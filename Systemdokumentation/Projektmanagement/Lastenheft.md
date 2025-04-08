@@ -28,10 +28,12 @@ Viele bestehende Lern- und Kursplattformen bieten zwar umfassende Funktionen, we
 - Kursmaterialien (Dateien, Videos, Links) können hochgeladen und verwaltet werden
 - Kommunikation über Foren, Chats oder Kommentare
 - Aufgaben-/Abgabe-Funktionen mit Deadlines
+- Bewertungen für die Abgaben
 - Rollensystem: Studierende, Lehrende, Admins
 - Kalender-Integration mit Erinnerungsfunktion
 - Barrierefreie Darstellung von Inhalten (Screenreader-Kompatibilität, Tastaturnavigation, Farbkontrast)
 - Optional: Integration von KI-Tools (z. B. automatische Zusammenfassungen, Chatbot für Fragen)
+- Erstellung von Zertifikaten (PDF)
 
 ### 2.2 Nicht-funktionale Anforderungen
 - Webanwendung mit responsivem Design (Desktop, Tablet, Mobile)
