@@ -1,0 +1,7 @@
+
+/.venv/
+# Ignoriere Umgebungsvariablen-Datei
+.env
+
+# Ignoriere SQLite-Datenbankdatei
+db.sqlite3
