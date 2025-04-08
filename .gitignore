@@ -2,6 +2,6 @@
 /.venv/*
 # Ignoriere Umgebungsvariablen-Datei
 .env
-
+.idea/*
 # Ignoriere SQLite-Datenbankdatei
 db.sqlite3
