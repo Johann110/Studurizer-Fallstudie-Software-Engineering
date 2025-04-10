@@ -22,11 +22,6 @@ from django.views.generic import RedirectView
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('accounts/', include('accounts.urls')),
-    path('courses/', include('courses.urls')),
-    path('documents/', include('documents.urls')),
-    path('assignments/', include('assignments.urls')),
-    path('', RedirectView.as_view(pattern_name='courses:dashboard')),
 ]
 
 # Serve media files in development
