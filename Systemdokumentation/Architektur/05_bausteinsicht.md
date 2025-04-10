@@ -10,7 +10,7 @@ Studurizer folgt einer modularen Micro - Service Struktur nach dem Django-Framew
 | Modul             | Beschreibung                                                                      |
 |-------------------|-----------------------------------------------------------------------------------|
 | **accounts**      | Verwaltung von Benutzer:innen, Rollen, Authentifizierung                          |
-| **courses**       | Erstellung und Verwaltung von Kursen, Zuweisung von Teilnehmenden                 |
+| **courses**       | Erstellung und Verwaltung von Kursen, Zuweisung von Teilnehmenden, Termine        |
 | **documents**     | Upload, Download und Versionierung von Lernmaterialien                            |
 | **assignments**   | Aufgabenstellungen, Abgaben und Bewertungen                                       |
 | **admin**         | Sonderfunktionen für Admins, abgewickelt durch Django (z. B. Nutzerregistrierung) |
