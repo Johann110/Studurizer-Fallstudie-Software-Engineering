@@ -41,7 +41,7 @@ jobs:
 
       # Django Tests ausführen
       - name: Run Django tests
-        run: docker compose exec -T web python manage.py test
+        run: docker compose exec -T studurizer python manage.py test
 
       # Container Logs anzeigen bei Fehler
       - name: Show logs if tests failed
