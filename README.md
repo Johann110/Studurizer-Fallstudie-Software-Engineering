@@ -21,13 +21,13 @@ Diese Anleitung erklärt, wie du das Studurizer-Projekt mit Docker lokal ausfüh
 
 2. **Verzeichnisstruktur prüfen**
 
-   Stelle sicher, dass die folgenden Verzeichnisse vorhanden sind oder erstelle sie:
+   Stelle sicher, dass die folgenden Verzeichnisse/Dateien vorhanden sind oder erstelle sie:
    ```bash
    # Verzeichnis für Medien-Dateien
    mkdir -p media
    
-   # Stelle sicher, dass das static-Verzeichnis existiert
-   mkdir -p static
+   # Stelle sicher, dass die db existiert
+   touch db.sqlite3
    ```
 
 3. **Docker Image bauen**
