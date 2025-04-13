@@ -12,7 +12,7 @@ from accounts.views import profile_detail
 urlpatterns = [
     path('login/', views.LoginView.as_view(template_name="accounts/login.html", form_class=CustomUserAuthenticationForm), name='login'),
     path('profile/<int:id>/', profile_detail, name='profile' ),
-    path('profile/', profile, name='profile' ),
+    path('logout/', views.LogoutView.as_view(), name='logout'),
 ]
 
 # Serve media files in development

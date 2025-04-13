@@ -177,3 +177,7 @@ a:not(.btn):not(.badge):not(.navbar-brand):not(.dropdown-item):hover {
 .table-hover tbody tr:hover {
   background-color: rgba(0, 86, 179, 0.05);
 }
+
+.navbar-brand{
+  margin-left: -7rem;
+}
