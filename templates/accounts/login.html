@@ -1,0 +1,68 @@
+{% extends "base.html" %}
+{% block title %} Erstelle deinen Account {% endblock %}
+{% block content %}
+<!--made by marvin hamacher, marvin scharfe, niko nikolovski-->
+    <style>
+        .card2 {
+            height: auto;
+            width: auto;
+            max-width: 70%;
+            border-radius: 40px;
+            background: #e0e0e0;
+            box-shadow: 20px 20px 60px #bebebe,
+            -20px -20px 60px #ffffff;
+            margin-left: auto;
+            margin-right: auto;
+            margin-top: 3%;
+
+
+        }
+
+        h4 {
+            text-align: center;
+        }
+
+        .input_content {
+            margin: auto;
+            justify-content: center;
+            max-width: 80%;
+        }
+    </style>
+
+    <div class="form-group">
+        <form method="post">
+            {% csrf_token %}
+            <div class="col-md-6 offset-md-3 mx-auto">
+                <div class="card2">
+                    <br/>
+                    <h4>Melde dich an mit deinen Account!</h4>
+                    <br/>
+                    <div class="input_content">
+                        {{ form.email}}
+                    </div>
+                    <div class="input_content">
+                        {{ form.password}}
+                    </div>
+                    <div class="input_content">
+                        <button class="btn btn-success">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
+                                 class="bi bi-person-check-fill" viewBox="0 0 16 16">
+                                <path fill-rule="evenodd"
+                                      d="M15.854 5.146a.5.5 0 0 1 0 .708l-3 3a.5.5 0 0 1-.708 0l-1.5-1.5a.5.5 0 0 1 .708-.708L12.5 7.793l2.646-2.647a.5.5 0 0 1 .708 0z"></path>
+                                <path d="M1 14s-1 0-1-1 1-4 6-4 6 3 6 4-1 1-1 1H1zm5-6a3 3 0 1 0 0-6 3 3 0 0 0 0 6z"></path>
+                            </svg>
+                        </button>
+                        <a href="{% url "home" %}" class="btn btn-danger">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-x" viewBox="0 0 16 16">
+                              <path d="M4.646 4.646a.5.5 0 0 1 .708 0L8 7.293l2.646-2.647a.5.5 0 0 1 .708.708L8.707 8l2.647 2.646a.5.5 0 0 1-.708.708L8 8.707l-2.646 2.647a.5.5 0 0 1-.708-.708L7.293 8 4.646 5.354a.5.5 0 0 1 0-.708z"/>
+                            </svg>
+                        </a>
+                    </div>
+                    <br/>
+                </div>
+            </div>
+        </form>
+    </div>
+    <br/>
+
+{% endblock %}

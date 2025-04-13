@@ -38,7 +38,8 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    
+    'accounts.apps.AccountsConfig'
+
     # Project apps
 ]
 
@@ -135,15 +136,11 @@ MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 # Custom user model
-# AUTH_USER_MODEL = 'accounts.User'
-
-# Authentication settings
-# LOGIN_URL = 'accounts:login'
-# LOGIN_REDIRECT_URL = 'courses:dashboard'
-# LOGOUT_REDIRECT_URL = 'accounts:login'
-
-# Email settings (for development - console backend)
-# EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
+AUTH_USER_MODEL = 'accounts.CustomUser'
+LOGIN_URL = 'accounts:login'
+LOGIN_REDIRECT_URL = 'home'
+LOGOUT_REDIRECT_URL = 'home'
+AUTHENTICATION_BACKENDS = ['accounts.backends.EmailBackend']
 
 # Locale settings
 LOCALE_PATHS = [
@@ -153,3 +150,4 @@ LANGUAGES = [
     ('en', 'English'),
     ('de', 'German'),
 ]
+
