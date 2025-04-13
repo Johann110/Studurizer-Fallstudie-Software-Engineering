@@ -1,0 +1,50 @@
+name: Build and Test
+
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+
+jobs:
+  build-and-test:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v3
+
+      # Docker Image bauen
+      - name: Build with Docker Compose
+        run: docker compose build
+
+      # Container starten
+      - name: Start container with Docker Compose
+        run: |
+          docker compose up -d
+          sleep 10  # Warten bis der Server gestartet ist
+
+      # Test auf Port 8000
+      - name: Test server availability on port 8000
+        run: |
+          if curl -sSf http://localhost:8000/ > /dev/null; then
+            echo "✅ Server is reachable on port 8000"
+          else
+            echo "❌ Server is not reachable on port 8000"
+            docker compose logs
+            exit 1
+          fi
+
+      # Django Tests ausführen
+      - name: Run Django tests
+        run: docker compose exec -T web python manage.py test
+
+      # Container Logs anzeigen bei Fehler
+      - name: Show logs if tests failed
+        if: ${{ failure() }}
+        run: docker compose logs
+
+      # Container stoppen
+      - name: Stop container
+        if: always()
+        run: docker compose down

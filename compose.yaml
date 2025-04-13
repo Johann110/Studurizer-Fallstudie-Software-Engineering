@@ -1,0 +1,10 @@
+services:
+  studurizer:
+    build: .
+    ports:
+      - "8000:8000"
+    volumes:
+      - ./db.sqlite3:/app/db.sqlite3 # Path to db, change left path
+      - ./media:/app/media # Path to media folder, change left path
+    environment:
+      - SECRET_KEY=${SECRET_KEY:-default_development_key}
