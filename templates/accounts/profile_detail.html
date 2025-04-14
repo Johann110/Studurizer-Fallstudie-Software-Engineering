@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+    {% if profile %}
+    	    <img class="thumbnail" src="{{ profile.profile_picture.url }}" alt="ERROR KEIN PROFILBILD GEFUNDEN">
+            <p>Vorname: {{ user_logged_in.first_name }}</p>
+            <p>Nachname: {{ user_logged_in.last_name }}</p>
+            <p>Email> {{ user_logged_in.email }}</p>
+            <hr>
+            <p>{{ profile.description}}</p>
+    {% else %}
+        nicht gut lol
+    {% endif %} 
+
+
+</body>
+</html>

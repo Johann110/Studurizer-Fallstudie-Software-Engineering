@@ -20,9 +20,12 @@ from django.conf import settings
 from django.conf.urls.static import static
 from django.views.generic import RedirectView
 
+from StudurizerApp.views import home
+
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('', admin.site.urls),
+    path('', home, name='home'),
+    path('accounts/', include('accounts.urls')),
 ]
 
 # Serve media files in development
