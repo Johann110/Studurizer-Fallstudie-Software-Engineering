@@ -10,12 +10,19 @@ classDiagram
         +date end_date
     }
 
-    class User {
+    class CustomUser {
         +int id
         +string firstname
         +string lastname
         +string email
         +string password
+    }
+    
+    class UserProfile {
+        +int id
+        +string profile_picture
+        +string description
+        +int FK user_id
     }
 
    class Event {
@@ -59,5 +66,5 @@ classDiagram
     Course "1" --> "many" Event
     Assignment "1" --> "1" Grade
     User "1" --> "many" Grade
-
+    UserProfile "1" --> "1" CustomUser
 ```
