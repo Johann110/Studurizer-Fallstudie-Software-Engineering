@@ -60,11 +60,11 @@ classDiagram
 
 
     %% Beziehungen
-    User "many" --> "many" Course : takes part
+    CustomUser "many" --> "many" Course : takes part
     Course "1" --> "many" Material
     Course "1" --> "many" Assignment
     Course "1" --> "many" Event
     Assignment "1" --> "1" Grade
-    User "1" --> "many" Grade
+    CustomUser "1" --> "many" Grade
     UserProfile "1" --> "1" CustomUser
 ```
