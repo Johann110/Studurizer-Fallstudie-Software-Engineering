@@ -8,15 +8,15 @@ from accounts.models import UserProfile, CustomUser
 # Create your views here.
 
 def profile_detail(request, id):
-    user_logged_in = None
+    logged_in_user = None
     try:
-        user_logged_in = CustomUser.objects.get(id=id)
-        profile = UserProfile.objects.get(user=user_logged_in)
+        logged_in_user = CustomUser.objects.get(id=id)
+        profile = UserProfile.objects.get(user=logged_in_user)
     except UserProfile.DoesNotExist:
         profile = None
 
     context = {
         profile : profile,
-        user_logged_in : user_logged_in
+        logged_in_user : logged_in_user
     }
     return render(request, "accounts/profile_detail.html", context)
