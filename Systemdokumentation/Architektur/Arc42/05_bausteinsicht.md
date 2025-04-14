@@ -3,7 +3,7 @@
 Diese Bausteinsicht beschreibt die statische Struktur von Studurizer.  
 Das System ist in mehrere logisch und fachlich getrennte Module (Django Apps) unterteilt.
 
-## 📦 Übersicht über Systembausteine
+## Übersicht über Systembausteine
 
 Studurizer folgt einer modularen Micro - Service Struktur nach dem Django-Framework-Prinzip. Die wichtigsten Module sind:
 
