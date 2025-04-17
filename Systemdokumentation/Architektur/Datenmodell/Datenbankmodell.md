@@ -55,6 +55,7 @@ classDiagram
         +int FK assignment_id
         +boolean agreed_to_terms_of_condition
         +boolean agreed_to_data_policy
+        +int FK grade_id
         +int FK user_id
     }
 
@@ -63,7 +64,6 @@ classDiagram
         +String grade_info
         +String short_feedback
         +int FK user_id
-        +int FK turned_in_material_id
     }
     
 
