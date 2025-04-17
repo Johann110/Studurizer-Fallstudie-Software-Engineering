@@ -49,7 +49,7 @@ classDiagram
         +int FK course_id
     }
 
-   class submission {
+   class Submission {
         +int id
         +string file_path
         +int FK assignment_id
@@ -72,7 +72,9 @@ classDiagram
     Course "1" --> "many" Material
     Course "1" --> "many" Assignment
     Course "1" --> "many" Event
-    Assignment "1" --> "1" Grade
+
     CustomUser "1" --> "many" Grade
     UserProfile "1" --> "1" CustomUser
+    Assignment "1" --> "Many" Submission
+    Submission "1" --> "1" Grade
 ```
