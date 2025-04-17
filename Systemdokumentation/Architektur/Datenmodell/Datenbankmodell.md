@@ -54,7 +54,8 @@ classDiagram
         +string file_path
         +int FK assignment_id
         +boolean agreed_to_terms_of_condition
-        +boolean agreed_to_data_policy 
+        +boolean agreed_to_data_policy
+        +int FK user_id
     }
 
     class Grade {
@@ -73,7 +74,7 @@ classDiagram
     Course "1" --> "many" Assignment
     Course "1" --> "many" Event
 
-    CustomUser "1" --> "many" Grade
+    CustomUser "1" --> "many" Submission
     UserProfile "1" --> "1" CustomUser
     Assignment "1" --> "Many" Submission
     Submission "1" --> "1" Grade
