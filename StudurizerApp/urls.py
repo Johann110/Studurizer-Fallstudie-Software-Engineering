@@ -20,11 +20,14 @@ from django.conf import settings
 from django.conf.urls.static import static
 from django.views.generic import RedirectView
 
-from StudurizerApp.views import home
+from StudurizerApp.views import home, contact, datapolicy, imprint
 
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('', home, name='home'),
+    path('contact/', contact, name='contact'),
+    path('datapolicy/', datapolicy, name='datapolicy'),
+    path('imprint/', imprint, name='imprint'),
     path('accounts/', include('accounts.urls')),
 ]
 

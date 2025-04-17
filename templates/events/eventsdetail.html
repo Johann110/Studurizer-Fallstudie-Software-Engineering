@@ -1,83 +1,123 @@
 {% extends "base.html" %}
 {% block content %}
-{% if expired_events %}
-  <h2>Vergangene Termine</h2>
-  <div class="row">
-    {% for event in expired_events %}
-      <div class="col-md-4">
-        <div class="card mb-3">
-          <div class="card-body">
-            <h5 class="card-title">{{ event.title }}</h5>
-            <p class="card-text">
-              Start: {{ event.start_time }}<br>
-              Ende: {{ event.end_time }}
-            </p>
-            <a class="btn btn-sm btn-outline-secondary" data-bs-toggle="collapse" href="#desc-expired-{{ event.id }}" role="button" aria-expanded="false" aria-controls="desc-expired-{{ event.id }}">
-              Beschreibung anzeigen
-            </a>
-            <div class="collapse mt-2" id="desc-expired-{{ event.id }}">
-              <div class="card card-body">
-                {{ event.description }}
+
+{% if user.is_authenticated %}
+  <div class="container my-4">
+    <div class="row">
+
+      {% if expired_events %}
+        <div class="col-md-4">
+          <h2>Vergangene Termine</h2>
+          {% for event in expired_events %}
+            {% if event.course %}
+              <a href="{% url 'course_detail' event.course_id %}" class="text-decoration-none text-dark">
+                <div class="card mb-3 hover-shadow">
+                  <div class="card-body">
+                    <h5 class="card-title">{{ event.title }}</h5>
+                    <p class="card-text">
+                      Start: {{ event.start_time }}<br>
+                      Ende: {{ event.end_time }}
+                    </p>
+                  </div>
+                </div>
+              </a>
+            {% endif %}
+            <div class="card mb-3">
+              <div class="card-body">
+                {% if not event.course %}
+                  <h5 class="card-title">{{ event.title }}</h5>
+                  <p class="card-text">
+                    Start: {{ event.start_time }}<br>
+                    Ende: {{ event.end_time }}
+                  </p>
+                {% endif %}
+                <a class="btn btn-sm btn-outline-secondary" data-bs-toggle="collapse" href="#desc-expired-{{ event.id }}" role="button" aria-expanded="false" aria-controls="desc-expired-{{ event.id }}">
+                  Beschreibung anzeigen
+                </a>
+                <div class="collapse mt-2" id="desc-expired-{{ event.id }}">
+                  <div class="card card-body">
+                    {{ event.description }}
+                  </div>
+                </div>
               </div>
             </div>
-          </div>
+          {% endfor %}
         </div>
-      </div>
-    {% endfor %}
+      {% endif %}
+
+      {% if events %}
+        <div class="col-md-4">
+          <h2>Bevorstehende Termine</h2>
+          {% for event in events %}
+            {% if event.course %}
+              <a href="{% url 'course_detail' event.course_id %}" class="text-decoration-none text-dark">
+                <div class="card mb-3 hover-shadow">
+                  <div class="card-body">
+                    <h5 class="card-title">{{ event.title }}</h5>
+                    <p class="card-text">
+                      Start: {{ event.start_time }}<br>
+                      Ende: {{ event.end_time }}
+                    </p>
+                  </div>
+                </div>
+              </a>
+            {% endif %}
+            <div class="card mb-3">
+              <div class="card-body">
+                {% if not event.course %}
+                  <h5 class="card-title">{{ event.title }}</h5>
+                  <p class="card-text">
+                    Start: {{ event.start_time }}<br>
+                    Ende: {{ event.end_time }}
+                  </p>
+                {% endif %}
+                <a class="btn btn-sm btn-outline-primary" data-bs-toggle="collapse" href="#desc-{{ event.id }}" role="button" aria-expanded="false" aria-controls="desc-{{ event.id }}">
+                  Beschreibung anzeigen
+                </a>
+                <div class="collapse mt-2" id="desc-{{ event.id }}">
+                  <div class="card card-body">
+                    {{ event.description }}
+                  </div>
+                </div>
+              </div>
+            </div>
+          {% endfor %}
+        </div>
+      {% endif %}
+
+      {% if misc_events %}
+        <div class="col-md-4">
+          <h2>Sonstige Termine</h2>
+          {% for event in misc_events %}
+            <div class="card mb-3">
+              <div class="card-body">
+                <h5 class="card-title">{{ event.title }}</h5>
+                <p class="card-text">
+                  Start: {{ event.start_time }}<br>
+                  Ende: {{ event.end_time }}
+                </p>
+                <a class="btn btn-sm btn-outline-dark" data-bs-toggle="collapse" href="#desc-misc-{{ event.id }}" role="button" aria-expanded="false" aria-controls="desc-misc-{{ event.id }}">
+                  Beschreibung anzeigen
+                </a>
+                <div class="collapse mt-2" id="desc-misc-{{ event.id }}">
+                  <div class="card card-body">
+                    {{ event.description }}
+                  </div>
+                </div>
+              </div>
+            </div>
+          {% endfor %}
+        </div>
+      {% endif %}
+
+    </div>
+  </div>
+
+{% else %}
+  <div class="container my-5 text-center">
+    <h2>Du musst angemeldet sein, um diese Seite zu sehen.</h2>
+    <a href="{% url 'login' %}" class="btn btn-primary mt-3">Zur Anmeldung</a>
   </div>
 {% endif %}
 
-{% if events %}
-  <h2>Bevorstehende Termine</h2>
-  <div class="row">
-    {% for event in events %}
-      <div class="col-md-4">
-        <div class="card mb-3">
-          <div class="card-body">
-            <h5 class="card-title">{{ event.title }}</h5>
-            <p class="card-text">
-              Start: {{ event.start_time }}<br>
-              Ende: {{ event.end_time }}
-            </p>
-            <a class="btn btn-sm btn-outline-primary" data-bs-toggle="collapse" href="#desc-{{ event.id }}" role="button" aria-expanded="false" aria-controls="desc-{{ event.id }}">
-              Beschreibung anzeigen
-            </a>
-            <div class="collapse mt-2" id="desc-{{ event.id }}">
-              <div class="card card-body">
-                {{ event.description }}
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-    {% endfor %}
-  </div>
-{% endif %}
-
-{% if misc_events %}
-  <h2>Sonstige Termine</h2>
-  <div class="row">
-    {% for event in misc_events %}
-      <div class="col-md-4">
-        <div class="card mb-3">
-          <div class="card-body">
-            <h5 class="card-title">{{ event.title }}</h5>
-            <p class="card-text">
-              Start: {{ event.start_time }}<br>
-              Ende: {{ event.end_time }}
-            </p>
-            <a class="btn btn-sm btn-outline-dark" data-bs-toggle="collapse" href="#desc-misc-{{ event.id }}" role="button" aria-expanded="false" aria-controls="desc-misc-{{ event.id }}">
-              Beschreibung anzeigen
-            </a>
-            <div class="collapse mt-2" id="desc-misc-{{ event.id }}">
-              <div class="card card-body">
-                {{ event.description }}
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-    {% endfor %}
-  </div>
-{% endif %}
 {% endblock %}
