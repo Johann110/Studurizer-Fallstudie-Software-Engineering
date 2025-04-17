@@ -1,0 +1,152 @@
+{% extends "base.html" %}
+{% block misc %}
+    <style>
+    .card-inner {
+        height: 10.5rem;
+    }
+    .card-title{
+        height: 2rem;
+    }
+    .email {
+        height: 1rem;
+    }
+    </style>
+<div class="card"
+     style="
+        height: 48rem;
+        width: 100rem;
+        padding-left: 1rem;
+        padding-right: 1rem;
+        padding-bottom: 4rem;
+        margin: 0 auto;
+    ">
+
+            <div class="card-body">
+                <h3 class="card-title mb-4">Kontaktstellen der Hochschule</h3>
+                <hr style="margin-top: -1rem">
+                <div class="row g-4">
+
+                    <div class="col-12 col-md-6 col-lg-3">
+                        <section class="card h-100">
+                            <div class="card-body">
+                                <h5 class="card-title"><strong>Studenten-Sekretariat</strong></h5>
+                                <hr>
+                                <p class="card-text card-inner">Ansprechpartner für Kursplanung, Raumbuchung und Lehrpersonal. Hier
+                                    erhalten Studierende Unterstützung bei organisatorischen Fragen rund um ihr Studium
+                                    sowie Auskünfte zu Fristen und Formularen.</p>
+                                <hr>
+                                <p class="card-text email"><strong>Email:</strong> <a
+                                        href="mailto:studsek@beispiel-universität.com">studsek@beispiel-universität.com</a></p>
+                            </div>
+                        </section>
+                    </div>
+
+                    <div class="col-12 col-md-6 col-lg-3">
+                        <section class="card h-100">
+                            <div class="card-body">
+                                <h5 class="card-title"><strong>Prüfungsamt</strong></h5>
+                                <hr>
+                                <p class="card-text card-inner">Zentrale Prüfungsorganisation für alle Prüfungsangelegenheiten. Das
+                                    Prüfungsamt ist zuständig für die Anmeldung, Durchführung und Archivierung von
+                                    Prüfungen sowie die Ausstellung von Zeugnissen.</p>
+                                <hr>
+                                <p class="card-text email"><strong>Email:</strong> <a
+                                        href="mailto:pruefungsamt@beispiel-universität.com">pruefungsamt@beispiel-universität.com</a></p>
+                            </div>
+                        </section>
+                    </div>
+
+                    <div class="col-12 col-md-6 col-lg-3">
+                        <section class="card h-100">
+                            <div class="card-body">
+                                <h5 class="card-title"><strong>Dozentenvertretung</strong></h5>
+                                <hr>
+                                <p class="card-text card-inner">Interessenvertretung für das Lehrpersonal. Sie fungiert als
+                                    Bindeglied zwischen Dozentenschaft und Hochschulleitung und bringt Anliegen aus der
+                                    Lehre in die hochschulpolitische Diskussion ein.</p>
+                                <hr>
+                                <p class="card-text email"><strong>Email:</strong> <a
+                                        href="mailto:dozentenvertretung@beispiel-universität.com">dozentenvert@beispiel-universität.com</a></p>
+                            </div>
+                        </section>
+                    </div>
+
+                    <div class="col-12 col-md-6 col-lg-3">
+                        <section class="card h-100">
+                            <div class="card-body">
+                                <h5 class="card-title"><strong>Studentenvertretung</strong></h5>
+                                <hr>
+                                <p class="card-text card-inner">Interessenvertretung der Studierenden. Sie setzt sich für
+                                    studentische Belange ein, organisiert Veranstaltungen und vertritt die
+                                    Studierendenschaft in hochschulpolitischen Gremien.</p>
+                                <hr>
+                                <p class="card-text email"><strong>Email:</strong> <a
+                                        href="mailto:studentenvertretung@beispiel-universität.com">studentenvert@beispiel-universität.com</a></p>
+                            </div>
+                        </section>
+                    </div>
+
+                    <div class="col-12 col-md-6 col-lg-3">
+                        <section class="card h-100">
+                            <div class="card-body">
+                                <h5 class="card-title"><strong>Barrierefreiheitsbeauftragte</strong></h5>
+                                <hr>
+                                <p class="card-text card-inner">Beratung zu barrierefreiem Zugang und digitalen Inhalten. Die
+                                    Beauftragte unterstützt bei der Gestaltung eines inklusiven Studienumfelds und gibt
+                                    Empfehlungen zu technischen und baulichen Maßnahmen.</p>
+                                <hr>
+                                <p class="card-text email"><strong>Email:</strong> <a
+                                        href="mailto:barrierefrei@beispiel-universität.com">barrierefrei@beispiel-universität.com</a></p>
+                            </div>
+                        </section>
+                    </div>
+
+                    <div class="col-12 col-md-6 col-lg-3">
+                        <section class="card h-100">
+                            <div class="card-body">
+                                <h5 class="card-title"><strong>Gleichstellungsbeauftragte</strong></h5>
+                                <hr>
+                                <p class="card-text card-inner">Förderung von Chancengleichheit und Diversität an der Hochschule.
+                                    Sie entwickelt Maßnahmen zur Gleichstellung aller Geschlechter und bietet Beratung
+                                    bei Diskriminierung und Konflikten im Hochschulkontext.</p>
+                                <hr>
+                                <p class="card-text email"><strong>Email:</strong> <a
+                                        href="mailto:gleichstellung@beispiel-universität.com">gleichstellung@beispiel-universität.com</a></p>
+                            </div>
+                        </section>
+                    </div>
+
+                    <div class="col-12 col-md-6 col-lg-3">
+                        <section class="card h-100">
+                            <div class="card-body">
+                                <h5 class="card-title"><strong>Datenschutzbeauftragter</strong></h5>
+                                <hr>
+                                <p class="card-text card-inner">Verantwortlich für den Schutz personenbezogener Daten an der
+                                    Hochschule. Der Datenschutzbeauftragte informiert über Rechte und Pflichten beim
+                                    Umgang mit Daten und achtet auf die Einhaltung der
+                                    Datenschutz-Grundverordnung (DSGVO).</p>
+                                <hr>
+                                <p class="card-text email"><strong>Email:</strong> <a
+                                        href="mailto:datenschutz@beispiel-universität.com">datenschutz@beispiel-universität.com</a></p>
+                            </div>
+                        </section>
+                    </div>
+
+                    <div class="col-12 col-md-6 col-lg-3">
+                        <section class="card h-100">
+                            <div class="card-body">
+                                <h5 class="card-title"><strong>Technischer Support & IT-Hilfe</strong></h5>
+                                <hr>
+                                <p class="card-text card-inner">Unterstützung bei technischen Problemen mit Hochschulsoftware,
+                                    WLAN, E-Mail-Zugang und Lernplattformen. Ansprechpartner für alle IT-bezogenen
+                                    Anliegen von Studierenden und Lehrenden.</p>
+                                <hr>
+                                <p class="card-text email"><strong>Email:</strong> <a
+                                        href="mailto:it-support@beispiel-universität.com">it-support@beispiel-universität.com</a></p>
+                            </div>
+                        </section>
+                    </div>
+                </div>
+            </div>
+        </div>
+{% endblock %}
