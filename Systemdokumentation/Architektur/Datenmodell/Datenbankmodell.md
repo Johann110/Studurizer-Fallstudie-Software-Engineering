@@ -48,13 +48,21 @@ classDiagram
         +string file_path
         +int FK course_id
     }
-    
+
+   class submission {
+        +int id
+        +string file_path
+        +int FK assignment_id
+        +boolean agreed_to_terms_of_condition
+        +boolean agreed_to_data_policy 
+    }
+
     class Grade {
         +int id
         +String grade_info
         +String short_feedback
         +int FK user_id
-        +int FK assignment_id
+        +int FK turned_in_material_id
     }
     
 
