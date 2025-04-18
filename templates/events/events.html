@@ -1,0 +1,26 @@
+{% block content %}
+    <div class="event-overview">
+        <div class="card" style="width: 18rem;">
+          <div class="card-body">
+            <h5 class="card-title">Anstehende Termine</h5>
+            <hr>
+            <div class="even-overview-inner">
+                {% for event in events %}
+                    <a href="{% url "course_detail" event.course_id %}">
+                       <div class="card" style="width: 18rem;">
+                          <div class="card-body">
+                          <h5 class="card-title">{{ event.title}}</h5>
+                          <p class="card-text">
+                              Start:{{ event.start_time }}
+                              Ende: {{ event.end_time }}
+                          </p>
+                       </div>
+                     </div>
+                    </a>
+                {% endfor %}
+            </div>
+            <a href="{% url "events" %}" class="btn btn-dark">Zur Terminübersicht</a>
+          </div>
+        </div>
+    </div>
+{% endblock %}
