@@ -1,0 +1,13 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+  <h2>Kurs aktualisieren</h2>
+  <form class="form-control" method="post">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <button type="submit" class="btn btn-success">Speichern</button>
+    <button type="button" class="btn btn-danger">Abbrechen</button>
+  </form>
+  <script src="{% static 'courses/js/courses.js' %}"></script>
+{% endblock %}
