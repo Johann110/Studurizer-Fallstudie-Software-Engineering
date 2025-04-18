@@ -1,8 +1,12 @@
 {% extends 'base.html' %}
+{% load roles %}
 
 {% block title %}Dozenten-Dashboard | Studurizer{% endblock %}
 
 {% block content %}
-
-<img src="https://upload.wikimedia.org/wikipedia/commons/thumb/3/3a/Cat03.jpg/640px-Cat03.jpg" alt="bruh"/>
+{% if user|is_group:"Teacher" %}
+    hallo ich bin dozent
+{% elif user|is_group:"Student" %}
+    hallo ich bin schüler
+{% endif %}
 {% endblock %}
