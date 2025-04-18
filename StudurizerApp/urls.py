@@ -29,6 +29,7 @@ urlpatterns = [
     path('datapolicy/', datapolicy, name='datapolicy'),
     path('imprint/', imprint, name='imprint'),
     path('accounts/', include('accounts.urls')),
+    path('courses/', include('courses.urls')),
 ]
 
 # Serve media files in development
