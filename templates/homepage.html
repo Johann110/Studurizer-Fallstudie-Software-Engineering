@@ -5,9 +5,9 @@
 
 {% block content %}
 {% if user|is_group:"Teacher" %}
-    hallo ich bin dozent
+    {% include "courses/teacher_dashboard.html" %}
 {% elif user|is_group:"Student" %}
-    hallo ich bin schüler
+    {% include "courses/student_dashboard.html" %}
 {% endif %}
 {#% include "events/events.html" %#}
 <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/3/3a/Cat03.jpg/640px-Cat03.jpg" alt="bruh"/>

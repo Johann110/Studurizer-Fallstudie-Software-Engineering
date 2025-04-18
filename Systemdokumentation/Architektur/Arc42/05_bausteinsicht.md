@@ -10,7 +10,8 @@ Studurizer folgt einer modularen Micro - Service Struktur nach dem Django-Framew
 | Modul             | Beschreibung                                                                      |
 |-------------------|-----------------------------------------------------------------------------------|
 | **accounts**      | Verwaltung von Benutzer:innen, Rollen, Authentifizierung                          |
-| **courses**       | Erstellung und Verwaltung von Kursen, Zuweisung von Teilnehmenden, Termine        |
+| **courses**       | Erstellung und Verwaltung von Kursen, Zuweisung von Teilnehmenden       |
+| **events**        | Erstellung und Verwaltung von Terminen                                            |
 | **documents**     | Upload, Download und Versionierung von Lernmaterialien                            |
 | **assignments**   | Aufgabenstellungen, Abgaben und Bewertungen                                       |
 | **admin**         | Sonderfunktionen für Admins, abgewickelt durch Django (z. B. Nutzerregistrierung) |
@@ -23,7 +24,9 @@ Studurizer folgt einer modularen Micro - Service Struktur nach dem Django-Framew
 ```mermaid
 graph TD
     A[core] --> B[accounts]
+    A[core] --> F[events]
     A --> C[courses]
+    C --- F
     C --> D[documents]
     C --> E[assignments]
     A --> G[adminpanel]

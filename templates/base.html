@@ -11,7 +11,7 @@
     <link href="{% static 'libs/bootstrap_5.css' %}" rel="stylesheet">
     
     <!-- Custom CSS -->
-    <link rel="stylesheet" href="/static/css/style.css">
+    <link rel="stylesheet" href={% static 'css/style.css' %}>
 
     <!-- jquery 3.7.1 -->
     <script src="{% static 'libs/jquery.js' %}"></script>
@@ -72,7 +72,11 @@
     <!-- Footer -->
     <footer class="footer mt-auto py-3 bg-light">
         <div class="container text-center">
-            <span class="text-muted">&copy; {% now "Y" %} Studurizer | Barrierefreies Kursverwaltungssystem</span>
+            <span class="text-muted">&copy; {% now "Y" %} Studurizer | Barrierefreies Kursverwaltungssystem |
+                <a href="misc/contact.html" class="text-muted"> Kontakt </a>
+                <a href="misc/imprint.html" class="text-muted"> Impressum </a>
+                <a href="misc/datapolicy.html" class="text-muted"> Datenschutzrichtlinie </a>
+            </span>
         </div>
     </footer>
 

@@ -1,99 +1,108 @@
 {% extends "base.html" %}
+{% load roles %}
 
 {% block title %}Dashboard | Studurizer{% endblock %}
 
 {% block content %}
-<div class="row mb-4">
-    <div class="col">
-        <h1 class="h2">Meine Kurse</h1>
-        <p class="lead">Willkommen zurück, {{ user.first_name|default:user.username }}!</p>
-    </div>
-</div>
-
-<!-- Active Courses -->
-<div class="row mb-5">
-    <div class="col-12">
-        <h2 class="h4 mb-3">Aktive Kurse</h2>
-        
-        {% if active_courses %}
-            <div class="row row-cols-1 row-cols-md-2 row-cols-lg-3 g-4">
-                {% for course in active_courses %}
-                    <div class="col">
-                        <div class="card h-100 shadow-sm">
-                            <div class="card-header bg-light">
-                                <span class="badge bg-primary float-end">{{ course.code }}</span>
-                                <h3 class="h5 card-title mb-0">{{ course.title }}</h3>
-                            </div>
-                            <div class="card-body">
-                                <p class="card-text">
-                                    {% if course.description %}
-                                        {{ course.description|truncatewords:15 }}
-                                    {% else %}
-                                        <span class="text-muted">Keine Beschreibung verfügbar</span>
-                                    {% endif %}
-                                </p>
-                                <p class="card-text">
-                                    <small class="text-muted">
-                                        <strong>Dozent:</strong> {{ course.teacher.get_full_name|default:course.teacher.username }}
-                                    </small>
-                                </p>
-                            </div>
-                            <div class="card-footer bg-transparent border-0">
-                                <a href="{% url 'courses:course_detail' course.id %}" class="btn btn-outline-primary d-block">
-                                    Zum Kurs
-                                </a>
-                            </div>
-                        </div>
-                    </div>
-                {% endfor %}
-            </div>
-        {% else %}
-            <div class="alert alert-info" role="alert">
-                Sie sind aktuell in keinen aktiven Kursen eingeschrieben. 
-                <a href="{% url 'courses:course_list' %}" class="alert-link">Durchsuchen Sie verfügbare Kurse</a>.
-            </div>
-        {% endif %}
-    </div>
-</div>
-
-<!-- Archived Courses -->
-{% if archived_courses %}
-    <div class="row">
-        <div class="col-12">
-            <h2 class="h4 mb-3">Archivierte Kurse</h2>
-            
-            <div class="row row-cols-1 row-cols-md-2 row-cols-lg-3 g-4">
-                {% for course in archived_courses %}
-                    <div class="col">
-                        <div class="card h-100 shadow-sm bg-light">
-                            <div class="card-header bg-secondary text-white">
-                                <span class="badge bg-secondary float-end">{{ course.code }}</span>
-                                <h3 class="h5 card-title mb-0">{{ course.title }}</h3>
-                            </div>
-                            <div class="card-body">
-                                <p class="card-text">
-                                    {% if course.description %}
-                                        {{ course.description|truncatewords:15 }}
-                                    {% else %}
-                                        <span class="text-muted">Keine Beschreibung verfügbar</span>
-                                    {% endif %}
-                                </p>
-                                <p class="card-text">
-                                    <small class="text-muted">
-                                        <strong>Dozent:</strong> {{ course.teacher.get_full_name|default:course.teacher.username }}
-                                    </small>
-                                </p>
-                            </div>
-                            <div class="card-footer bg-transparent border-0">
-                                <a href="{% url 'courses:course_detail' course.id %}" class="btn btn-outline-secondary d-block">
-                                    Zum Kurs
-                                </a>
-                            </div>
-                        </div>
-                    </div>
-                {% endfor %}
-            </div>
+        {% if user.is_authenticated and user|is_group:"Student" or user.is_staff %}
+    <div class="row mb-4">
+        <div class="col">
+            <h1 class="h2">Meine Kurse</h1>
+            <p class="lead">Willkommen zurück, {{ user.first_name|default:user.username }}!</p>
         </div>
     </div>
+
+    <!-- Active Courses -->
+    <div class="row mb-5">
+        <div class="col-12">
+            <h2 class="h4 mb-3">Aktive Kurse</h2>
+
+            {% if active_courses %}
+                <div class="row row-cols-1 row-cols-md-2 row-cols-lg-3 g-4">
+                    {% for course in active_courses %}
+                        <div class="col">
+                            <div class="card h-100 shadow-sm">
+                                <div class="card-header bg-light">
+                                    <span class="badge bg-primary float-end">{{ course.code }}</span>
+                                    <h3 class="h5 card-title mb-0">{{ course.title }}</h3>
+                                </div>
+                                <div class="card-body">
+                                    <p class="card-text">
+                                        {% if course.description %}
+                                            {{ course.description|truncatewords:15 }}
+                                        {% else %}
+                                            <span class="text-muted">Keine Beschreibung verfügbar</span>
+                                        {% endif %}
+                                    </p>
+                                    <p class="card-text">
+                                        <small class="text-muted">
+                                            {% for teacher in course.teachers.all %}
+                                                <strong>Dozent:</strong> {{ teacher.get_full_name|default:teacher.email }}
+                                            {% endfor %}
+                                        </small>
+                                    </p>
+                                </div>
+                                <div class="card-footer bg-transparent border-0">
+                                    <a href="{#% url 'course_detail' course.id %#}}" class="btn btn-outline-primary d-block">
+                                        Zum Kurs
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                    {% endfor %}
+                </div>
+            {% else %}
+                <div class="alert alert-info" role="alert">
+                    Sie sind aktuell in keinen aktiven Kursen eingeschrieben.
+                </div>
+            {% endif %}
+        </div>
+    </div>
+
+    <!-- Archived Courses -->
+    {% if archived_courses %}
+        <div class="row">
+            <div class="col-12">
+                <h2 class="h4 mb-3">Archivierte Kurse</h2>
+
+                <div class="row row-cols-1 row-cols-md-2 row-cols-lg-3 g-4">
+                    {% for course in archived_courses %}
+                        <div class="col">
+                            <div class="card h-100 shadow-sm bg-light">
+                                <div class="card-header bg-secondary text-white">
+                                    <h3 class="h5 card-title mb-0">{{ course.title }}</h3>
+                                </div>
+                                <div class="card-body">
+                                    <p class="card-text">
+                                        {% if course.description %}
+                                            {{ course.description }}
+                                        {% else %}
+                                            <span class="text-muted">Keine Beschreibung verfügbar</span>
+                                        {% endif %}
+                                    </p>
+                                    <p class="card-text">
+                                        <small class="text-muted">
+                                            {% for teacher in course.teachers.all %}
+                                                <strong>Dozent:</strong> {{ teacher.get_full_name|default:teacher.email }}
+                                            {% endfor %}
+                                        </small>
+                                    </p>
+                                </div>
+                                <div class="card-footer bg-transparent border-0">
+                                    <a href="{#% url 'course_detail' course.id %#}}" class="btn btn-outline-secondary d-block">
+                                        Zum Kurs
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                    {% endfor %}
+                </div>
+            </div>
+        </div>
+    {% else %}
+        <p> Keine alten Kurse verfügbar</p>
+    {% endif %}
+{% else %}
+   <p> Sie dürfen hier nicht sein </p>
 {% endif %}
 {% endblock %}
