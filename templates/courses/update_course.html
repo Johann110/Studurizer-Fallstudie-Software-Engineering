@@ -1,13 +1,21 @@
 {% extends 'base.html' %}
 {% load static %}
-
+{% load roles %}
 {% block content %}
-  <h2>Kurs aktualisieren</h2>
-  <form class="form-control" method="post">
-    {% csrf_token %}
-    {{ form.as_p }}
-    <button type="submit" class="btn btn-success">Speichern</button>
-    <button type="button" class="btn btn-danger">Abbrechen</button>
-  </form>
-  <script src="{% static 'courses/js/courses.js' %}"></script>
+{% if user.is_authenticated %}
+    {% if user|is_group:"Teacher" or user.is_staff %}
+          <h2>Kurs aktualisieren</h2>
+          <form class="form-control" method="post">
+            {% csrf_token %}
+            {{ form.as_p }}
+            <button type="submit" class="btn btn-success">Speichern</button>
+            <button type="button" class="btn btn-danger">Abbrechen</button>
+          </form>
+          <script src="{% static 'courses/js/courses.js' %}"></script>
+    {% else %}
+        <p> Sie dürfen hier nicht sein!</p>
+    {% endif%}
+{% else %}
+   <p> Sie dürfen hier nicht sein!</p>
+{% endif%}
 {% endblock %}
