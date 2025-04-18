@@ -6,15 +6,17 @@
             <hr>
             <div class="even-overview-inner">
                 {% for event in events %}
-                     <div class="card" style="width: 18rem;" href="{% url "course_detail" event.course_id %}">
+                    <a href="{% url "course_detail" event.course_id %}">
+                       <div class="card" style="width: 18rem;">
                           <div class="card-body">
-                            <h5 class="card-title">{{ event.title}}</h5>
-                            <p class="card-text">
-                                Start:{{ event.start_time }}
-                                Ende: {{ event.end_time }}
-                            </p>
-                          </div>
+                          <h5 class="card-title">{{ event.title}}</h5>
+                          <p class="card-text">
+                              Start:{{ event.start_time }}
+                              Ende: {{ event.end_time }}
+                          </p>
+                       </div>
                      </div>
+                    </a>
                 {% endfor %}
             </div>
             <a href="{% url "events" %}" class="btn btn-dark">Zur Terminübersicht</a>
