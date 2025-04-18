@@ -1,6 +1,11 @@
 {% extends 'base.html' %}
 {% load roles %}
 {% load static %}
+
+{% block extra_head %}
+    <link href="{% static 'libs/bootstrap_duallistbox.css' %}" rel="stylesheet">
+{% endblock %}
+
 {% block content %}
     {% if user.is_authenticated %}
         {% if user|is_group:"Teacher" or user.is_staff %}
@@ -12,7 +17,6 @@
                 <button type="submit" class="btn btn-success">Speichern</button>
                 <button type="button" class="btn btn-danger">Abbrechen</button>
               </form>
-              <script src="{% static 'courses/js/courses.js' %}"></script>
 
         {% else %}
             <p> Sie dürfen hier nicht sein!</p>
@@ -20,4 +24,9 @@
     {% else %}
         <p> Sie dürfen hier nicht sein!</p>
     {% endif %}
+{% endblock %}
+
+{% block extra_js %}
+    <script src="{% static 'libs/bootstrap_duallistbox.js' %}"></script>
+    <script src="{% static 'courses/js/courses.js' %}"></script>
 {% endblock %}
