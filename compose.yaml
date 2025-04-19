@@ -1,7 +1,8 @@
 services:
   studurizer:
-    build: .
-  image: studurizer
+    build:
+      context: .
+    image: studurizer
     ports:
       - "8000:8000"
     volumes:
