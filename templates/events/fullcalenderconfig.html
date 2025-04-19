@@ -1,0 +1,68 @@
+{% block extrajs %}
+    <script>
+    document.addEventListener('DOMContentLoaded', function () {
+          const columnView = document.getElementById("column-view");
+          const calendarView = document.getElementById("calendar-view");
+
+          document.getElementById("show-columns").addEventListener("click", () => {
+            columnView.style.display = "block";
+            calendarView.style.display = "none";
+          });
+
+          document.getElementById("show-calendar").addEventListener("click", () => {
+            columnView.style.display = "none";
+            calendarView.style.display = "block";
+          });
+
+          const calendarEl = document.getElementById('calendar');
+          const calendar = new FullCalendar.Calendar(calendarEl, {
+            locale: 'de',
+            initialView: 'dayGridMonth',
+            headerToolbar: {
+              left: 'prev,next today',
+              center: 'title',
+              right: 'dayGridMonth,timeGridWeek,listWeek'
+            },
+            events: [
+              {% for event in events %}
+                {
+                  title: "{{ event.title|escapejs }}",
+                  start: "{{ event.start_date|date:'c' }}",
+                  end: "{{ event.end_date|date:'c' }}",
+                  description: "{{ event.description|default:''|escapejs }}",
+                  url: "{% if event.course %}{#% url 'course_detail' event.course_id %#}{% else %}#{% endif %}"
+                },
+              {% endfor %}
+              {% for event in expired_events %}
+                {
+                  title: "[Vergangen] {{ event.title|escapejs }}",
+                  start: "{{ event.start_date|date:'c' }}",
+                  end: "{{ event.end_date|date:'c' }}",
+                  color: "#aaa",
+                  description: "{{ event.description|default:''|escapejs }}",
+                  url: "{% if event.course %}{#% url 'course_detail' event.course_id %#}{% else %}#{% endif %}"
+                },
+              {% endfor %}
+              {% for event in misc_events %}
+                {
+                  title: "[Sonstiges] {{ event.title|escapejs }}",
+                  start: "{{ event.start_date|date:'c' }}",
+                  end: "{{ event.end_date|date:'c' }}",
+                  color: "#999999",
+                  description: "{{ event.description|default:''|escapejs }}"
+                },
+              {% endfor %}
+            ],
+            eventClick: function (info) {
+              info.jsEvent.preventDefault(); // don't navigate unless there's a URL
+              if (info.event.url && info.event.url !== "#") {
+                window.location.href = info.event.url;
+              } else if (info.event.extendedProps.description) {
+                alert(info.event.extendedProps.description);
+              }
+            }
+          });
+          calendar.render();
+        });
+    </script>
+{% endblock %}
