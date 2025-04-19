@@ -31,11 +31,11 @@ jobs:
       - name: Normalize image name (lowercase)
         run: echo "IMAGE_NAME_LOWER=$(echo '${{ env.IMAGE_NAME }}' | tr '[:upper:]' '[:lower:]')" >> $GITHUB_ENV
 
-      # Docker Image bauen für mehrere Plattformen
+      # Docker Image bauen für mehrere Plattformen mit docker buildx
       - name: Build Docker image for multiple platforms
         run: |
           docker buildx create --use  # Buildx als Standard setzen
-          docker compose build --platform linux/amd64,linux/arm64,linux/arm/v7,linux/ppc64le,linux/s390x
+          docker buildx build --platform linux/amd64,linux/arm64,linux/arm/v7,linux/ppc64le,linux/s390x -t $IMAGE_NAME_LOWER:${{ env.BRANCH_NAME }} --push .
 
       # Stelle sicher db Datei existiert
       - name: Ensure database file exists
@@ -80,10 +80,9 @@ jobs:
           username: ${{ github.actor }}
           password: ${{ secrets.GITHUB_TOKEN }}
 
-      # Image taggen und pushen
+      # Image taggen und pushen (nur einmal)
       - name: Tag and push image to GHCR
         run: |
-          # Taggen des Images mit dem Branch-Namen
           docker tag studurizer $IMAGE_NAME_LOWER:${{ env.BRANCH_NAME }}
           docker push $IMAGE_NAME_LOWER:${{ env.BRANCH_NAME }}
 
