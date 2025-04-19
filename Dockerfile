@@ -1,5 +1,5 @@
 # Basis-Image
-FROM python:3.10-slim
+FROM python:3.10
 
 # Umgebungsvariablen setzen
 ENV PYTHONUNBUFFERED=1 \
