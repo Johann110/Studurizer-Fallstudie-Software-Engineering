@@ -10,13 +10,13 @@
           <h2>Vergangene Termine</h2>
           {% for event in expired_events %}
             {% if event.course %}
-              <a href="{% url 'course_detail' event.course_id %}" class="text-decoration-none text-dark">
+              <a href="{#% url 'course_detail' event.course_id %#}" class="text-decoration-none text-dark">
                 <div class="card mb-3 hover-shadow">
                   <div class="card-body">
                     <h5 class="card-title">{{ event.title }}</h5>
                     <p class="card-text">
-                      Start: {{ event.start_time }}<br>
-                      Ende: {{ event.end_time }}
+                      Start: {{ event.start_date }}<br>
+                      Ende: {{ event.end_date }}
                     </p>
                   </div>
                 </div>
@@ -27,8 +27,8 @@
                 {% if not event.course %}
                   <h5 class="card-title">{{ event.title }}</h5>
                   <p class="card-text">
-                    Start: {{ event.start_time }}<br>
-                    Ende: {{ event.end_time }}
+                    Start: {{ event.start_date }}<br>
+                    Ende: {{ event.end_date }}
                   </p>
                 {% endif %}
                 <a class="btn btn-sm btn-outline-secondary" data-bs-toggle="collapse" href="#desc-expired-{{ event.id }}" role="button" aria-expanded="false" aria-controls="desc-expired-{{ event.id }}">
@@ -50,13 +50,13 @@
           <h2>Bevorstehende Termine</h2>
           {% for event in events %}
             {% if event.course %}
-              <a href="{% url 'course_detail' event.course_id %}" class="text-decoration-none text-dark">
+              <a href="{#% url 'course_detail' event.course_id %#}" class="text-decoration-none text-dark">
                 <div class="card mb-3 hover-shadow">
                   <div class="card-body">
                     <h5 class="card-title">{{ event.title }}</h5>
                     <p class="card-text">
-                      Start: {{ event.start_time }}<br>
-                      Ende: {{ event.end_time }}
+                      Start: {{ event.start_date }}<br>
+                      Ende: {{ event.end_date }}
                     </p>
                   </div>
                 </div>
@@ -67,8 +67,8 @@
                 {% if not event.course %}
                   <h5 class="card-title">{{ event.title }}</h5>
                   <p class="card-text">
-                    Start: {{ event.start_time }}<br>
-                    Ende: {{ event.end_time }}
+                    Start: {{ event.start_date }}<br>
+                    Ende: {{ event.end_date }}
                   </p>
                 {% endif %}
                 <a class="btn btn-sm btn-outline-primary" data-bs-toggle="collapse" href="#desc-{{ event.id }}" role="button" aria-expanded="false" aria-controls="desc-{{ event.id }}">
@@ -93,8 +93,8 @@
               <div class="card-body">
                 <h5 class="card-title">{{ event.title }}</h5>
                 <p class="card-text">
-                  Start: {{ event.start_time }}<br>
-                  Ende: {{ event.end_time }}
+                  Start: {{ event.start_date }}<br>
+                  Ende: {{ event.end_date }}
                 </p>
                 <a class="btn btn-sm btn-outline-dark" data-bs-toggle="collapse" href="#desc-misc-{{ event.id }}" role="button" aria-expanded="false" aria-controls="desc-misc-{{ event.id }}">
                   Beschreibung anzeigen
@@ -109,7 +109,6 @@
           {% endfor %}
         </div>
       {% endif %}
-
     </div>
   </div>
 

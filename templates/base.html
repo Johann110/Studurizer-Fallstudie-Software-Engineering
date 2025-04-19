@@ -64,18 +64,23 @@
     </header>
 
     <!-- Main content -->
-    <main id="main-content" class="container my-4">
+    <main id="main-content" >
+        <div class="container my-4">
+            {% block content %}{% endblock %}
+        </div>
         <!-- Page content -->
-        {% block content %}{% endblock %}
+        {% block misc %}
+        {% endblock %}
+
     </main>
 
     <!-- Footer -->
     <footer class="footer mt-auto py-3 bg-light">
         <div class="container text-center">
             <span class="text-muted">&copy; {% now "Y" %} Studurizer | Barrierefreies Kursverwaltungssystem |
-                <a href="misc/contact.html" class="text-muted"> Kontakt </a>
-                <a href="misc/imprint.html" class="text-muted"> Impressum </a>
-                <a href="misc/datapolicy.html" class="text-muted"> Datenschutzrichtlinie </a>
+                <a href="{% url "contact" %}" class="text-muted"> Kontakt </a>
+                <a href="{% url "imprint" %}" class="text-muted"> Impressum </a>
+                <a href="{% url "datapolicy" %}" class="text-muted"> Datenschutzrichtlinie </a>
             </span>
         </div>
     </footer>

@@ -1,4 +1,4 @@
-{% extends "base.html" %}
+
 {% load roles %}
 
 {% block title %}Dozenten-Dashboard | Studurizer{% endblock %}
@@ -11,7 +11,7 @@
             <p class="lead">Willkommen zurück, {{ user.get_full_name|default:user.username }}!</p>
         </div>
         <div class="col-md-4 text-md-end">
-            <a href="{% url 'courses:course_create' %}" class="btn btn-primary">
+            <a href="{% url 'create-course' %}" class="btn btn-primary">
                 <i class="bi bi-plus-circle me-1"></i> Neuen Kurs erstellen
             </a>
         </div>
@@ -48,7 +48,7 @@
                                         <a href="{#% url 'course_detail' course.id %#}" class="btn btn-outline-primary">
                                             Zum Kurs
                                         </a>
-                                        <a href="{% url 'update-course' course.id %}" class="btn btn-outline-secondary">
+                                        <a href="{% url 'update-course' course.id  %}" class="btn btn-outline-secondary">
                                             Bearbeiten
                                         </a>
                                     </div>

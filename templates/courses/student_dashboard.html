@@ -1,4 +1,4 @@
-{% extends "base.html" %}
+
 {% load roles %}
 
 {% block title %}Dashboard | Studurizer{% endblock %}
@@ -20,35 +20,38 @@
             {% if active_courses %}
                 <div class="row row-cols-1 row-cols-md-2 row-cols-lg-3 g-4">
                     {% for course in active_courses %}
-                        <div class="col">
-                            <div class="card h-100 shadow-sm">
-                                <div class="card-header bg-light">
-                                    <span class="badge bg-primary float-end">{{ course.code }}</span>
-                                    <h3 class="h5 card-title mb-0">{{ course.title }}</h3>
-                                </div>
-                                <div class="card-body">
-                                    <p class="card-text">
-                                        {% if course.description %}
-                                            {{ course.description|truncatewords:15 }}
-                                        {% else %}
-                                            <span class="text-muted">Keine Beschreibung verfügbar</span>
-                                        {% endif %}
-                                    </p>
-                                    <p class="card-text">
-                                        <small class="text-muted">
-                                            {% for teacher in course.teachers.all %}
-                                                <strong>Dozent:</strong> {{ teacher.get_full_name|default:teacher.email }}
-                                            {% endfor %}
-                                        </small>
-                                    </p>
-                                </div>
-                                <div class="card-footer bg-transparent border-0">
-                                    <a href="{#% url 'course_detail' course.id %#}}" class="btn btn-outline-primary d-block">
-                                        Zum Kurs
-                                    </a>
+                        {% if course %}
+                            <div class="col">
+                                <div class="card h-100 shadow-sm">
+                                    <div class="card-header bg-light">
+                                        <h3 class="h5 card-title mb-0">{{ course.title }}</h3>
+                                    </div>
+                                    <div class="card-body">
+                                        <p class="card-text">
+                                            {% if course.description %}
+                                                {{ course.description }}
+                                            {% else %}
+                                                <span class="text-muted">Keine Beschreibung verfügbar</span>
+                                            {% endif %}
+                                        </p>
+                                        <p class="card-text">
+                                            <small class="text-muted">
+                                                {% for teacher in course.teachers.all %}
+                                                    <strong>Dozent:</strong> {{ teacher.get_full_name|default:teacher.email }}
+                                                {% endfor %}
+                                            </small>
+                                        </p>
+                                    </div>
+                                    <div class="card-footer bg-transparent border-0">
+                                        <a href="{#% url 'course_detail' course.id %#}}" class="btn btn-outline-primary d-block">
+                                            Zum Kurs
+                                        </a>
+                                    </div>
                                 </div>
                             </div>
-                        </div>
+                        {% else %}
+                            <p> Aktuell keine Kurse verfügbar </p>
+                        {% endif %}
                     {% endfor %}
                 </div>
             {% else %}
@@ -67,34 +70,38 @@
 
                 <div class="row row-cols-1 row-cols-md-2 row-cols-lg-3 g-4">
                     {% for course in archived_courses %}
-                        <div class="col">
-                            <div class="card h-100 shadow-sm bg-light">
-                                <div class="card-header bg-secondary text-white">
-                                    <h3 class="h5 card-title mb-0">{{ course.title }}</h3>
-                                </div>
-                                <div class="card-body">
-                                    <p class="card-text">
-                                        {% if course.description %}
-                                            {{ course.description }}
-                                        {% else %}
-                                            <span class="text-muted">Keine Beschreibung verfügbar</span>
-                                        {% endif %}
-                                    </p>
-                                    <p class="card-text">
-                                        <small class="text-muted">
-                                            {% for teacher in course.teachers.all %}
-                                                <strong>Dozent:</strong> {{ teacher.get_full_name|default:teacher.email }}
-                                            {% endfor %}
-                                        </small>
-                                    </p>
-                                </div>
-                                <div class="card-footer bg-transparent border-0">
-                                    <a href="{#% url 'course_detail' course.id %#}}" class="btn btn-outline-secondary d-block">
-                                        Zum Kurs
-                                    </a>
+                        {% if course %}
+                            <div class="col">
+                                <div class="card h-100 shadow-sm bg-light">
+                                    <div class="card-header bg-secondary text-white">
+                                        <h3 class="h5 card-title mb-0">{{ course.title }}</h3>
+                                    </div>
+                                    <div class="card-body">
+                                        <p class="card-text">
+                                            {% if course.description %}
+                                                {{ course.description }}
+                                            {% else %}
+                                                <span class="text-muted">Keine Beschreibung verfügbar</span>
+                                            {% endif %}
+                                        </p>
+                                        <p class="card-text">
+                                            <small class="text-muted">
+                                                {% for teacher in course.teachers.all %}
+                                                    <strong>Dozent:</strong> {{ teacher.get_full_name|default:teacher.email }}
+                                                {% endfor %}
+                                            </small>
+                                        </p>
+                                    </div>
+                                    <div class="card-footer bg-transparent border-0">
+                                        <a href="{#% url 'course_detail' course.id %#}}" class="btn btn-outline-secondary d-block">
+                                            Zum Kurs
+                                        </a>
+                                    </div>
                                 </div>
                             </div>
-                        </div>
+                        {% else %}
+                            <p> Keine archivierten Kurse verfügbar! </p>
+                        {% endif %}
                     {% endfor %}
                 </div>
             </div>
