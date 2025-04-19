@@ -26,29 +26,29 @@ Diese Anleitung erklärt, wie du das Studurizer-Projekt mit Docker lokal ausfüh
    touch db.sqlite3
    ```
 
-2. Compose-Datei erstellen und Container starten
+2. **Compose-Datei erstellen und Container starten**
 
-Erstelle eine `compose.yaml` mit folgendem Inhalt:
+   Erstelle eine `compose.yaml` mit folgendem Inhalt:
 
-```yaml
-services:
-  studurizer:
-    container_name: studurizer
-    image: ghcr.io/johann110/studurizer-fallstudie-software-engineering:latest
-    ports:
-      - "8000:8000"  # Exponiert Port 8000
-    volumes:
-      - ./db.sqlite3:/app/db.sqlite3  # Pfad zur lokalen SQLite-Datenbank (links anpassen, falls nötig)
-      - ./media:/app/media            # Ordner für Medien-Dateien (links anpassen, falls nötig)
-    environment:
-      - SECRET_KEY=${SECRET_KEY:-default_development_key}  # Umgebungsvariable für Django Secret Key setzen
-   ```
+   ```yaml
+   services:
+     studurizer:
+       container_name: studurizer
+       image: ghcr.io/johann110/studurizer-fallstudie-software-engineering:latest
+       ports:
+         - "8000:8000"  # Exponiert Port 8000
+       volumes:
+         - ./db.sqlite3:/app/db.sqlite3  # Pfad zur lokalen SQLite-Datenbank (links anpassen, falls nötig)
+         - ./media:/app/media            # Ordner für Medien-Dateien (links anpassen, falls nötig)
+       environment:
+         - SECRET_KEY=${SECRET_KEY:-default_development_key}  # Umgebungsvariable für Django Secret Key setzen
+      ```
 
-Container starten
+   Container starten
 
-   ```bash
-   docker compose up
-   ```
+      ```bash
+      docker compose up
+      ```
 
 3. **Admin-Benutzer erstellen**
 
