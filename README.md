@@ -6,56 +6,58 @@ Diese Anleitung erklärt, wie du das Studurizer-Projekt mit Docker lokal ausfüh
 
 ## Voraussetzungen
 
-- [Git](https://git-scm.com/downloads) installiert
 - [Docker](https://docs.docker.com/get-docker/) installiert
 - [Docker Compose](https://docs.docker.com/compose/install/) installiert (in den meisten Docker-Desktop-Installationen bereits enthalten)
 
 ## Installationsschritte
 
-1. **Repository klonen**
-
-   ```bash
-   git clone https://github.com/Johann110/Studurizer-Fallstudie-Software-Engineering.git
-   cd studurizer
-   ```
-
-2. **Verzeichnisstruktur prüfen**
+1. **Verzeichnis erstellen und Struktur prüfen**
 
    Stelle sicher, dass die folgenden Verzeichnisse/Dateien vorhanden sind oder erstelle sie:
    ```bash
-   # Verzeichnis für Medien-Dateien
+   # Ordner für die App erstellen und in den Pfad
+   mkdir studurizer
+   cd studurizer
+   
+   # Verzeichnis für Medien-Dateien erstellen
    mkdir -p media
    
-   # Stelle sicher, dass die db existiert
+   # Datenbankdatei erstellen
    touch db.sqlite3
    ```
 
-3. **Docker Image bauen**
+2. Compose-Datei erstellen und Container starten
 
-   ```bash
-   docker compose build
+Erstelle eine `compose.yaml` mit folgendem Inhalt:
+
+```yaml
+services:
+  studurizer:
+    container_name: studurizer
+    image: ghcr.io/johann110/studurizer-fallstudie-software-engineering:latest
+    ports:
+      - "8000:8000"  # Exponiert Port 8000
+    volumes:
+      - ./db.sqlite3:/app/db.sqlite3  # Pfad zur lokalen SQLite-Datenbank (links anpassen, falls nötig)
+      - ./media:/app/media            # Ordner für Medien-Dateien (links anpassen, falls nötig)
+    environment:
+      - SECRET_KEY=${SECRET_KEY:-default_development_key}  # Umgebungsvariable für Django Secret Key setzen
    ```
 
-4. **compose.yaml anpassen**
-
-   Passe die compose.yaml Datei an und setze die Umgebungsvariablen
-
-
-5. **Container starten**
+Container starten
 
    ```bash
-   # Container starten
    docker compose up
    ```
 
-5. **Admin-Benutzer erstellen**
+3. **Admin-Benutzer erstellen**
 
    Öffne ein neues Terminal-Fenster und führe aus:
    ```bash
    docker compose exec studurizer python manage.py createsuperuser
    ```
 
-6. **Zugriff auf die Anwendung**
+4. **Zugriff auf die Anwendung**
 
    Öffne deinen Webbrowser und gehe zu: http://localhost:8000
 
