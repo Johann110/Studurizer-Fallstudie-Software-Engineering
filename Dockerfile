@@ -1,12 +1,5 @@
 # Basis-Image
-FROM python:3.13-alpine
-
-# Pakete installieren für C Bibliotheken
-RUN apk add --no-cache \
-    build-base \
-    libffi-dev \
-    libpq-dev \
-    && rm -rf /var/cache/apk/*
+FROM python:3.13
 
 # Umgebungsvariablen setzen
 ENV PYTHONUNBUFFERED=1 \
