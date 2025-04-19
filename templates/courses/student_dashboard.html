@@ -4,7 +4,7 @@
 {% block title %}Dashboard | Studurizer{% endblock %}
 
 {% block content %}
-        {% if user.is_authenticated and user|is_group:"Student" or user.is_staff %}
+    {% if user.is_authenticated and user|is_group:"Student" or user.is_staff %}
     <div class="row mb-4">
         <div class="col">
             <h1 class="h2">Meine Kurse</h1>

@@ -23,10 +23,10 @@ def home(request):
             'events': events
         }
     else:
-        courses = Course.objects.filter(students=request.user)
-        print(courses)
-        active_courses = courses.filter(end_date__gte=timezone.now()).order_by('start_date'),
-        archived_courses = courses.filter(end_date__lt=timezone.now()).order_by('-end_date'),
+        courses_qs = Course.objects.filter(students=request.user)
+        active_courses = courses_qs.filter(end_date__gte=timezone.now()).order_by('start_date')
+        archived_courses = courses_qs.filter(end_date__lt=timezone.now()).order_by('-end_date')
+        print(archived_courses)
         context = {
             'active_courses': active_courses,
             'archived_courses': archived_courses,
