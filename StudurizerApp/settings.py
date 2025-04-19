@@ -26,7 +26,19 @@ SECRET_KEY = '$SECRET_KEY'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['*']
+# Basiswerte
+allowed_hosts = ['localhost', '127.0.0.1']
+
+# Falls DOMAIN angegeben ist → hinzufügen
+domain = os.getenv('DOMAIN')
+if domain:
+    allowed_hosts.append(domain)
+
+ALLOWED_HOSTS = allowed_hosts
+
+# CSRF_ORIGINS aus DOMAIN ableiten
+csrf_trusted = [f'https://{host}' for host in allowed_hosts]
+CSRF_TRUSTED_ORIGINS = csrf_trusted
 
 # Application definition
 
