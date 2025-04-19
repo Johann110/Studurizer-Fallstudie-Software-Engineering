@@ -42,6 +42,7 @@ Diese Anleitung erklärt, wie du das Studurizer-Projekt mit Docker lokal ausfüh
          - ./media:/app/media            # Ordner für Medien-Dateien (links anpassen, falls nötig)
        environment:
          - SECRET_KEY=${SECRET_KEY:-default_development_key}  # Umgebungsvariable für Django Secret Key setzen
+    #     - DOMAIN=${SECRET_KEY:-DOMAIN} # Domain setzen wenn SSL benutzt wird oder eine Domain um auf die App zugreifen
       ```
 
    Container starten
