@@ -22,15 +22,20 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v3
 
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v2
+
       - name: Set branch name
         run: echo "BRANCH_NAME=${GITHUB_REF##*/}" >> $GITHUB_ENV
   
       - name: Normalize image name (lowercase)
         run: echo "IMAGE_NAME_LOWER=$(echo '${{ env.IMAGE_NAME }}' | tr '[:upper:]' '[:lower:]')" >> $GITHUB_ENV
 
-      # Docker Image bauen
-      - name: Build with Docker Compose
-        run: docker compose build
+      # Docker Image bauen für mehrere Plattformen
+      - name: Build Docker image for multiple platforms
+        run: |
+          docker buildx create --use  # Buildx als Standard setzen
+          docker compose build --platform linux/amd64,linux/arm64,linux/arm/v7,linux/ppc64le,linux/s390x
 
       # Stelle sicher db Datei existiert
       - name: Ensure database file exists
@@ -78,9 +83,11 @@ jobs:
       # Image taggen und pushen
       - name: Tag and push image to GHCR
         run: |
+          # Taggen des Images mit dem Branch-Namen
           docker tag studurizer $IMAGE_NAME_LOWER:${{ env.BRANCH_NAME }}
           docker push $IMAGE_NAME_LOWER:${{ env.BRANCH_NAME }}
 
+          # Wenn der Branch 'main' ist, zusätzlich mit 'latest' taggen
           if [ "${{ env.BRANCH_NAME }}" = "main" ]; then
             docker tag studurizer $IMAGE_NAME_LOWER:latest
             docker push $IMAGE_NAME_LOWER:latest
