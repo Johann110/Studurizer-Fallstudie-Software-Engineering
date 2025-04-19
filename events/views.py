@@ -3,16 +3,16 @@ from django.shortcuts import render
 from django.urls import reverse_lazy
 from django.views.generic import CreateView, UpdateView, DeleteView
 from django.utils import timezone
+
+from courses.models import Course
 from events.forms import EventForm
 from events.models import Events
 
 
 class CreateEvent(CreateView):
     model = Events
-    template_name = 'events/create_events.html'
     form_class = EventForm
     success_url = reverse_lazy("home")
-
 
 class UpdateEvent(UpdateView):
     model = Events
@@ -32,20 +32,20 @@ def events(request):
     events = Events.objects.filter(
         user_courses_q,
         end_date__gte=now
-    ).order_by('start_date').select_related('course')
+    ).order_by('start_date').select_related('course').distinct()
     archived_main_events = Events.objects.filter(
         user_courses_q,
         end_date__lte=now
-    ).order_by('end_date').select_related('course')
+    ).order_by('end_date').select_related('course').distinct()
     archived_misc_events = Events.objects.filter(
         course=None,
         end_date__lte=now
-    ).order_by('end_date')
-    expired_events = archived_main_events.union(archived_misc_events)
+    ).order_by('end_date').distinct()
+    expired_events = archived_main_events | archived_misc_events
     misc_events =Events.objects.filter(
         course=None,
         end_date__gte=now
-    ).order_by('start_date')
+    ).order_by('start_date').distinct()
     context = {
         'events': events,
         'expired_events': expired_events,

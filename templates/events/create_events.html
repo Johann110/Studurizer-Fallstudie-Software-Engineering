@@ -1,21 +1,33 @@
-{% extends 'base.html' %}
 {% load roles %}
 {% load static %}
-
-{% block extra_head %}
-    <link href="{% static 'libs/bootstrap_duallistbox.css' %}" rel="stylesheet">
-{% endblock %}
-
 {% block content %}
-    {% if user.is_authenticated and user|is_group:"Teacher" or user.is_staff %}
-          <h2>Termin anlegen</h2>
-          <form class="form-control" method="post">
-            {% csrf_token %}
-            {{ form.as_p }}
-            <button type="submit" class="btn btn-success">Speichern</button>
-            <button type="button" class="btn btn-danger" onclick="window.location.href='{% url "home" %}">Abbrechen</button>
-          </form>
-    {% else %}
-        <p> Sie dürfen hier nicht sein!</p>
-    {% endif %}
+    <button class="btn btn-success" data-bs-toggle="modal" data-bs-target="#createEventModal">
+        Termin erstellen
+    </button>
+
+    <div class="modal fade" id="createEventModal" tabindex="-1" aria-labelledby="createEventModalLabel"
+         aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <form method="post" action="{% url 'create_event' %}">
+                    {% csrf_token %}
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="createEventModalLabel">Termin anlegen</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Schließen"></button>
+                    </div>
+                    <div class="modal-body">
+                        {{ form.as_p }}
+                    </div>
+                    <div class="modal-footer">
+                        <button type="submit" class="btn btn-primary">Speichern</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+<script>
+  document.addEventListener("DOMContentLoaded", function() {
+    $('.select2').select2();
+  });
+</script>
 {% endblock %}

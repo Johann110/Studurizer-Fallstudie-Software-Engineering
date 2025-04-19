@@ -2,10 +2,12 @@ from django.shortcuts import render
 from django.utils import timezone
 
 from courses.models import Course
+from events.forms import EventForm
 from events.models import Events
 
 
 def home(request):
+    form = EventForm(user=request.user)
     if not request.user.is_authenticated:
         return render(request, 'homepage.html')
     events = Events.objects.filter(
@@ -18,6 +20,7 @@ def home(request):
         taught_courses = taught_courses_qs.filter(end_date__gte=timezone.now()).order_by('start_date')
         archived_courses = taught_courses_qs.filter(end_date__lt=timezone.now()).order_by('-end_date')
         context = {
+            'form': form,
             'taught_courses': taught_courses,
             'archived_courses': archived_courses,
             'events': events
@@ -28,6 +31,7 @@ def home(request):
         archived_courses = courses_qs.filter(end_date__lt=timezone.now()).order_by('-end_date')
         print(archived_courses)
         context = {
+            'form': form,
             'active_courses': active_courses,
             'archived_courses': archived_courses,
             'events': events

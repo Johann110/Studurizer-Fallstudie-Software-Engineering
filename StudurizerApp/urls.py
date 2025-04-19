@@ -30,6 +30,7 @@ urlpatterns = [
     path('imprint/', imprint, name='imprint'),
     path('accounts/', include('accounts.urls')),
     path('courses/', include('courses.urls')),
+    path('events/', include('events.urls')),
 ]
 
 # Serve media files in development
