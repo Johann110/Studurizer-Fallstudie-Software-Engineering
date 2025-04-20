@@ -1,10 +1,9 @@
-
 {% load roles %}
 
 {% block title %}Dashboard | Studurizer{% endblock %}
 
 {% block content %}
-    {% if user.is_authenticated and user|is_group:"Student" or user.is_staff %}
+{% if user.is_authenticated and user|is_group:"Student" or user.is_staff %}
     <div class="row mb-4">
         <div class="col">
             <h1 class="h2">Meine Kurse</h1>
@@ -12,15 +11,14 @@
         </div>
     </div>
 
-    <!-- Active Courses -->
-    <div class="row mb-5">
-        <div class="col-12">
-            <h2 class="h4 mb-3">Aktive Kurse</h2>
+    <div class="d-flex flex-wrap gap-4">
+        <div class="flex-grow-1" style="min-width: 60%;">
+            <div class="mb-5">
+                <h2 class="h4 mb-3">Aktive Kurse</h2>
 
-            {% if active_courses %}
-                <div class="row row-cols-1 row-cols-md-2 row-cols-lg-3 g-4">
-                    {% for course in active_courses %}
-                        {% if course %}
+                {% if active_courses %}
+                    <div class="row row-cols-1 row-cols-md-2 row-cols-lg-3 g-4">
+                        {% for course in active_courses %}
                             <div class="col">
                                 <div class="card h-100 shadow-sm">
                                     <div class="card-header bg-light">
@@ -43,34 +41,27 @@
                                         </p>
                                     </div>
                                     <div class="card-footer bg-transparent border-0">
-                                        <a href="{#% url 'course_detail' course.id %#}}" class="btn btn-outline-primary d-block">
+                                        <a href="{#% url 'course_detail' course.id %#}" class="btn btn-outline-primary d-block">
                                             Zum Kurs
                                         </a>
                                     </div>
                                 </div>
                             </div>
-                        {% else %}
-                            <p> Aktuell keine Kurse verfügbar </p>
-                        {% endif %}
-                    {% endfor %}
-                </div>
-            {% else %}
-                <div class="alert alert-info" role="alert">
-                    Sie sind aktuell in keinen aktiven Kursen eingeschrieben.
-                </div>
-            {% endif %}
-        </div>
-    </div>
+                        {% endfor %}
+                    </div>
+                {% else %}
+                    <div class="alert alert-info" role="alert">
+                        Sie sind aktuell in keinen aktiven Kursen eingeschrieben.
+                    </div>
+                {% endif %}
+            </div>
 
-    <!-- Archived Courses -->
-    {% if archived_courses %}
-        <div class="row">
-            <div class="col-12">
-                <h2 class="h4 mb-3">Archivierte Kurse</h2>
-
-                <div class="row row-cols-1 row-cols-md-2 row-cols-lg-3 g-4">
-                    {% for course in archived_courses %}
-                        {% if course %}
+            <!-- Archivierte Kurse -->
+            {% if archived_courses %}
+                <div class="mb-5">
+                    <h2 class="h4 mb-3">Archivierte Kurse</h2>
+                    <div class="row row-cols-1 row-cols-md-2 row-cols-lg-3 g-4">
+                        {% for course in archived_courses %}
                             <div class="col">
                                 <div class="card h-100 shadow-sm bg-light">
                                     <div class="card-header bg-secondary text-white">
@@ -93,23 +84,21 @@
                                         </p>
                                     </div>
                                     <div class="card-footer bg-transparent border-0">
-                                        <a href="{#% url 'course_detail' course.id %#}}" class="btn btn-outline-secondary d-block">
+                                        <a href="{#% url 'course_detail' course.id %#}" class="btn btn-outline-secondary d-block">
                                             Zum Kurs
                                         </a>
                                     </div>
                                 </div>
                             </div>
-                        {% else %}
-                            <p> Keine archivierten Kurse verfügbar! </p>
-                        {% endif %}
-                    {% endfor %}
+                        {% endfor %}
+                    </div>
                 </div>
-            </div>
+            {% else %}
+                <p>Keine alten Kurse verfügbar</p>
+            {% endif %}
         </div>
-    {% else %}
-        <p> Keine alten Kurse verfügbar</p>
-    {% endif %}
+    </div>
 {% else %}
-   <p> Sie dürfen hier nicht sein </p>
+    <p>Sie dürfen hier nicht sein</p>
 {% endif %}
 {% endblock %}
