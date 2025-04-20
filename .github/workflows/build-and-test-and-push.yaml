@@ -19,34 +19,18 @@ jobs:
       IMAGE_NAME: ghcr.io/${{ github.repository }}
 
     steps:
-      # Repository auschecken
       - name: Checkout repository
         uses: actions/checkout@v3
 
-      # Docker Buildx einrichten (für Multi-Arch Build)
       - name: Set up Docker Buildx
         uses: docker/setup-buildx-action@v2
 
-      # Branchname setzen (z. B. für Tagging)
       - name: Set branch name
         run: echo "BRANCH_NAME=${GITHUB_REF##*/}" >> $GITHUB_ENV
-
-      # Image-Name in Kleinbuchstaben umwandeln
+  
       - name: Normalize image name (lowercase)
         run: echo "IMAGE_NAME_LOWER=$(echo '${{ env.IMAGE_NAME }}' | tr '[:upper:]' '[:lower:]')" >> $GITHUB_ENV
 
-      # Docker Tag abhängig vom Event setzen
-      - name: Set Docker tag
-        shell: bash
-        run: |
-          if [ "$GITHUB_EVENT_NAME" == "pull_request" ]; then
-            echo "DOCKER_TAG=pr-${{ github.event.pull_request.number }}" >> $GITHUB_ENV
-          elif [ "${GITHUB_REF##*/}" == "main" ]; then
-            echo "DOCKER_TAG=latest" >> $GITHUB_ENV
-          else
-            echo "DOCKER_TAG=${GITHUB_REF##*/}" >> $GITHUB_ENV
-
-      # Docker Image lokal bauen
       - name: Build Docker Image for Testing
         run: docker compose build
 
@@ -85,7 +69,7 @@ jobs:
         if: always()
         run: docker compose down
 
-      # Login bei GHCR (GitHub Container Registry)
+      # Login bei GHCR
       - name: Log in to GHCR
         uses: docker/login-action@v3
         with:
@@ -93,7 +77,7 @@ jobs:
           username: ${{ github.actor }}
           password: ${{ secrets.GITHUB_TOKEN }}
 
-      # Multi-Arch Image bauen und pushen mit Tag (branch, pr, oder latest)
+      # Multi-Arch Image bauen und pushen
       - name: Build and push multi-arch image
         uses: docker/build-push-action@v5
         with:
@@ -102,4 +86,5 @@ jobs:
           platforms: linux/amd64,linux/arm64
           push: true
           tags: |
-            ${{ env.IMAGE_NAME_LOWER }}:${{ env.DOCKER_TAG }}
+            ${{ env.IMAGE_NAME_LOWER }}:${{ env.BRANCH_NAME }}
+            ${{ github.ref == 'refs/heads/main' && env.IMAGE_NAME_LOWER }}:latest
