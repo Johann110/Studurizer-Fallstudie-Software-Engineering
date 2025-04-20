@@ -7,7 +7,10 @@ from events.models import Events
 
 
 def home(request):
-    form = EventForm(user=request.user)
+    if(request.user.is_authenticated):
+        form = EventForm(user=request.user)
+    else:
+        form = EventForm()
     if not request.user.is_authenticated:
         return render(request, 'homepage.html')
     events = Events.objects.filter(
