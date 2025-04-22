@@ -3,209 +3,80 @@
 {% block title %}{{ course.title }} | Studurizer{% endblock %}
 
 {% block content %}
-<div class="row mb-4">
-    <div class="col-md-8">
-        <nav aria-label="breadcrumb">
-            <ol class="breadcrumb">
-                <li class="breadcrumb-item"><a href="{% url 'courses:dashboard' %}">Dashboard</a></li>
-                <li class="breadcrumb-item active" aria-current="page">{{ course.title }}</li>
-            </ol>
-        </nav>
-        <h1 class="h2">{{ course.title }} <span class="badge bg-primary">{{ course.code }}</span></h1>
-        <p class="lead">{{ course.description }}</p>
-    </div>
-    <div class="col-md-4 text-md-end">
-        {% if user == course.teacher or user.is_admin_user %}
-            <div class="btn-group" role="group">
-                <a href="{% url 'courses:course_update' course.id %}" class="btn btn-outline-primary">
-                    Kurs bearbeiten
-                </a>
-                <a href="{% url 'documents:document_upload' course.id %}" class="btn btn-outline-primary">
-                    Dokument hochladen
-                </a>
-                <a href="{% url 'assignments:assignment_create' course_id=course.id %}" class="btn btn-outline-primary">
-                    Aufgabe erstellen
-                </a>
+    <div class="container mt-4">
+        {% if not request.user.is_authenticated %}
+            <div class="alert alert-warning" role="alert">
+                Nur angemeldete Nutzer dürfen Kursinhalte sehen.
             </div>
-        {% elif user.is_student %}
-            {% if is_enrolled %}
-                <form action="{% url 'courses:unenroll_course' course.id %}" method="post" class="d-inline">
-                    {% csrf_token %}
-                    <button type="submit" class="btn btn-outline-danger">Vom Kurs abmelden</button>
-                </form>
+        {% else %}
+            {% if request.user.is_superuser or request.user in course.students.all or request.user in course.teachers.all %}
+                <div class="card shadow-sm">
+                    <div class="card-body">
+                        <h2 class="card-title">{{ course.title }}</h2>
+                        <p class="card-text">{{ course.description }}</p>
+
+                        <p><strong>Gestartet am:</strong> {{ course.start_date }}</p>
+                        <p><strong>Endet am:</strong> {{ course.end_date }}</p>
+
+                        <hr>
+
+                        <h5>Lehrende</h5>
+                        <ul class="list-group mb-3">
+                            {% for teacher in course.teachers.all %}
+                                <li class="list-group-item">{{ teacher.username }} ({{ teacher.email }})</li>
+                            {% empty %}
+                                <li class="list-group-item text-muted">Keine Lehrenden zugewiesen</li>
+                            {% endfor %}
+                        </ul>
+
+                        {% comment %}
+          <!-- eventuell gar nicht anzeigen lassen -->
+          <h5>Teilnehmende</h5>
+          <ul class="list-group mb-3">
+            {% for student in course.students.all %}
+              <li class="list-group-item">{{ student.username }} ({{ student.email }})</li>
+            {% empty %}
+              <li class="list-group-item text-muted">Keine Studierenden eingeschrieben</li>
+            {% endfor %}
+          </ul>
+          {% endcomment %}
+
+                        <h5>Kursmaterial</h5>
+                        <ul class="list-group mb-3">
+                            <li class="list-group-item">material1</li>
+                            <li class="list-group-item">material2</li>
+                        </ul>
+
+                        <h5>Abgaben</h5>
+                        <ul class="list-group mb-3">
+                            <li class="list-group-item">Abgabe1</li>
+                            <li class="list-group-item">Abgabe2</li>
+                        </ul>
+
+                        <div class="mt-4">
+                            <a href="{% url 'home' %}" class="btn btn-secondary">Zurück</a>
+                            {% if request.user.is_superuser or request.user in course.teachers.all %}
+                                <a href="{% url 'update_course' course.pk %}" class="btn btn-primary">Bearbeiten</a>
+                                <form method="post" action="{% url 'delete_course' course.pk %}" class="d-inline">
+                                    {% csrf_token %}
+                                    <button type="submit" class="btn btn-danger">Löschen</button>
+                                </form>
+                            {% endif %}
+                        </div>
+                    </div>
+                </div>
             {% else %}
-                <form action="{% url 'courses:enroll_course' course.id %}" method="post" class="d-inline">
-                    {% csrf_token %}
-                    <button type="submit" class="btn btn-primary">In Kurs einschreiben</button>
-                </form>
+                <div class="alert alert-warning">
+                    Du bist nicht für diesen Kurs eingeschrieben. Bitte wende dich an einen der Lehrenden:
+                    <ul class="mt-2">
+                        {% for teacher in course.teachers.all %}
+                            <li>{{ teacher.username }} ({{ teacher.email }})</li>
+                        {% empty %}
+                            <li>Keine Lehrenden verfügbar.</li>
+                        {% endfor %}
+                    </ul>
+                </div>
             {% endif %}
         {% endif %}
     </div>
-</div>
-
-<div class="row">
-    <div class="col-md-4">
-        <div class="card mb-4 shadow-sm">
-            <div class="card-header bg-light">
-                <h2 class="h5 mb-0">Kursinformationen</h2>
-            </div>
-            <div class="card-body">
-                <ul class="list-group list-group-flush">
-                    <li class="list-group-item d-flex justify-content-between align-items-center">
-                        <span>Dozent</span>
-                        <span>{{ course.teacher.get_full_name|default:course.teacher.username }}</span>
-                    </li>
-                    <li class="list-group-item d-flex justify-content-between align-items-center">
-                        <span>Startdatum</span>
-                        <span>{{ course.start_date|date:"d.m.Y" }}</span>
-                    </li>
-                    <li class="list-group-item d-flex justify-content-between align-items-center">
-                        <span>Enddatum</span>
-                        <span>{{ course.end_date|date:"d.m.Y" }}</span>
-                    </li>
-                    <li class="list-group-item d-flex justify-content-between align-items-center">
-                        <span>Status</span>
-                        <span class="badge {% if course.is_active %}bg-success{% else %}bg-secondary{% endif %} rounded-pill">
-                            {% if course.is_active %}Aktiv{% else %}Archiviert{% endif %}
-                        </span>
-                    </li>
-                </ul>
-            </div>
-        </div>
-
-        <!-- Quick Links -->
-        <div class="card mb-4 shadow-sm">
-            <div class="card-header bg-light">
-                <h2 class="h5 mb-0">Schnellzugriff</h2>
-            </div>
-            <div class="card-body p-0">
-                <ul class="list-group list-group-flush">
-                    <li class="list-group-item">
-                        <a href="{% url 'documents:document_list' course.id %}" class="text-decoration-none d-flex justify-content-between align-items-center">
-                            Dokumente
-                            <span class="badge bg-primary rounded-pill">{{ course.documents.count }}</span>
-                        </a>
-                    </li>
-                    <li class="list-group-item">
-                        <a href="{% url 'assignments:assignment_list' course_id=course.id %}" class="text-decoration-none d-flex justify-content-between align-items-center">
-                            Aufgaben
-                            <span class="badge bg-primary rounded-pill">{{ course.assignments.count }}</span>
-                        </a>
-                    </li>
-                </ul>
-            </div>
-        </div>
-    </div>
-
-    <div class="col-md-8">
-        <!-- Sessions -->
-        <div class="card mb-4 shadow-sm">
-            <div class="card-header bg-light d-flex justify-content-between align-items-center">
-                <h2 class="h5 mb-0">Sitzungsplan</h2>
-                {% if user == course.teacher or user.is_admin_user %}
-                    <a href="{% url 'courses:session_create' course_pk=course.id %}" class="btn btn-sm btn-outline-primary">
-                        Sitzung hinzufügen
-                    </a>
-                {% endif %}
-            </div>
-            <div class="card-body">
-                {% if sessions %}
-                    <div class="table-responsive">
-                        <table class="table table-hover align-middle">
-                            <thead>
-                                <tr>
-                                    <th>Datum</th>
-                                    <th>Zeit</th>
-                                    <th>Thema</th>
-                                    <th>Ort</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                {% for session in sessions %}
-                                    <tr>
-                                        <td>{{ session.date|date:"d.m.Y" }}</td>
-                                        <td>{{ session.start_time|time:"H:i" }} - {{ session.end_time|time:"H:i" }}</td>
-                                        <td>{{ session.title }}</td>
-                                        <td>
-                                            {% if session.is_online %}
-                                                <span class="badge bg-info">Online</span>
-                                                {% if session.online_meeting_link %}
-                                                    <a href="{{ session.online_meeting_link }}" target="_blank" class="text-decoration-none ms-2">
-                                                        Link
-                                                    </a>
-                                                {% endif %}
-                                            {% else %}
-                                                {{ session.location }}
-                                            {% endif %}
-                                        </td>
-                                    </tr>
-                                {% endfor %}
-                            </tbody>
-                        </table>
-                    </div>
-                {% else %}
-                    <p class="text-muted">Keine Sitzungen geplant</p>
-                {% endif %}
-            </div>
-        </div>
-
-        <!-- Recent Documents -->
-        <div class="card mb-4 shadow-sm">
-            <div class="card-header bg-light d-flex justify-content-between align-items-center">
-                <h2 class="h5 mb-0">Neueste Dokumente</h2>
-                <a href="{% url 'documents:document_list' course.id %}" class="btn btn-sm btn-outline-primary">
-                    Alle anzeigen
-                </a>
-            </div>
-            <div class="card-body">
-                {% if course.documents.all|length > 0 %}
-                    <ul class="list-group list-group-flush">
-                        {% for document in course.documents.all|slice:":5" %}
-                            <li class="list-group-item d-flex justify-content-between align-items-center">
-                                <div>
-                                    <h3 class="h6 mb-0">{{ document.title }}</h3>
-                                    <small class="text-muted">{{ document.uploaded_at|date:"d.m.Y H:i" }}</small>
-                                </div>
-                                <a href="{% url 'documents:document_download' document.id %}" class="btn btn-sm btn-outline-secondary">
-                                    Download
-                                </a>
-                            </li>
-                        {% endfor %}
-                    </ul>
-                {% else %}
-                    <p class="text-muted">Keine Dokumente verfügbar</p>
-                {% endif %}
-            </div>
-        </div>
-
-        <!-- Recent Assignments -->
-        <div class="card shadow-sm">
-            <div class="card-header bg-light d-flex justify-content-between align-items-center">
-                <h2 class="h5 mb-0">Aktuelle Aufgaben</h2>
-                <a href="{% url 'assignments:assignment_list' course_id=course.id %}" class="btn btn-sm btn-outline-primary">
-                    Alle anzeigen
-                </a>
-            </div>
-            <div class="card-body">
-                {% if course.assignments.all|length > 0 %}
-                    <ul class="list-group list-group-flush">
-                        {% for assignment in course.assignments.all|slice:":5" %}
-                            <li class="list-group-item d-flex justify-content-between align-items-center">
-                                <div>
-                                    <h3 class="h6 mb-0">{{ assignment.title }}</h3>
-                                    <small class="text-muted">Fällig: {{ assignment.due_date|date:"d.m.Y H:i" }}</small>
-                                </div>
-                                <a href="{% url 'assignments:assignment_detail' assignment.id %}" class="btn btn-sm btn-outline-secondary">
-                                    Details
-                                </a>
-                            </li>
-                        {% endfor %}
-                    </ul>
-                {% else %}
-                    <p class="text-muted">Keine Aufgaben verfügbar</p>
-                {% endif %}
-            </div>
-        </div>
-    </div>
-</div>
 {% endblock %}

@@ -1,4 +1,4 @@
-from django.shortcuts import render
+from django.shortcuts import render, get_object_or_404
 from django.urls import reverse_lazy
 from django.views.generic import CreateView, UpdateView, DeleteView
 
@@ -24,3 +24,8 @@ class UpdateCourse(UpdateView):
 class DeleteCourse(DeleteView):
     model = Course
     success_url = reverse_lazy('home')
+
+
+def course_detail(request, pk):
+    course = get_object_or_404(Course, pk=pk)
+    return render(request, 'courses/course_detail.html', {'course': course})
