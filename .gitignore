@@ -4,4 +4,4 @@
 .env
 .idea/*
 # Ignoriere SQLite-Datenbankdatei
-db.sqlite3
+data/db.sqlite3

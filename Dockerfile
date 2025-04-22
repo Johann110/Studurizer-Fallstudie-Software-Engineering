@@ -1,5 +1,5 @@
 # Basis-Image
-FROM python:3.10-slim
+FROM python:3.11-slim
 
 # Umgebungsvariablen setzen
 ENV PYTHONUNBUFFERED=1 \
@@ -19,7 +19,7 @@ COPY . /app/
 # Port freigeben
 EXPOSE 8000
 
-# Startbefehl
-RUN ["python", "manage.py", "makemigrations"]
-RUN ["python", "manage.py", "migrate"]
-CMD ["python", "manage.py", "runserver", "0.0.0.0:8000"]
+# Führe entrypoint.sh aus
+COPY entrypoint.sh /app/entrypoint.sh
+RUN chmod +x /app/entrypoint.sh
+CMD ["/app/entrypoint.sh"]

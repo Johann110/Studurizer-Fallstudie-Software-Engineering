@@ -21,13 +21,24 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # See https://docs.djangoproject.com/en/5.2/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = '$SECRET_KEY'
+SECRET_KEY = os.environ.get('SECRET_KEY', 'fallback-secret-key')
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+# Basiswerte
+allowed_hosts = ['localhost', '127.0.0.1']
 
+# Falls DOMAIN angegeben ist → hinzufügen
+domain = os.getenv('DOMAIN')
+if domain:
+    allowed_hosts.append(domain)
+
+ALLOWED_HOSTS = allowed_hosts
+
+# CSRF_ORIGINS aus DOMAIN ableiten
+csrf_trusted = [f'https://{host}' for host in allowed_hosts]
+CSRF_TRUSTED_ORIGINS = csrf_trusted
 
 # Application definition
 
@@ -83,7 +94,7 @@ WSGI_APPLICATION = 'StudurizerApp.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
+        'NAME': os.path.join(BASE_DIR, 'data', 'db.sqlite3'),
     }
 }
 
