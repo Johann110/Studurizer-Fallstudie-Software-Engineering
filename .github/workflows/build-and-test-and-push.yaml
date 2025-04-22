@@ -34,10 +34,6 @@ jobs:
       - name: Build Docker Image for Testing
         run: docker compose build
 
-      # Stelle sicher db Datei existiert
-      - name: Ensure database file exists
-        run: touch db.sqlite3
-
       # Container starten
       - name: Start container with Docker Compose
         run: |
