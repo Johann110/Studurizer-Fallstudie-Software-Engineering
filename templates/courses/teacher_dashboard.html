@@ -10,7 +10,7 @@
             <p class="lead">Willkommen zurück, {{ user.get_full_name|default:user.username }}!</p>
         </div>
         <div class="col-md-4 text-md-end">
-            <a href="{% url 'create-course' %}" class="btn btn-primary">
+            <a href="{% url 'create_course' %}" class="btn btn-primary">
                 <i class="bi bi-plus-circle me-1"></i> Neuen Kurs erstellen
             </a>
             {% include 'events/create_events.html' %}
@@ -47,10 +47,10 @@
                                             </div>
                                             <div class="card-footer bg-transparent border-0">
                                                 <div class="btn-group w-100" role="group">
-                                                    <a href="{#% url 'course_detail' course.id %#}" class="btn btn-outline-primary">
+                                                    <a href="{% url 'course_detail' course.id %}" class="btn btn-outline-primary">
                                                         Zum Kurs
                                                     </a>
-                                                    <a href="{% url 'update-course' course.id %}" class="btn btn-outline-secondary">
+                                                    <a href="{% url 'update_course' course.id %}" class="btn btn-outline-secondary">
                                                         Bearbeiten
                                                     </a>
                                                 </div>
@@ -63,13 +63,13 @@
                     {% else %}
                         <div class="alert alert-info" role="alert">
                             Sie haben aktuell keine aktiven Kurse.
-                            <a href="{% url 'create-course' %}" class="alert-link">Erstellen Sie einen neuen Kurs</a>.
+                            <a href="{% url 'create_course' %}" class="alert-link">Erstellen Sie einen neuen Kurs</a>.
                         </div>
                     {% endif %}
                 {% else %}
                     <div class="alert alert-info" role="alert">
                         Sie haben aktuell keine aktiven Kurse.
-                        <a href="{% url 'create-course' %}" class="alert-link">Erstellen Sie einen neuen Kurs</a>.
+                        <a href="{% url 'create_course' %}" class="alert-link">Erstellen Sie einen neuen Kurs</a>.
                     </div>
                 {% endif %}
             </div>
@@ -102,10 +102,10 @@
                                             </div>
                                             <div class="card-footer bg-transparent border-0">
                                                 <div class="btn-group w-100" role="group">
-                                                    <a href="{#% url 'course_detail' course.id %#}" class="btn btn-outline-secondary">
+                                                    <a href="{% url 'course_detail' course.id %}" class="btn btn-outline-secondary">
                                                         Zum Kurs
                                                     </a>
-                                                    <a href="{% url 'update-course' course.id %}" class="btn btn-outline-secondary">
+                                                    <a href="{% url 'update_course' course.id %}" class="btn btn-outline-secondary">
                                                         Bearbeiten
                                                     </a>
                                                 </div>
