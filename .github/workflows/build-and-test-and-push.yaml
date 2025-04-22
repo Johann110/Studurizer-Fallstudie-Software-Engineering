@@ -83,4 +83,4 @@ jobs:
           push: true
           tags: |
             ${{ env.IMAGE_NAME_LOWER }}:${{ github.event_name == 'pull_request' && format('pr-{0}', github.event.pull_request.number) || github.ref_name }}
-            ${{ github.ref == 'refs/heads/main' && format('{0}:latest', env.IMAGE_NAME_LOWER) }}
+            ${{ github.ref == 'refs/heads/main' && format('{0}:latest', env.IMAGE_NAME_LOWER) || '' }}
