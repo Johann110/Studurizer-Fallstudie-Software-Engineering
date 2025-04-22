@@ -117,7 +117,7 @@
     {% endif %}
 {% endblock %}
 {% block extra_js %}
-  <p>juhuscript</p>
-  <script src=" https://cdn.jsdelivr.net/npm/fullcalendar@6.1.17/index.global.min.js "></script>
+  <!-- fullcalendar 6.1.17 -->
+  <script src="{% static 'libs/fullcalendar_6.js' %}"></script>
   {% include 'events/fullcalenderconfig.html' %}
 {% endblock %}
