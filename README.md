@@ -19,16 +19,13 @@ Diese Anleitung erklärt, wie du das Studurizer-Projekt mit Docker lokal ausfüh
    mkdir studurizer
    cd studurizer
    
-   # Verzeichnis für Medien-Dateien erstellen
-   mkdir -p media
-   
-   # Datenbankdatei erstellen
-   touch db.sqlite3
+   # Verzeichnis für Medien-Dateien und Datenbank erstellen
+   mkdir -p media data
    ```
 
 2. **Compose-Datei erstellen und Container starten**
 
-   Erstelle eine `compose.yaml` mit folgendem Inhalt:
+   Erstelle eine `compose.yaml` mit folgendem Inhalt und passe die Umgebungsvariablen an:
 
    ```yaml
    services:
@@ -38,14 +35,14 @@ Diese Anleitung erklärt, wie du das Studurizer-Projekt mit Docker lokal ausfüh
        ports:
          - "8000:8000"  # Exponiert Port 8000
        volumes:
-         - ./db.sqlite3:/app/db.sqlite3  # Pfad zur lokalen SQLite-Datenbank (links anpassen, falls nötig)
+         - ./data:/app/data # Pfad zur lokalen SQLite-Datenbank (links anpassen, falls nötig)
          - ./media:/app/media            # Ordner für Medien-Dateien (links anpassen, falls nötig)
        environment:
-         - SECRET_KEY=${SECRET_KEY:-default_development_key}  # Umgebungsvariable für Django Secret Key setzen
-    #     - DOMAIN=${SECRET_KEY:-DOMAIN} # Domain setzen wenn SSL benutzt wird oder eine Domain um auf die App zugreifen
+         - SECRET_KEY=${SECRET_KEY:-default_development_key}  # SECRET_KEY generieren: https://djecrety.ir oder z. B. python -c "import secrets; print(secrets.token_urlsafe(50))"
+    #     - DOMAIN=${SECRET_KEY:-DOMAIN} # Domain setzen wenn SSL benutzt wird oder eine Domain um auf die App zugreifen (optional)
       ```
 
-   Container starten
+   Container starten:
 
       ```bash
       docker compose up
@@ -68,7 +65,7 @@ Die Docker-Konfiguration verwendet zwei wichtige Volumes:
 
 - **Mediendateien (`./media:/app/media`)**: Hochgeladene Dateien (z.B. Profilbilder, Kursunterlagen) werden im `media`-Verzeichnis gespeichert.
 
-- **Datenbank (`./db.sqlite3:/app/db.sqlite3`)**: Die SQLite-Datenbank wird direkt im Projektverzeichnis gespeichert und bleibt auch nach dem Neustart des Containers erhalten.
+- **Datenbank (`./data:/app/data`)**: Die SQLite-Datenbank wird direkt im Projektverzeichnis gespeichert und bleibt auch nach dem Neustart des Containers erhalten.
 
 ## Häufig verwendete Befehle
 
