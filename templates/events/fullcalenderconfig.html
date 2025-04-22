@@ -2,7 +2,7 @@
 $(document).ready(function() {
     const calendarEl = document.getElementById('calendar');  // Stelle sicher, dass das Element existiert
     const calendar = new FullCalendar.Calendar(calendarEl, {
-        timeZone: 'local',
+        timeZone: 'UTC',
         locale: 'de',
         initialView: 'dayGridMonth',
         headerToolbar: {
