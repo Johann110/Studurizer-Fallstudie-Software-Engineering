@@ -23,7 +23,4 @@ class EventForm(forms.ModelForm):
             existing_classes = field.widget.attrs.get('class', '')
             field.widget.attrs['class'] = f'{existing_classes} form-control'.strip()
         if user:
-            # Filtere Kurse basierend auf dem Lehrenden
             self.fields['course'].queryset = Course.objects.filter(teachers=user)
-        # Optional: Debug-Ausgabe zur Überprüfung
-        print(f"User in Form: {user}")

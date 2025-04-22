@@ -56,7 +56,6 @@
                 {% endif %}
             </div>
 
-            <!-- Archivierte Kurse -->
             {% if archived_courses %}
                 <div class="mb-5">
                     <h2 class="h4 mb-3">Archivierte Kurse</h2>
@@ -97,7 +96,11 @@
                 <p>Keine alten Kurse verfügbar</p>
             {% endif %}
         </div>
+        <div style="width: 22rem; min-width: 280px;">
+            {% include "events/events.html" %}
+        </div>
     </div>
+
 {% else %}
     <p>Sie dürfen hier nicht sein</p>
 {% endif %}

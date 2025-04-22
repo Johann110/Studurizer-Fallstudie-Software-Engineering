@@ -1,3 +1,4 @@
+from django.db.models import Q
 from django.shortcuts import render
 from django.utils import timezone
 
@@ -14,7 +15,7 @@ def home(request):
     if not request.user.is_authenticated:
         return render(request, 'homepage.html')
     events = Events.objects.filter(
-        course__students=request.user,  # oder course__teachers=user
+        Q(course__students=request.user) | Q(course__teachers=request.user),
         end_date__gt=timezone.now()
     ).order_by('start_date')
 
