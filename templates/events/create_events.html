@@ -1,0 +1,33 @@
+{% load roles %}
+{% load static %}
+{% block content %}
+    <button class="btn btn-success" data-bs-toggle="modal" data-bs-target="#createEventModal">
+        Termin erstellen
+    </button>
+
+    <div class="modal fade" id="createEventModal" tabindex="-1" aria-labelledby="createEventModalLabel"
+         aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <form method="post" action="{% url 'create_event' %}">
+                    {% csrf_token %}
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="createEventModalLabel">Termin anlegen</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Schließen"></button>
+                    </div>
+                    <div class="modal-body">
+                        {{ form.as_p }}
+                    </div>
+                    <div class="modal-footer">
+                        <button type="submit" class="btn btn-primary">Speichern</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+<script>
+  document.addEventListener("DOMContentLoaded", function() {
+    $('.select2').select2();
+  });
+</script>
+{% endblock %}

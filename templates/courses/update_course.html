@@ -1,11 +1,9 @@
 {% extends 'base.html' %}
 {% load static %}
 {% load roles %}
-
 {% block extra_head %}
     <link href="{% static 'libs/bootstrap_duallistbox.css' %}" rel="stylesheet">
 {% endblock %}
-
 {% block content %}
     {% if user.is_authenticated and user|is_group:"Teacher" or user.is_staff %}
         <h2>Kurs aktualisieren</h2>
@@ -19,7 +17,6 @@
        <p> Sie dürfen hier nicht sein!</p>
     {% endif%}
 {% endblock %}
-
 {% block extra_js %}
     <script src="{% static 'libs/bootstrap_duallistbox.js' %}"></script>
     <script src="{% static 'courses/js/courses.js' %}"></script>

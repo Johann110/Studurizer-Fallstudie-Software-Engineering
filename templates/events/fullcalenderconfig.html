@@ -1,0 +1,100 @@
+<script>
+$(document).ready(function() {
+    const calendarEl = document.getElementById('calendar');  // Stelle sicher, dass das Element existiert
+    const calendar = new FullCalendar.Calendar(calendarEl, {
+        timeZone: 'local',
+        locale: 'de',
+        initialView: 'dayGridMonth',
+        headerToolbar: {
+            left: 'prev,next today',
+            center: 'title',
+            right: 'dayGridMonth,timeGridWeek,listWeek'
+        },
+        events: [
+            {% for event in events %}
+            {
+                title: "{{ event.course.title|escapejs }}",  // Kurs-Titel
+                start: new Date("{{ event.start_date|date:'c' }}").toISOString(),
+                end: new Date("{{ event.end_date|date:'c' }}").toISOString(),
+                description: "{{ event.description|default:''|escapejs }}",
+                url: "{% if event.course %}{#% url 'course_detail' event.course.id %#}{% else %}#{% endif %}"
+            },
+            {% endfor %}
+            {% for event in expired_events %}
+            {
+                title: "[Vergangen] {{ event.course.title|escapejs }}",  // Kurs-Titel für vergangene Events
+                start: new Date("{{ event.start_date|date:'c' }}").toISOString(),
+                end: new Date("{{ event.end_date|date:'c' }}").toISOString(),
+                color: "#aaa",
+                description: "{{ event.description|default:''|escapejs }}",
+                url: "{% if event.course %}{#% url 'course_detail' event.course.id %#}{% else %}#{% endif %}"
+            },
+            {% endfor %}
+            {% for event in misc_events %}
+            {
+                title: "[Sonstiges] {{ event.description|default:''|escapejs }}",  // Event-Beschreibung
+                start: new Date("{{ event.start_date|date:'c' }}").toISOString(),
+                end: new Date("{{ event.end_date|date:'c' }}").toISOString(),
+                color: "#999999",
+                description: "{{ event.description|default:''|escapejs }}"
+            },
+            {% endfor %}
+        ],
+        eventClick: function (info) {
+            info.jsEvent.preventDefault(); // Verhindert Standard-Verhalten (URL-Navigation)
+            if (info.event.url && info.event.url !== "#") {
+                window.location.href = info.event.url;
+            } else if (info.event.extendedProps.description) {
+                alert(info.event.extendedProps.description);
+            }
+        },
+        dayClick: function (date, jsEvent, view) {
+            const selectedDate = date.toISOString().split('T')[0]; // Formatierte Datumsausgabe
+            const eventsForDay = calendar.getEvents().filter(function(event) {
+                return event.startStr.startsWith(selectedDate); // Filtert die Events für den gewählten Tag
+            });
+
+            let eventsList = "<ul>";
+            eventsForDay.forEach(function(event) {
+                eventsList += "<li>" + event.title + " (Start: " + event.start.toLocaleString() + ", Ende: " + event.end.toLocaleString() + ")</li>";
+            });
+            eventsList += "</ul>";
+
+            document.getElementById("event-details").innerHTML = eventsList; // Zeigt die Liste der Events an
+        }
+    });
+
+    calendar.render();
+
+    // Zeigt standardmäßig die Kalenderansicht an und versteckt die Spaltenansicht
+    $('#calendar').hide();
+    $('#column-view').show();
+
+    // Event-Listener für die Spaltenansicht
+    $('#btn-column').on('click', function() {
+        console.log('Spaltenansicht Button geklickt');
+        // Logik für die Spaltenansicht
+        $('#calendar').hide();
+        $('#column-view').show();
+
+        // Setze den aktiven Button
+        $('#btn-column').addClass('active');
+        $('#btn-calendar').removeClass('active');
+    });
+
+    // Event-Listener für die Kalenderansicht
+    $('#btn-calendar').on('click', function() {
+        console.log('Kalenderansicht Button geklickt');
+        // Logik für die Kalenderansicht
+        $('#column-view').hide();
+        $('#calendar').show();
+
+        // Setze den aktiven Button
+        $('#btn-calendar').addClass('active');
+        $('#btn-column').removeClass('active');
+    });
+});
+
+
+</script>
+
