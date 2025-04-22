@@ -19,7 +19,6 @@ class UpdateCourse(UpdateView):
     template_name = 'courses/update_course.html'
     form_class = CourseForm
     success_url = reverse_lazy("home")
-    pk_url_kwarg = 'pk'
 
 
 class DeleteCourse(DeleteView):

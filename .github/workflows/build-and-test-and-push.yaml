@@ -34,10 +34,6 @@ jobs:
       - name: Build Docker Image for Testing
         run: docker compose build
 
-      # Stelle sicher db Datei existiert
-      - name: Ensure database file exists
-        run: touch db.sqlite3
-
       # Container starten
       - name: Start container with Docker Compose
         run: |
@@ -86,6 +82,5 @@ jobs:
           platforms: linux/amd64,linux/arm64
           push: true
           tags: |
-            ${{ env.IMAGE_NAME_LOWER }}:${{ env.BRANCH_NAME }}
-            ${{ env.IMAGE_NAME_LOWER }}${{ env.BRANCH_NAME == 'main' && ':latest' || '' }}
-
+            ${{ env.IMAGE_NAME_LOWER }}:${{ github.event_name == 'pull_request' && format('pr-{0}', github.event.pull_request.number) || github.ref_name }}
+            ${{ github.ref == 'refs/heads/main' && format('{0}:latest', env.IMAGE_NAME_LOWER) || '' }}

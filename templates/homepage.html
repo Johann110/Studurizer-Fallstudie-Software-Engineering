@@ -1,14 +1,28 @@
 {% extends 'base.html' %}
 {% load roles %}
 
-{% block title %}Dozenten-Dashboard | Studurizer{% endblock %}
+{% block title %}Dashboard | Studurizer{% endblock %}
 
 {% block content %}
-{% if user|is_group:"Teacher" %}
-    hallo ich bin dozent
-{% elif user|is_group:"Student" %}
-    hallo ich bin schüler
-{% endif %}
-{#% include "events/events.html" %#}
-<img src="https://upload.wikimedia.org/wikipedia/commons/thumb/3/3a/Cat03.jpg/640px-Cat03.jpg" alt="bruh"/>
+    {% if user.is_authenticated %}
+        {% if user|is_group:"Student" %}
+            <div class="container-fluid mt-4">
+                <div class="d-flex flex-wrap gap-3 justify-content-between">
+                    <div class="flex-grow-1" style="min-width: 65%;">
+                        {% include "courses/student_dashboard.html" %}
+                    </div>
+                </div>
+            </div>
+        {% elif user|is_group:"Teacher" %}
+            <div class="container-fluid mt-4">
+                <div class="d-flex flex-wrap gap-3 justify-content-between">
+                    <div class="flex-grow-1" style="min-width: 65%;">
+                        {% include "courses/teacher_dashboard.html" %}
+                    </div>
+                </div>
+            </div>
+        {% endif %}
+    {% else %}
+        <p>Bitte melden Sie sich an.</p>
+    {% endif %}
 {% endblock %}

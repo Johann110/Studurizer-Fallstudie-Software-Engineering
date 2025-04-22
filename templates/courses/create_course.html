@@ -9,11 +9,11 @@
 {% block content %}
     {% if user.is_authenticated and user|is_group:"Teacher" or user.is_staff %}
           <h2>Kurs erstellen</h2>
-          <form class="form-control" method="post">
+          <form class="form-control" method="post" enctype="multipart/form-data">
             {% csrf_token %}
             {{ form.as_p }}
             <button type="submit" class="btn btn-success">Speichern</button>
-            <button type="button" class="btn btn-danger" onclick="window.location.href='/'">Abbrechen</button>
+            <button type="button" class="btn btn-danger" onclick="window.location.href='{% url "home" %}">Abbrechen</button>
           </form>
     {% else %}
         <p> Sie dürfen hier nicht sein!</p>
