@@ -3,9 +3,11 @@ from django.db import models
 from courses.models import Course
 from accounts.models import CustomUser
 
+
 def course_material_upload_path(instance, filename):
     # path: media/course_<id>/material/
     return f'course_{instance.course.id}/material/{filename}'
+
 
 class Material(models.Model):
     course = models.ForeignKey(

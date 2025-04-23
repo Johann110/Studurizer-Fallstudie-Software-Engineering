@@ -3,21 +3,140 @@
 {% load roles %}
 {% block extra_head %}
     <link href="{% static 'libs/bootstrap_duallistbox.css' %}" rel="stylesheet">
+    <link href="{% static 'libs/dropzone-css.css' %}" rel="stylesheet">
+    <script src="{% static 'libs/dropzoneCode.js' %}"></script>
 {% endblock %}
 {% block content %}
     {% if user.is_authenticated and user|is_group:"Teacher" or user.is_staff %}
         <h2>Kurs aktualisieren</h2>
-        <form class="form-control" method="post" enctype="multipart/form-data">
+        <form id="course-form" class="form-control" method="post" enctype="multipart/form-data">
             {% csrf_token %}
             {{ form.as_p }}
-            <button type="submit" class="btn btn-success">Speichern</button>
-            <button type="button" class="btn btn-danger" onclick="window.location.href='{% url 'home' %}'">Abbrechen</button>
+            <label for="file">Dateien:</label>
+            <div id="course-dropzone" class="dropzone">
+                <div class="dz-default dz-message" data-dz-message>
+                    <span>Datei hier ablegen oder klicken, um eine Datei hochzuladen</span>
+                </div>
+            </div>
+            <button type="submit" id="submit-btn" class="btn btn-success">Speichern</button>
+            <button type="button" class="btn btn-danger" onclick="window.location.href='{% url 'home' %}'">Abbrechen
+            </button>
         </form>
     {% else %}
-       <p> Sie dürfen hier nicht sein!</p>
-    {% endif%}
+        <p> Sie dürfen hier nicht sein!</p>
+    {% endif %}
 {% endblock %}
 {% block extra_js %}
+    <script>
+        function getCookie(name) {
+            var cookieValue = null;
+            if (document.cookie && document.cookie != '') {
+                var cookies = document.cookie.split(';');
+                for (var i = 0; i < cookies.length; i++) {
+                    var cookie = jQuery.trim(cookies[i]);
+                    // Does this cookie string begin with the name we want?
+                    if (cookie.substring(0, name.length + 1) == (name + '=')) {
+                        cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+                        break;
+                    }
+                }
+            }
+            return cookieValue;
+        }
+
+        Dropzone.autoDiscover = false;
+        if (document.getElementById("course-dropzone")) {
+            var myyDropzone = new Dropzone("div#" + "course-dropzone", {
+                url: "#",
+                params: {'csrfmiddlewaretoken': getCookie('csrftoken')},
+                autoProcessQueue: false, // last change, if error occurs then change to false
+                addRemoveLinks: true,
+                maxFilesize: 256 * 4 * 2,
+                maxFiles: 10,
+                uploadMultiple: true,
+                parallelUploads: 10,
+                acceptedFiles: ".jpg, .jpeg, .png, .pdf",
+                dictRemoveFile: "Datei entfernen",
+                dictCancelUpload: "Upload abbrechen",
+                dictDefaultMessage: "",
+
+                init: function () {
+                    var myDropzone = this, submitBtn = document.getElementById("submit-btn");
+
+                    // First change the button to actually tell Dropzone to process the queue.
+                    submitBtn.addEventListener("click", function (e) {
+                        // Make sure that the form isn't actually being sent.
+                        e.preventDefault();
+                        e.stopPropagation();
+                        myDropzone.processQueue();
+                    });
+
+                    // Listen to the sendingmultiple event. In this case, it's the sendingmultiple event instead
+                    // of the sending event because uploadMultiple is set to true.
+                    this.on("sendingmultiple", function (files, xhr, formData) {
+                        // Alle Eingabefelder des Formulars sammeln
+                        var form = document.getElementById("course-form");
+                        var formElements = form.querySelectorAll("input, select, textarea");
+
+                        formElements.forEach(function (element) {
+                            if (element.type === "checkbox" || element.type === "radio") {
+                                // Nur ausgewählte Checkboxen und Radios mitsenden
+                                if (element.checked) {
+                                    formData.append(element.name, element.value);
+                                }
+                            } else if (element.multiple) {
+                                // Für Multi-Select-Felder (wie students und teachers)
+                                Array.from(element.selectedOptions).forEach(function (option) {
+                                    formData.append(element.name, option.value);
+                                });
+                            } else {
+                                // Normale Eingabefelder
+                                formData.append(element.name, element.value);
+                            }
+                        });
+                    });
+                    this.on("successmultiple", function (files, response) {
+                        window.location.href = "/";
+                    });
+                    this.on("errormultiple", function (files, response) {
+
+                    });
+                    this.on("addedfile", function (file) {
+                        var dropzoneMessage = myDropzone.element.querySelector('.dz-message');
+                        if (dropzoneMessage) {
+                            dropzoneMessage.style.display = 'none'; // Hide the message when file is uploaded
+                        }
+
+                        // Ladeleiste ausblenden
+                        if (file.previewElement) {
+                            var progress = file.previewElement.querySelector(".dz-progress");
+                            if (progress) {
+                                progress.style.display = "none";
+                            }
+                        }
+                    });
+                    this.on("removedfile", function (file) {
+                        var numberOfFiles = myDropzone.files.length;
+                        if (numberOfFiles === 0) {
+                            var dropzoneMessage = myDropzone.element.querySelector('.dz-message');
+                            dropzoneMessage.style.display = 'block';
+                        }
+                    });
+                },
+                sending: function (file, xhr, formData) {
+                }
+            });
+        } else {
+            console.log("Dropzone already initialized");
+        }
+        let dropzoneElement = document.getElementById("course-dropzone");
+        dropzoneElement.style.border = '1px solid lightgray';
+        dropzoneElement.style.borderRadius = '5px';
+        dropzoneElement.style.marginBottom = '20px';
+
+        var messageElement = dropzoneElement.querySelector('.dz-message');
+        messageElement.style.color = 'black';
+    </script>
     <script src="{% static 'libs/bootstrap_duallistbox.js' %}"></script>
     <script src="{% static 'courses/js/courses.js' %}"></script>
 {% endblock %}
