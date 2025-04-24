@@ -3,105 +3,160 @@
 {% block title %}Dashboard | Studurizer{% endblock %}
 
 {% block content %}
-{% if user.is_authenticated and user|is_group:"Student" or user.is_staff %}
-    <div class="row mb-4">
-        <div class="col">
-            <h1 class="h2">Meine Kurse</h1>
-            <p class="lead">Willkommen zurück, {{ user.first_name|default:user.username }}!</p>
+    {% if user.is_authenticated and user|is_group:"Student" or user.is_staff %}
+        <div class="row mb-4">
+            <div class="col">
+                <h1 class="h2">Meine Kurse</h1>
+                <p class="lead">Willkommen zurück, {{ user.first_name|default:user.username }}!</p>
+            </div>
         </div>
-    </div>
 
-    <div class="d-flex flex-wrap gap-4">
-        <div class="flex-grow-1" style="min-width: 60%;">
-            <div class="mb-5">
-                <h2 class="h4 mb-3">Aktive Kurse</h2>
+        <div class="d-flex flex-wrap gap-4">
+            <div class="flex-grow-1" style="min-width: 60%;">
+                <div class="mb-5">
+                    <h2 class="h4 mb-3">Aktive Kurse</h2>
 
-                {% if active_courses %}
-                    <div class="row row-cols-1 row-cols-md-2 row-cols-lg-3 g-4">
-                        {% for course in active_courses %}
-                            <div class="col">
-                                <div class="card h-100 shadow-sm">
-                                    <div class="card-header bg-light">
-                                        <h3 class="h5 card-title mb-0">{{ course.title }}</h3>
-                                    </div>
-                                    <div class="card-body">
-                                        <p class="card-text">
-                                            {% if course.description %}
-                                                {{ course.description }}
-                                            {% else %}
-                                                <span class="text-muted">Keine Beschreibung verfügbar</span>
-                                            {% endif %}
-                                        </p>
-                                        <p class="card-text">
-                                            <small class="text-muted">
-                                                {% for teacher in course.teachers.all %}
-                                                    <strong>Dozent:</strong> {{ teacher.get_full_name|default:teacher.email }}
-                                                {% endfor %}
-                                            </small>
-                                        </p>
-                                    </div>
-                                    <div class="card-footer bg-transparent border-0">
-                                        <a href="{% url 'course_detail' course.id %}" class="btn btn-outline-primary d-block">
-                                            Zum Kurs
-                                        </a>
+                    {% if active_courses %}
+                        <div class="row row-cols-1 row-cols-md-2 row-cols-lg-3 g-4">
+                            {% for course in active_courses %}
+                                <div class="col">
+                                    <div class="card h-100 shadow-sm">
+                                        <div class="card-header bg-light">
+                                            <h3 class="h5 card-title mb-0">{{ course.title }}</h3>
+                                        </div>
+                                        <div class="card-body">
+                                            <p class="card-text">
+                                                {% if course.description %}
+                                                    {{ course.description }}
+                                                {% else %}
+                                                    <span class="text-muted">Keine Beschreibung verfügbar</span>
+                                                {% endif %}
+                                            </p>
+                                            <p class="card-text">
+                                                <small class="text-muted">
+                                                    {% for teacher in course.teachers.all %}
+                                                        <strong>Dozent:</strong>
+                                                        {{ teacher.get_full_name|default:teacher.email }}
+                                                    {% endfor %}
+                                                </small>
+                                            </p>
+                                        </div>
+                                        <div class="card-footer bg-transparent border-0">
+                                            <a href="{% url 'course_detail' course.id %}"
+                                               class="btn btn-outline-primary d-block">
+                                                Zum Kurs
+                                            </a>
+                                        </div>
                                     </div>
                                 </div>
+                            {% endfor %}
+                        </div>
+                    {% else %}
+                        <div class="alert alert-info" role="alert">
+                            Sie sind aktuell in keinen aktiven Kursen eingeschrieben.
+                        </div>
+                    {% endif %}
+                </div>
+
+                {% if archived_courses %}
+                    <div class="mb-5">
+                        <div class="toggle-header collapsed" data-bs-toggle="collapse"
+                             data-bs-target="#archivedCoursesCollapse" aria-expanded="false"
+                             aria-controls="archivedCoursesCollapse">
+                            <h2 class="h4 mb-0">Archivierte Kurse</h2>
+                            <span class="toggle-icon">&#9660;</span>
+                        </div>
+
+                        <div class="collapse mt-3" id="archivedCoursesCollapse">
+                            <div class="row row-cols-1 row-cols-md-2 row-cols-lg-3 g-4">
+                                {% for course in archived_courses %}
+                                    <div class="col">
+                                        <div class="card h-100 shadow-sm bg-light">
+                                            <div class="card-header bg-secondary text-white">
+                                                <h3 class="h5 card-title mb-0">{{ course.title }}</h3>
+                                            </div>
+                                            <div class="card-body">
+                                                <p class="card-text">
+                                                    {% if course.description %}
+                                                        {{ course.description }}
+                                                    {% else %}
+                                                        <span class="text-muted">Keine Beschreibung verfügbar</span>
+                                                    {% endif %}
+                                                </p>
+                                                <p class="card-text">
+                                                    <small class="text-muted">
+                                                        {% for teacher in course.teachers.all %}
+                                                            <strong>Dozent:</strong>
+                                                            {{ teacher.get_full_name|default:teacher.email }}
+                                                        {% endfor %}
+                                                    </small>
+                                                </p>
+                                            </div>
+                                            <div class="card-footer bg-transparent border-0">
+                                                <a href="{% url 'course_detail' course.id %}"
+                                                   class="btn btn-outline-secondary d-block">
+                                                    Zum Kurs
+                                                </a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                {% endfor %}
                             </div>
-                        {% endfor %}
+                        </div>
                     </div>
                 {% else %}
-                    <div class="alert alert-info" role="alert">
-                        Sie sind aktuell in keinen aktiven Kursen eingeschrieben.
-                    </div>
+                    <p>Keine alten Kurse verfügbar</p>
                 {% endif %}
             </div>
-
-            {% if archived_courses %}
-                <div class="mb-5">
-                    <h2 class="h4 mb-3">Archivierte Kurse</h2>
-                    <div class="row row-cols-1 row-cols-md-2 row-cols-lg-3 g-4">
-                        {% for course in archived_courses %}
-                            <div class="col">
-                                <div class="card h-100 shadow-sm bg-light">
-                                    <div class="card-header bg-secondary text-white">
-                                        <h3 class="h5 card-title mb-0">{{ course.title }}</h3>
-                                    </div>
-                                    <div class="card-body">
-                                        <p class="card-text">
-                                            {% if course.description %}
-                                                {{ course.description }}
-                                            {% else %}
-                                                <span class="text-muted">Keine Beschreibung verfügbar</span>
-                                            {% endif %}
-                                        </p>
-                                        <p class="card-text">
-                                            <small class="text-muted">
-                                                {% for teacher in course.teachers.all %}
-                                                    <strong>Dozent:</strong> {{ teacher.get_full_name|default:teacher.email }}
-                                                {% endfor %}
-                                            </small>
-                                        </p>
-                                    </div>
-                                    <div class="card-footer bg-transparent border-0">
-                                        <a href="{% url 'course_detail' course.id %}" class="btn btn-outline-secondary d-block">
-                                            Zum Kurs
-                                        </a>
-                                    </div>
-                                </div>
-                            </div>
-                        {% endfor %}
-                    </div>
-                </div>
-            {% else %}
-                <p>Keine alten Kurse verfügbar</p>
-            {% endif %}
+            <div style="width: 22rem; min-width: 280px;">
+                {% include "events/events.html" %}
+            </div>
         </div>
-        <div style="width: 22rem; min-width: 280px;">
-            {% include "events/events.html" %}
-        </div>
-    </div>
 
-{% else %}
-    <p>Sie dürfen hier nicht sein</p>
-{% endif %}
+    {% else %}
+        <p>Sie dürfen hier nicht sein</p>
+    {% endif %}
+{% endblock %}
+{% block extra_js %}
+  <script>
+  document.addEventListener("DOMContentLoaded", () => {
+    const toggleHeader = document.querySelector(".toggle-header");
+    const collapseTarget = document.getElementById("archivedCoursesCollapse");
+
+    collapseTarget.addEventListener("show.bs.collapse", () => {
+      toggleHeader.classList.remove("collapsed");
+      toggleHeader.classList.add("expanded");
+    });
+
+    collapseTarget.addEventListener("hide.bs.collapse", () => {
+      toggleHeader.classList.remove("expanded");
+      toggleHeader.classList.add("collapsed");
+    });
+  });
+</script>
+{% endblock %}
+{% block extra_head %}
+	<style>
+
+    .toggle-header {
+          cursor: pointer;
+          display: flex;
+          justify-content: space-between;
+          align-items: center;
+          padding-bottom: 15px;
+        }
+
+        .toggle-icon {
+          transition: transform 0.3s ease;
+          color: gray;
+        }
+
+        .collapsed .toggle-icon {
+          transform: rotate(0deg);
+        }
+
+        .expanded .toggle-icon {
+          transform: rotate(180deg);
+        }
+        </style>
 {% endblock %}

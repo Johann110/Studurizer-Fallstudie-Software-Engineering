@@ -1,3 +1,4 @@
+{% load roles %}
 {% load static %}
 <!DOCTYPE html>
 <html lang="{% if LANGUAGE_CODE %}{{ LANGUAGE_CODE }}{% else %}en{% endif %}">
@@ -25,10 +26,7 @@
     {% block extra_head %}{% endblock %}
 </head>
 <body>
-    <!-- Skip to main content link for screen readers -->
     <a href="#main-content" class="visually-hidden-focusable">Skip to main content</a>
-    
-    <!-- Header/Navbar -->
     <header>
         <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
             <div class="container">
@@ -41,8 +39,16 @@
                 <div class="collapse navbar-collapse" id="navbarMain">
                     <ul class="navbar-nav ms-auto">
                         {% if user.is_authenticated %}
-                            <li class="nav-item dropdown">
-                                <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button"
+                            <li class="nav-item">
+                                <a class="nav-link text-decoration-none" href="{% url 'all_events' %}">Alle Termine</a>
+                            </li>
+                            {% if user|is_group:"Teacher" or user.is_staff %}
+                            	<li class="nav-item">
+                                    <a class="nav-link text-decoration-none" href="{% url 'create_course' %}">Kurs anlegen</a>
+                                </li>
+                            {% endif %}
+                            <li class="nav-item dropdown" style="margin-left: 1rem">
+                                <a class="nav-link dropdown-toggle text-decoration-none" href="#" id="userDropdown" role="button"
                                    data-bs-toggle="dropdown" aria-expanded="false">
                                     {{ user.username }}
                                 </a>
@@ -59,7 +65,7 @@
                             </li>
                         {% else %}
                             <li class="nav-item">
-                                <a class="nav-link" href="{% url 'login' %}">Anmelden</a>
+                                <a class="nav-link text-decoration-none" href="{% url 'login' %}">Anmelden</a>
                             </li>
                         {% endif %}
                     </ul>

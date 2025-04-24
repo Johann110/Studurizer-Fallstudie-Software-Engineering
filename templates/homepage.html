@@ -6,15 +6,15 @@
 {% block content %}
     {% if user.is_authenticated %}
         {% if user|is_group:"Student" %}
-            <div class="container-fluid mt-4">
+            <div class="container-fluid px-0 mt-4">
                 <div class="d-flex flex-wrap gap-3 justify-content-between">
                     <div class="flex-grow-1" style="min-width: 65%;">
                         {% include "courses/student_dashboard.html" %}
                     </div>
                 </div>
             </div>
-        {% elif user|is_group:"Teacher" %}
-            <div class="container-fluid mt-4">
+        {% elif user|is_group:"Teacher" or user.is_staff   %}
+            <div class="container-fluid px-0 mt-4">
                 <div class="d-flex flex-wrap gap-3 justify-content-between">
                     <div class="flex-grow-1" style="min-width: 65%;">
                         {% include "courses/teacher_dashboard.html" %}

@@ -4,7 +4,6 @@
     {% if user.is_authenticated %}
         <div class="container my-4">
 
-            <!-- Button für Ansicht wechseln -->
             <div class="d-flex justify-content-end mb-3">
                 <div class="btn-group" role="group">
                     <button id="btn-column" class="btn btn-outline-primary active">Spaltenansicht</button>
@@ -12,36 +11,36 @@
                 </div>
             </div>
 
-            <!-- Spaltenansicht -->
             <div id="column-view">
                 <div class="row">
-                    <!-- Vergangene Termine -->
                     {% if expired_events %}
                         <div class="col-md-4">
                             <h2>Vergangene Termine</h2>
-                            {% for event in expired_events %}
-                                <div class="card mb-3">
-                                    <div class="card-body">
-                                        {% if event.course %}
-                                            <a href="{#% url 'course_detail' event.course.id %#}" class="text-decoration-none text-dark">
-                                                <h5 class="card-title">{{ event.course.title }}</h5>
+                            <div class="overflowing-hidden">
+                                {% for event in expired_events %}
+                                    <div class="card mb-3">
+                                        <div class="card-body">
+                                            {% if event.course %}
+                                                <a href="{#% url 'course_detail' event.course.id %#}" class="text-decoration-none text-dark">
+                                                    <h5 class="card-title">{{ event.course.title }}</h5>
+                                                </a>
+                                            {% endif %}
+                                            <p class="card-text">
+                                                Start: {{ event.start_date }}<br>
+                                                Ende: {{ event.end_date }}
+                                            </p>
+                                            <a class="btn btn-sm btn-outline-secondary" data-bs-toggle="collapse" href="#desc-expired-{{ event.id }}" role="button" aria-expanded="false" aria-controls="desc-expired-{{ event.id }}">
+                                                Beschreibung anzeigen
                                             </a>
-                                        {% endif %}
-                                        <p class="card-text">
-                                            Start: {{ event.start_date }}<br>
-                                            Ende: {{ event.end_date }}
-                                        </p>
-                                        <a class="btn btn-sm btn-outline-secondary" data-bs-toggle="collapse" href="#desc-expired-{{ event.id }}" role="button" aria-expanded="false" aria-controls="desc-expired-{{ event.id }}">
-                                            Beschreibung anzeigen
-                                        </a>
-                                        <div class="collapse mt-2" id="desc-expired-{{ event.id }}">
-                                            <div class="card card-body">
-                                                {{ event.description }}
+                                            <div class="collapse mt-2" id="desc-expired-{{ event.id }}">
+                                                <div class="card card-body">
+                                                    {{ event.description }}
+                                                </div>
                                             </div>
                                         </div>
                                     </div>
-                                </div>
-                            {% endfor %}
+                                {% endfor %}
+                            </div>
                         </div>
                     {% endif %}
 
@@ -49,6 +48,7 @@
                     {% if events %}
                         <div class="col-md-4">
                             <h2>Bevorstehende Termine</h2>
+                            <div class="overflowing-hidden">
                             {% for event in events %}
                                 <div class="card mb-3">
                                     <div class="card-body">
@@ -72,32 +72,25 @@
                                     </div>
                                 </div>
                             {% endfor %}
+                            </div>
                         </div>
                     {% endif %}
-
-                    <!-- Sonstige Termine -->
                     {% if misc_events %}
                         <div class="col-md-4">
                             <h2>Sonstige Termine</h2>
-                            {% for event in misc_events %}
-                                <div class="card mb-3">
-                                    <div class="card-body">
-                                        <h5 class="card-title">Sonstiger Termin</h5>
-                                        <p class="card-text">
-                                            Start: {{ event.start_date }}<br>
-                                            Ende: {{ event.end_date }}
-                                        </p>
-                                        <a class="btn btn-sm btn-outline-dark" data-bs-toggle="collapse" href="#desc-misc-{{ event.id }}" role="button" aria-expanded="false" aria-controls="desc-misc-{{ event.id }}">
-                                            Beschreibung anzeigen
-                                        </a>
-                                        <div class="collapse mt-2" id="desc-misc-{{ event.id }}">
-                                            <div class="card card-body">
-                                                {{ event.description }}
-                                            </div>
+                            <div class="overflowing-hidden">
+                                {% for event in misc_events %}
+                                    <div class="card mb-3">
+                                        <div class="card-body">
+                                            <h5 class="card-title">{{ event.description }}</h5>
+                                            <p class="card-text">
+                                                Start: {{ event.start_date }}<br>
+                                                Ende: {{ event.end_date }}
+                                            </p>
                                         </div>
                                     </div>
-                                </div>
-                            {% endfor %}
+                                {% endfor %}
+                            </div>
                         </div>
                     {% endif %}
                 </div>
@@ -117,7 +110,24 @@
     {% endif %}
 {% endblock %}
 {% block extra_js %}
-  <!-- fullcalendar 6.1.17 -->
   <script src="{% static 'libs/fullcalendar_6.js' %}"></script>
   {% include 'events/fullcalenderconfig.html' %}
+{% endblock %}
+
+{% block extra_head %}
+    <style>
+        .overflowing-hidden {
+            max-height: 29rem;
+            overflow: hidden;
+            overflow-y: scroll !important;
+            -ms-overflow-style: none;
+            scrollbar-width: none;
+        }
+        .overflowing-hidden::-webkit-scrollbar {
+            display: none;
+        }
+        h2 {
+            padding-bottom: 2rem;
+        }
+    </style>
 {% endblock %}

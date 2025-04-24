@@ -1,5 +1,6 @@
 {% block content %}
-<div class="event-overview">
+{% if events %}
+	<div class="event-overview">
   <h2 class="h4 mb-3">Anstehende Termine</h2>
   <div class="card" style="width: 100%;">
     <div class="card-body">
@@ -18,4 +19,5 @@
     </div>
   </div>
 </div>
+{% endif %}
 {% endblock %}
