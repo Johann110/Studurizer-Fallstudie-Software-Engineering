@@ -10,7 +10,7 @@
   Copyright (c) 2012 Matias Meno
 
 - **Bootstrap Duallistbox (Version 4.0.2)**  
-  Lizenz: Apache License
+  Lizenz: Apache License<br>
   Quelle: https://www.virtuosoft.eu/code/bootstrap-duallistbox/  
   Copyright (c) 2013-2014 István Ujj-Mészáros
 
