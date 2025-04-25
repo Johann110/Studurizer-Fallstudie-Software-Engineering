@@ -26,3 +26,20 @@
         <p>Bitte melden Sie sich an.</p>
     {% endif %}
 {% endblock %}
+{% block extra_js %}
+    <script>
+        document.getElementById('searchInput').addEventListener('input', function(event) {
+            let searchTerm = event.target.value.toLowerCase();
+            let courses = document.querySelectorAll('.course-card');
+            courses.forEach(function(course) {
+                let title = course.querySelector('.card-header').innerText.toLowerCase();
+                let description = course.querySelector('.card-body').innerText.toLowerCase();
+                if (title.includes(searchTerm) || description.includes(searchTerm)) {
+                    course.style.display = 'block';
+                } else {
+                    course.style.display = 'none';
+                }
+            });
+        });
+    </script>
+{% endblock %}

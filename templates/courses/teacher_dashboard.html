@@ -15,6 +15,10 @@
                 </a>
                 {% include 'events/create_events.html' %}
             </div>
+            <form class="d-flex">
+                <input class="form-control me-2" type="search" placeholder="Kurs suchen..." aria-label="Search" id="searchInput" style="width: 50%">
+                <button class="btn btn-outline-primary" type="submit">Suchen</button>
+            </form>
         </div>
 
         <div class="d-flex flex-wrap gap-4">
@@ -28,7 +32,7 @@
                         {% for course in taught_courses %}
                             {% if course %}
                                 <div class="col">
-                                    <div class="card h-100 shadow-sm">
+                                    <div class="card h-100 shadow-sm bg-light course-card">
                                         <div class="card-header bg-light">
                                             <h3 class="h5 card-title mb-0">{{ course.title }}</h3>
                                         </div>
@@ -90,7 +94,7 @@
                 <div class="row row-cols-1 row-cols-md-2 row-cols-lg-3 g-4">
                     {% for course in archived_courses %}
                         <div class="col">
-                            <div class="card h-100 shadow-sm bg-light">
+                            <div class="card h-100 shadow-sm bg-light course-card">
                                 <div class="card-header bg-secondary text-white">
                                     <h3 class="h5 card-title mb-0">{{ course.title }}</h3>
                                 </div>

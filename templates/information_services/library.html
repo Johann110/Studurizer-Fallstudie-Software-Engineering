@@ -1,0 +1,107 @@
+{% extends "base.html" %}
+{% block content %}
+<section class="search-section container">
+        <h2 class="mb-4">Buchsuche</h2>
+        <form class="d-flex">
+            <input class="form-control me-2" type="search" placeholder="Buch suchen..." aria-label="Search" id="searchInput">
+            <button class="btn btn-outline-primary" type="submit">Suchen</button>
+        </form>
+    </section>
+
+    <section class="container">
+        <br>
+        <div class="row" id="bookList">
+            <div class="col-md-4 mb-4 book-card">
+                <div class="card">
+                    <div class="card-header">
+                        <i class="fas fa-book"></i> Einführung in die Mathematik
+                    </div>
+                    <div class="card-body">
+                        <p><strong>Autor:</strong> Max Mustermann</p>
+                        <p><strong>Verlag:</strong> Wissen Verlag</p>
+                        <p><strong>Jahr:</strong> 2021</p>
+                        <p><strong>Genre:</strong> Mathematik, Bildung</p>
+                        <p>Dieses Buch bietet eine umfassende Einführung in grundlegende mathematische Konzepte für Studierende aller Fachrichtungen.</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-md-4 mb-4 book-card">
+                <div class="card">
+                    <div class="card-header">
+                        <i class="fas fa-book"></i> Computer Science für Einsteiger
+                    </div>
+                    <div class="card-body">
+                        <p><strong>Autor:</strong> Claudia Schmidt</p>
+                        <p><strong>Verlag:</strong> TechBooks</p>
+                        <p><strong>Jahr:</strong> 2020</p>
+                        <p><strong>Genre:</strong> Informatik, Technologie</p>
+                        <p>Ein leicht verständliches Buch, das die Grundlagen der Informatik behandelt und Studierenden den Einstieg erleichtert.</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-md-4 mb-4 book-card">
+                <div class="card">
+                    <div class="card-header">
+                        <i class="fas fa-book"></i> Kreatives Schreiben für Studierende
+                    </div>
+                    <div class="card-body">
+                        <p><strong>Autor:</strong> Anna Müller</p>
+                        <p><strong>Verlag:</strong> SchreibArt</p>
+                        <p><strong>Jahr:</strong> 2019</p>
+                        <p><strong>Genre:</strong> Literatur, Schreiben</p>
+                        <p>Dieses Buch bietet Techniken und Methoden, um kreatives Schreiben zu entwickeln und zu verbessern.</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-md-4 mb-4 book-card">
+                <div class="card">
+                    <div class="card-header">
+                        <i class="fas fa-book"></i> Physik für Anfänger
+                    </div>
+                    <div class="card-body">
+                        <p><strong>Autor:</strong> Johann Friedrich</p>
+                        <p><strong>Verlag:</strong> SciencePress</p>
+                        <p><strong>Jahr:</strong> 2018</p>
+                        <p><strong>Genre:</strong> Physik, Wissenschaft</p>
+                        <p>Dieses Buch erklärt die Grundlagen der Physik auf einfache Weise, ideal für Studierende im ersten Semester.</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-md-4 mb-4 book-card">
+                <div class="card">
+                    <div class="card-header">
+                        <i class="fas fa-book"></i> Einführung in die Kunstgeschichte
+                    </div>
+                    <div class="card-body">
+                        <p><strong>Autor:</strong> Beatrice Weber</p>
+                        <p><strong>Verlag:</strong> KunstVerlag</p>
+                        <p><strong>Jahr:</strong> 2022</p>
+                        <p><strong>Genre:</strong> Kunst, Kultur</p>
+                        <p>Ein grundlegendes Buch zur Geschichte der Kunst, von der Antike bis zur Moderne, für Studierende der Kunstgeschichte.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+{% endblock %}
+{% block extra_js %}
+    <script>
+        document.getElementById('searchInput').addEventListener('input', function(event) {
+            let searchTerm = event.target.value.toLowerCase();
+            let books = document.querySelectorAll('.book-card');
+            books.forEach(function(book) {
+                let title = book.querySelector('.card-header').innerText.toLowerCase();
+                let description = book.querySelector('.card-body').innerText.toLowerCase();
+                if (title.includes(searchTerm) || description.includes(searchTerm)) {
+                    book.style.display = 'block';
+                } else {
+                    book.style.display = 'none';
+                }
+            });
+        });
+    </script>
+{% endblock %}
