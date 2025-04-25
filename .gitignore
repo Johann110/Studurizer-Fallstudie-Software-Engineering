@@ -5,3 +5,4 @@
 .idea/*
 # Ignoriere SQLite-Datenbankdatei
 data/db.sqlite3
+media/*
