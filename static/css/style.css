@@ -194,3 +194,12 @@ a:not(.btn):not(.badge):not(.navbar-brand):not(.dropdown-item):hover {
    display: flex !important;
    align-items: center !important;
  }
+
+.nav-link:hover {
+    background-color: #444 !important;
+    border-radius: 0.25rem !important;
+}
+
+.nav-item {
+    transition: background-color 0.2s ease !important;
+}
