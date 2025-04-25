@@ -31,14 +31,21 @@
                                                 Ende: {{ event.end_date }}
                                             </p>
                                             <hr>
-                                            <a href="{% url 'delete_event' event.id %}"
-                                               class="btn btn-danger">Löschen</a>
+                                            <span class="d-flex gap-2">
+                                                <form action="{% url 'delete_event' event.id %}" method="post" style="display:inline;">
+                                                    {% csrf_token %}
+                                                    <button type="submit" class="btn btn-sm btn-outline-danger">Löschen</button>
+                                                </form>
 
-                                            <a class="btn btn-sm btn-outline-secondary" data-bs-toggle="collapse"
-                                               href="#desc-expired-{{ event.id }}" role="button" aria-expanded="false"
-                                               aria-controls="desc-expired-{{ event.id }}">
-                                                Beschreibung anzeigen
-                                            </a>
+                                                <a class="btn btn-sm btn-outline-secondary"
+                                                   data-bs-toggle="collapse"
+                                                   href="#desc-expired-{{ event.id }}"
+                                                   role="button"
+                                                   aria-expanded="false"
+                                                   aria-controls="desc-expired-{{ event.id }}">
+                                                    Beschreibung anzeigen
+                                                </a>
+                                            </span>
                                             <div class="collapse mt-2" id="desc-expired-{{ event.id }}">
                                                 <div class="card card-body">
                                                     {{ event.description }}
@@ -68,20 +75,24 @@
                                                 Ende: {{ event.end_date }}
                                             </p>
                                             <hr>
-                                            <a href="{% url 'delete_event' event.id %}"
-                                               class="btn btn-danger">Löschen</a>
-                                            <a class="btn btn-sm btn-outline-primary" data-bs-toggle="collapse"
-                                               href="#desc-{{ event.id }}" role="button" aria-expanded="false"
-                                               aria-controls="desc-{{ event.id }}">
-                                                Beschreibung anzeigen
-                                            </a>
-                                            <div class="collapse mt-2" id="desc-{{ event.id }}">
+                                            <span class="d-flex gap-2">
+                                                <form action="{% url 'delete_event' event.id %}" method="post" style="display:inline;">
+                                                    {% csrf_token %}
+                                                    <button type="submit" class="btn btn-sm btn-outline-danger">Löschen</button>
+                                                </form>
+
+                                                <a class="btn btn-sm btn-outline-secondary"
+                                                   data-bs-toggle="collapse"
+                                                   href="#desc-expired-{{ event.id }}"
+                                                   role="button"
+                                                   aria-expanded="false"
+                                                   aria-controls="desc-expired-{{ event.id }}">
+                                                    Beschreibung anzeigen
+                                                </a>
+                                            </span>
+                                            <div class="collapse mt-2" id="desc-expired-{{ event.id }}">
                                                 <div class="card card-body">
                                                     {{ event.description }}
-                                                    <form class="form-control" method="post"
-                                                          enctype="multipart/form-data">
-                                                        {% csrf_token %}
-                                                    </form>
                                                 </div>
                                             </div>
                                         </div>
@@ -102,6 +113,12 @@
                                                 Start: {{ event.start_date }}<br>
                                                 Ende: {{ event.end_date }}
                                             </p>
+                                            <span class="d-flex gap-2">
+                                                <form action="{% url 'delete_event' event.id %}" method="post" style="display:inline;">
+                                                    {% csrf_token %}
+                                                    <button type="submit" class="btn btn-sm btn-outline-danger">Löschen</button>
+                                                </form>
+                                            </span>
                                         </div>
                                     </div>
                                 {% endfor %}

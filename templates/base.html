@@ -65,7 +65,7 @@
     </nav>
 </header>
 
-<div class="d-flex min-vh-80" style="flex-direction: column; margin-top: 0">
+<div class="d-flex" style="min-height: 100vh; flex-direction: column; margin-top: 0">
     <div class="d-flex flex-grow-1">
         <nav class="p-3" style="width: 10rem; background-color: #333333">
             <ul class="nav flex-column mt-4">
@@ -91,7 +91,7 @@
             {% endblock %}
         </main>
     </div>
-    <footer class="bg-dark text-center text-white py-3">
+    <footer class="bg-dark text-center text-white py-3 mt-auto">
         &copy; {% now "Y" %} Studurizer | Barrierefreies Kursverwaltungssystem |
         <a href="{% url "contact" %}" class="text-white">Kontakt</a> |
         <a href="{% url "imprint" %}" class="text-white">Impressum</a> |
