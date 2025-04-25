@@ -1,6 +1,7 @@
 {% extends 'base.html' %}
 {% load static %}
 {% load roles %}
+{% load filename %}
 {% block extra_head %}
     <link href="{% static 'libs/bootstrap_duallistbox.css' %}" rel="stylesheet">
     <link href="{% static 'libs/dropzone-css.css' %}" rel="stylesheet">
@@ -12,14 +13,47 @@
         <form id="course-form" class="form-control" method="post" enctype="multipart/form-data">
             {% csrf_token %}
             {{ form.as_p }}
-            <label for="file">Dateien:</label>
+            <label for="material-list" style="margin-bottom: 5px">Kursmaterial:</label>
+            <table class="table" id="material-list">
+                <thead>
+                <tr>
+                    <th>Datei</th>
+                    <th>Aktion</th>
+                </tr>
+                </thead>
+                <tbody>
+                {% for file in files %}
+                    <tr id="material-{{ file.id }}">
+                        <td>
+                            <a href="{{ file.file.url }}" download>
+                                {{ file.file.name|basename }}
+                            </a>
+                        </td>
+                        <td>
+                            <button type="button" class="btn btn-danger" onclick="deleteMaterial({{ file.id }})">
+                                Löschen
+                            </button>
+                        </td>
+                    </tr>
+                {% empty %}
+                    <tr id="no-material-row">
+                        <td colspan="2">Keine Dateien vorhanden.</td>
+                    </tr>
+                {% endfor %}
+                </tbody>
+            </table>
+            <!-- Ende der Generierung -->
+            <label for="file" style="margin-bottom: 5px">Kursmaterial hochladen (Maximal 15 MB pro Datei, 3 Dateien pro
+                upload):</label>
             <div id="course-dropzone" class="dropzone">
                 <div class="dz-default dz-message" data-dz-message>
                     <span>Datei hier ablegen oder klicken, um eine Datei hochzuladen</span>
                 </div>
             </div>
+
             <button type="submit" id="submit-btn" class="btn btn-success">Speichern</button>
-            <button type="button" class="btn btn-danger" onclick="window.location.href='{% url 'home' %}'">Abbrechen
+            <button type="button" class="delete-material-btn btn btn-danger"
+                    onclick="window.location.href='{% url 'home' %}'">Abbrechen
             </button>
         </form>
     {% else %}
@@ -27,23 +61,8 @@
     {% endif %}
 {% endblock %}
 {% block extra_js %}
+    <script src="{% static 'js/cookies.js' %}"></script>
     <script>
-        function getCookie(name) {
-            var cookieValue = null;
-            if (document.cookie && document.cookie != '') {
-                var cookies = document.cookie.split(';');
-                for (var i = 0; i < cookies.length; i++) {
-                    var cookie = jQuery.trim(cookies[i]);
-                    // Does this cookie string begin with the name we want?
-                    if (cookie.substring(0, name.length + 1) == (name + '=')) {
-                        cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
-                        break;
-                    }
-                }
-            }
-            return cookieValue;
-        }
-
         Dropzone.autoDiscover = false;
         if (document.getElementById("course-dropzone")) {
             var myyDropzone = new Dropzone("div#" + "course-dropzone", {
@@ -51,10 +70,10 @@
                 params: {'csrfmiddlewaretoken': getCookie('csrftoken')},
                 autoProcessQueue: false, // last change, if error occurs then change to false
                 addRemoveLinks: true,
-                maxFilesize: 256 * 4 * 2,
-                maxFiles: 10,
+                maxFilesize: 40,
+                maxFiles: 3,
                 uploadMultiple: true,
-                parallelUploads: 10,
+                parallelUploads: 3,
                 acceptedFiles: ".jpg, .jpeg, .png, .pdf",
                 dictRemoveFile: "Datei entfernen",
                 dictCancelUpload: "Upload abbrechen",
@@ -68,38 +87,49 @@
                         // Make sure that the form isn't actually being sent.
                         e.preventDefault();
                         e.stopPropagation();
-                        myDropzone.processQueue();
+                        // just submit if no files were uploaded
+                        if (myDropzone.getQueuedFiles().length === 0) {
+                            if (!document.getElementById("course-form").checkValidity()) {
+                                alert("Formular enthält Fehler. Bitte überprüfen Sie Ihre Eingaben.");
+                                return;
+                            }
+                            document.getElementById("course-form").submit();
+                        } else { // process files if uploaded
+                            if (!document.getElementById("course-form").checkValidity()) {
+                                alert("Formular enthält Fehler. Bitte überprüfen Sie Ihre Eingaben.");
+                                return;
+                            }
+                            myDropzone.processQueue();
+                        }
                     });
 
                     // Listen to the sendingmultiple event. In this case, it's the sendingmultiple event instead
                     // of the sending event because uploadMultiple is set to true.
                     this.on("sendingmultiple", function (files, xhr, formData) {
-                        // Alle Eingabefelder des Formulars sammeln
+                        // Quelle: Codegenerierung mit ChatGPT
                         var form = document.getElementById("course-form");
                         var formElements = form.querySelectorAll("input, select, textarea");
 
                         formElements.forEach(function (element) {
                             if (element.type === "checkbox" || element.type === "radio") {
-                                // Nur ausgewählte Checkboxen und Radios mitsenden
                                 if (element.checked) {
                                     formData.append(element.name, element.value);
                                 }
                             } else if (element.multiple) {
-                                // Für Multi-Select-Felder (wie students und teachers)
                                 Array.from(element.selectedOptions).forEach(function (option) {
                                     formData.append(element.name, option.value);
                                 });
                             } else {
-                                // Normale Eingabefelder
                                 formData.append(element.name, element.value);
                             }
                         });
+                        // Ende der Generierung
                     });
                     this.on("successmultiple", function (files, response) {
                         window.location.href = "/";
                     });
                     this.on("errormultiple", function (files, response) {
-
+                        alert("Fehler beim Hochladen der Dateien.");
                     });
                     this.on("addedfile", function (file) {
                         var dropzoneMessage = myDropzone.element.querySelector('.dz-message');
@@ -133,10 +163,46 @@
         dropzoneElement.style.border = '1px solid lightgray';
         dropzoneElement.style.borderRadius = '5px';
         dropzoneElement.style.marginBottom = '20px';
+        dropzoneElement.style.minHeight = '300px';
 
-        var messageElement = dropzoneElement.querySelector('.dz-message');
+        let messageElement = dropzoneElement.querySelector('.dz-message');
         messageElement.style.color = 'black';
     </script>
+    <script>
+        // Quelle: Codegenerierung mit ChatGPT
+        function deleteMaterial(materialId) {
+            fetch(`/material/delete/${materialId}/`, {
+                method: "POST",
+                headers: {
+                    "X-CSRFToken": getCookie("csrftoken"),
+                },
+            })
+                .then(response => response.json())
+                .then(data => {
+                    if (data.success) {
+                        const row = document.getElementById(`material-${materialId}`);
+                        if (row) row.remove();
+
+                        const tbody = document.querySelector("#material-list tbody");
+                        if (tbody && tbody.children.length === 0) {
+                            const noDataRow = document.createElement("tr");
+                            noDataRow.id = "no-material-row";
+
+                            const td = document.createElement("td");
+                            td.colSpan = 2;
+                            td.textContent = "Keine Dateien vorhanden.";
+
+                            noDataRow.appendChild(td);
+                            tbody.appendChild(noDataRow);
+                        }
+                    } else {
+                        alert("Fehler beim Löschen");
+                    }
+                });
+        }
+        // Ende der Generierung
+    </script>
+
     <script src="{% static 'libs/bootstrap_duallistbox.js' %}"></script>
     <script src="{% static 'courses/js/courses.js' %}"></script>
 {% endblock %}
