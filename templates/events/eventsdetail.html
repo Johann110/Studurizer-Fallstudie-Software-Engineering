@@ -1,6 +1,6 @@
 {% extends "base.html" %}
 {% block content %}
-{% load static %}
+    {% load static %}
     {% if user.is_authenticated %}
         <div class="container my-4">
 
@@ -21,7 +21,8 @@
                                     <div class="card mb-3">
                                         <div class="card-body">
                                             {% if event.course %}
-                                                <a href="{#% url 'course_detail' event.course.id %#}" class="text-decoration-none text-dark">
+                                                <a href="{% url 'course_detail' event.course.id %}"
+                                                   class="text-decoration-none text-dark">
                                                     <h5 class="card-title">{{ event.course.title }}</h5>
                                                 </a>
                                             {% endif %}
@@ -29,7 +30,13 @@
                                                 Start: {{ event.start_date }}<br>
                                                 Ende: {{ event.end_date }}
                                             </p>
-                                            <a class="btn btn-sm btn-outline-secondary" data-bs-toggle="collapse" href="#desc-expired-{{ event.id }}" role="button" aria-expanded="false" aria-controls="desc-expired-{{ event.id }}">
+                                            <hr>
+                                            <a href="{% url 'delete_event' event.id %}"
+                                               class="btn btn-danger">Löschen</a>
+
+                                            <a class="btn btn-sm btn-outline-secondary" data-bs-toggle="collapse"
+                                               href="#desc-expired-{{ event.id }}" role="button" aria-expanded="false"
+                                               aria-controls="desc-expired-{{ event.id }}">
                                                 Beschreibung anzeigen
                                             </a>
                                             <div class="collapse mt-2" id="desc-expired-{{ event.id }}">
@@ -43,35 +50,43 @@
                             </div>
                         </div>
                     {% endif %}
-
-                    <!-- Bevorstehende Termine -->
                     {% if events %}
                         <div class="col-md-4">
                             <h2>Bevorstehende Termine</h2>
                             <div class="overflowing-hidden">
-                            {% for event in events %}
-                                <div class="card mb-3">
-                                    <div class="card-body">
-                                        {% if event.course %}
-                                            <a href="{#% url 'course_detail' event.course.id %#}" class="text-decoration-none text-dark">
-                                                <h5 class="card-title">{{ event.course.title }}</h5>
+                                {% for event in events %}
+                                    <div class="card mb-3">
+                                        <div class="card-body">
+                                            {% if event.course %}
+                                                <a href="{% url 'course_detail' event.course.id %}"
+                                                   class="text-decoration-none text-dark">
+                                                    <h5 class="card-title">{{ event.course.title }}</h5>
+                                                </a>
+                                            {% endif %}
+                                            <p class="card-text">
+                                                Start: {{ event.start_date }}<br>
+                                                Ende: {{ event.end_date }}
+                                            </p>
+                                            <hr>
+                                            <a href="{% url 'delete_event' event.id %}"
+                                               class="btn btn-danger">Löschen</a>
+                                            <a class="btn btn-sm btn-outline-primary" data-bs-toggle="collapse"
+                                               href="#desc-{{ event.id }}" role="button" aria-expanded="false"
+                                               aria-controls="desc-{{ event.id }}">
+                                                Beschreibung anzeigen
                                             </a>
-                                        {% endif %}
-                                        <p class="card-text">
-                                            Start: {{ event.start_date }}<br>
-                                            Ende: {{ event.end_date }}
-                                        </p>
-                                        <a class="btn btn-sm btn-outline-primary" data-bs-toggle="collapse" href="#desc-{{ event.id }}" role="button" aria-expanded="false" aria-controls="desc-{{ event.id }}">
-                                            Beschreibung anzeigen
-                                        </a>
-                                        <div class="collapse mt-2" id="desc-{{ event.id }}">
-                                            <div class="card card-body">
-                                                {{ event.description }}
+                                            <div class="collapse mt-2" id="desc-{{ event.id }}">
+                                                <div class="card card-body">
+                                                    {{ event.description }}
+                                                    <form class="form-control" method="post"
+                                                          enctype="multipart/form-data">
+                                                        {% csrf_token %}
+                                                    </form>
+                                                </div>
                                             </div>
                                         </div>
                                     </div>
-                                </div>
-                            {% endfor %}
+                                {% endfor %}
                             </div>
                         </div>
                     {% endif %}
@@ -95,8 +110,6 @@
                     {% endif %}
                 </div>
             </div>
-
-            <!-- Kalenderansicht (versteckt) -->
             <div id="calendar-view">
                 <div id="calendar"></div>
                 <div id="event-details" class="mt-4"></div>
@@ -110,8 +123,8 @@
     {% endif %}
 {% endblock %}
 {% block extra_js %}
-  <script src="{% static 'libs/fullcalendar_6.js' %}"></script>
-  {% include 'events/fullcalenderconfig.html' %}
+    <script src="{% static 'libs/fullcalendar_6.js' %}"></script>
+    {% include 'events/fullcalenderconfig.html' %}
 {% endblock %}
 
 {% block extra_head %}
@@ -123,9 +136,11 @@
             -ms-overflow-style: none;
             scrollbar-width: none;
         }
+
         .overflowing-hidden::-webkit-scrollbar {
             display: none;
         }
+
         h2 {
             padding-bottom: 2rem;
         }

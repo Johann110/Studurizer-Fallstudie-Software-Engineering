@@ -178,6 +178,20 @@ a:not(.btn):not(.badge):not(.navbar-brand):not(.dropdown-item):hover {
   background-color: rgba(0, 86, 179, 0.05);
 }
 
-.navbar-brand{
-  margin-left: -7rem;
+
+.list-group-item.active {
+    background-color: #0d6efd;
+    color: white;
+    border-color: #0d6efd;
 }
+
+.no-underline {
+  text-decoration: none !important;
+  color: white;
+}
+
+.navbar-default .navbar-brand {
+   padding: 0 !important;
+   display: flex !important;
+   align-items: center !important;
+ }

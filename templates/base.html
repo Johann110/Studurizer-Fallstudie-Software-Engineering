@@ -8,98 +8,100 @@
     <meta name="description" content="Studurizer - Barrierefreies Kursverwaltungssystem">
     <title>{% block title %}Studurizer{% endblock %}</title>
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-
-    <!-- select2 4.1.0 -->
-    <link href="{% static 'libs/select2_4.css' %}" rel="stylesheet" />
+    <link href="{% static 'libs/select2_4.css' %}" rel="stylesheet"/>
     <script src="{% static 'libs/select2_4.js' %}"></script>
-
-    <!-- Bootstrap CSS -->
     <link href="{% static 'libs/bootstrap_5.css' %}" rel="stylesheet">
-    
-    <!-- Custom CSS -->
     <link rel="stylesheet" href={% static 'css/style.css' %}>
-
-    <!-- jquery 3.7.1 -->
     <script src="{% static 'libs/jquery.js' %}"></script>
-    
-    <!-- Additional head content -->
     {% block extra_head %}{% endblock %}
 </head>
 <body>
-    <a href="#main-content" class="visually-hidden-focusable">Skip to main content</a>
-    <header>
-        <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
-            <div class="container">
-                <a class="navbar-brand" href="{% url "home" %}">Studurizer</a>
-                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarMain" 
-                        aria-controls="navbarMain" aria-expanded="false" aria-label="Toggle navigation">
-                    <span class="navbar-toggler-icon"></span>
-                </button>
-                
-                <div class="collapse navbar-collapse" id="navbarMain">
-                    <ul class="navbar-nav ms-auto">
-                        {% if user.is_authenticated %}
+<header>
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark" style="margin: 0; padding: 0; width: 100%; z-index: 10000">
+            <a class="navbar-brand" href="{% url "home" %}" style="margin-left: 1rem">Studurizer</a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarMain"
+                    aria-controls="navbarMain" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+
+            <div class="collapse navbar-collapse" id="navbarMain">
+                <ul class="navbar-nav ms-auto">
+                    {% if user.is_authenticated %}
+                        <li class="nav-item">
+                            <a class="nav-link text-decoration-none" href="{% url 'all_events' %}">Alle Termine</a>
+                        </li>
+                        {% if user|is_group:"Teacher" or user.is_staff %}
                             <li class="nav-item">
-                                <a class="nav-link text-decoration-none" href="{% url 'all_events' %}">Alle Termine</a>
-                            </li>
-                            {% if user|is_group:"Teacher" or user.is_staff %}
-                            	<li class="nav-item">
-                                    <a class="nav-link text-decoration-none" href="{% url 'create_course' %}">Kurs anlegen</a>
-                                </li>
-                            {% endif %}
-                            <li class="nav-item dropdown" style="margin-left: 1rem">
-                                <a class="nav-link dropdown-toggle text-decoration-none" href="#" id="userDropdown" role="button"
-                                   data-bs-toggle="dropdown" aria-expanded="false">
-                                    {{ user.username }}
-                                </a>
-                                <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="userDropdown">
-                                    <li><a class="dropdown-item" href="{% url 'profile' id=user.id %}">Profil</a></li>
-                                    <li><hr class="dropdown-divider"></li>
-                                    <li>
-                                        <form action="{% url 'logout' %}" method="post">
-                                            {% csrf_token %}
-                                            <button type="submit" class="dropdown-item">Abmelden</button>
-                                        </form>
-                                    </li>
-                                </ul>
-                            </li>
-                        {% else %}
-                            <li class="nav-item">
-                                <a class="nav-link text-decoration-none" href="{% url 'login' %}">Anmelden</a>
+                                <a class="nav-link text-decoration-none" href="{% url 'create_course' %}">Kurs
+                                    anlegen</a>
                             </li>
                         {% endif %}
-                    </ul>
-                </div>
+                        <li class="nav-item dropdown" style="margin-left: 1rem">
+                            <a class="nav-link dropdown-toggle text-decoration-none" href="#" id="userDropdown"
+                               role="button"
+                               data-bs-toggle="dropdown" aria-expanded="false">
+                                {{ user.username }}
+                            </a>
+                            <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="userDropdown">
+                                <li><a class="dropdown-item" href="{% url 'profile' id=user.id %}">Profil</a></li>
+                                <li>
+                                    <hr class="dropdown-divider">
+                                </li>
+                                <li>
+                                    <form action="{% url 'logout' %}" method="post">
+                                        {% csrf_token %}
+                                        <button type="submit" class="dropdown-item">Abmelden</button>
+                                    </form>
+                                </li>
+                            </ul>
+                        </li>
+                    {% else %}
+                        <li class="nav-item">
+                            <a class="nav-link text-decoration-none" href="{% url 'login' %}">Anmelden</a>
+                        </li>
+                    {% endif %}
+                </ul>
             </div>
+    </nav>
+</header>
+
+<div class="d-flex min-vh-80" style="flex-direction: column; margin-top: 0">
+    <div class="d-flex flex-grow-1">
+        <nav class="p-3" style="width: 10rem; background-color: #333333">
+            <ul class="nav flex-column mt-4">
+                <li class="nav-item">
+                    <a class="nav-link text-white" href="{% url 'news' %}">News</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link text-white" href="{% url 'tools' %}">Tools</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link text-white" href="{% url 'library' %}">Bibliothek</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link text-white disabled" href="#">Forum</a>
+                </li>
+            </ul>
         </nav>
-    </header>
 
-    <!-- Main content -->
-    <main id="main-content" >
-        <div class="container my-4">
-            {% block content %}{% endblock %}
-        </div>
-        <!-- Page content -->
-        {% block misc %}
-        {% endblock %}
-
-    </main>
-
-    <!-- Footer -->
-    <footer class="footer mt-auto py-3 bg-light">
-        <div class="container text-center">
-            <span class="text-muted">&copy; {% now "Y" %} Studurizer | Barrierefreies Kursverwaltungssystem |
-                <a href="{% url "contact" %}" class="text-muted"> Kontakt </a>
-                <a href="{% url "imprint" %}" class="text-muted"> Impressum </a>
-                <a href="{% url "datapolicy" %}" class="text-muted"> Datenschutzrichtlinie </a>
-            </span>
-        </div>
+        <main class="flex-grow-1 p-4">
+            {% block content %}
+            <div class="bg-light p-4 shadow-sm rounded">
+            </div>
+            {% endblock %}
+        </main>
+    </div>
+    <footer class="bg-dark text-center text-white py-3">
+        &copy; {% now "Y" %} Studurizer | Barrierefreies Kursverwaltungssystem |
+        <a href="{% url "contact" %}" class="text-white">Kontakt</a> |
+        <a href="{% url "imprint" %}" class="text-white">Impressum</a> |
+        <a href="{% url "datapolicy" %}" class="text-white">Datenschutz</a>
     </footer>
 
-    <!-- Bootstrap JS with Popper -->
-    <script src="{% static 'libs/bootstrap_5.js' %}"></script>
+</div>
 
-    <!-- Additional scripts -->
-    {% block extra_js %}{% endblock %}
+<script src="{% static 'libs/bootstrap_5.js' %}"></script>
+
+{% block extra_js %}{% endblock %}
 </body>
 </html>
