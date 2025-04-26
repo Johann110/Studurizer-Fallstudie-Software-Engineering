@@ -161,19 +161,21 @@
                 reader.onload = function(e) {
                     const imgContainer = document.createElement('div');
                     imgContainer.className = 'mb-2';
-                    
+
+                    const text = document.createElement('span');
+                    text.textContent = 'Neues Profilbild:';
+
+                    const lineBreak = document.createElement('br');
+                    text.appendChild(lineBreak);
+
                     const img = document.createElement('img');
                     img.src = e.target.result;
                     img.alt = 'Neue Profilbildvorschau';
                     img.className = 'img-thumbnail';
                     img.style.maxHeight = '100px';
-                    
-                    const text = document.createElement('span');
-                    text.className = 'ms-2';
-                    text.textContent = 'Neue Bildauswahl';
-                    
-                    imgContainer.appendChild(img);
+
                     imgContainer.appendChild(text);
+                    imgContainer.appendChild(img);
                     
                     const inputGroup = profilePictureInput.closest('.input-group');
                     inputGroup.parentNode.insertBefore(imgContainer, inputGroup);
