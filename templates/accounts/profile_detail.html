@@ -26,7 +26,7 @@
     <div class="col-md-4 mb-4">
         <div class="card shadow-sm">
             <div class="card-header bg-light">
-                <h2 class="h5 mb-0">Profilbild</h2>
+                <h2 class="h5 mb-0">Profilinformationen</h2>
             </div>
             <div class="card-body text-center">
                 {% if profile and profile.profile_picture %}
@@ -44,26 +44,32 @@
                     </style>
                 {% endif %}
                 <h3 class="h4">{{ logged_in_user.get_full_name|default:logged_in_user.username }}</h3>
+                        <!-- Status-Badge einfügen (Lehrer oder Student) -->
+                {% if logged_in_user.is_staff %}
+                    <span class="badge bg-primary mb-2">Dozent</span>
+                {% else %}
+                    <span class="badge bg-info mb-2">Student</span>
+                {% endif %}
                 <p class="text-muted">{{ logged_in_user.email }}</p>
             </div>
         </div>
     </div>
     <div class="col-md-8">
         <div class="card shadow-sm">
-            <div class="card-header bg-light">
-                <h2 class="h5 mb-0">Über mich</h2>
+         <div class="card-header bg-light d-flex justify-content-between align-items-center">
+             <h2 class="h5 mb-0">Über mich</h2>
             </div>
-            <div class="card-body">
-                {% if profile and profile.description %}
-                    <p>{{ profile.description|linebreaks }}</p>
+         <div class="card-body">
+             {% if profile and profile.description %}
+                 <p>{{ profile.description|linebreaks }}</p>
                 {% else %}
-                    <p class="text-muted">
-                        {% if request.user.id == logged_in_user.id %}
-                            Keine Beschreibung vorhanden. 
-                            <a href="{% url 'profile_edit' %}">Jetzt hinzufügen</a>
-                        {% else %}
-                            Keine Beschreibung vorhanden.
-                        {% endif %}
+                   <p class="text-muted">
+                       {% if request.user.id == logged_in_user.id %}
+                           Keine Beschreibung vorhanden.
+                         <a href="{% url 'profile_edit' %}">Jetzt hinzufügen</a>
+                     {% else %}
+                          Keine Beschreibung vorhanden.
+                     {% endif %}
                     </p>
                 {% endif %}
             </div>

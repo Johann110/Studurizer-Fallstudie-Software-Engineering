@@ -36,11 +36,20 @@
                     {% endif %}
 
                     <div class="mb-3">
-                        <label for="{{ form.profile_picture.id_for_label }}" class="form-label">Mein Profilbild</label>
+                        <label for="{{ form.profile_picture.id_for_label }}" class="form-label">Mein aktuelles Profilbild:</label>
                         {% if profile and profile.profile_picture %}
                             <div class="mb-2">
                                 <img src="{{ profile.profile_picture.url }}" alt="Aktuelles Profilbild" class="img-thumbnail" style="max-height: 100px;">
-                                <span class="ms-2">Aktuelles Bild</span>
+                                <a href="{% url 'profile_delete_picture' %}" class="btn btn-sm btn-danger ms-2"
+                                    onclick="return confirm('Sind Sie sicher, dass Sie Ihr Profilbild löschen möchten?');">
+                                        <i class="bi bi-trash"></i> Löschen
+                                </a>
+                            </div>
+                        {% else %}
+                             <!-- Platzhalter anzeigen, wenn kein Bild vorhanden ist -->
+                            <br>
+                            <div class="placeholder-image d-inline-flex justify-content-center align-items-center bg-light rounded" style="width: 100px; height: 100px;">
+                                <span class="text-secondary fs-3">{{ user.username|first|upper }}</span>
                             </div>
                         {% endif %}
                         <div class="input-group">
