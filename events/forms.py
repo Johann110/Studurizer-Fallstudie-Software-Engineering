@@ -12,7 +12,7 @@ class EventForm(forms.ModelForm):
             'start_date': forms.DateTimeInput(attrs={'type': 'datetime-local'}),
             'end_date': forms.DateTimeInput(attrs={'type': 'datetime-local'}),
             'course': forms.Select(attrs={
-                'class': 'form-select select2',
+                'class': 'form-select',
                 'data-live-search': 'true'
             }),
         }
