@@ -198,3 +198,8 @@ a:not(.btn):not(.badge):not(.navbar-brand):not(.dropdown-item):hover {
 .same-size {
     height: 22rem;
 }
+
+button:focus, button:active, input:focus, input:active, select:focus, select:active, textarea:focus, textarea:active, a:focus, a:active {
+   outline: none !important;
+   box-shadow: none;
+}
