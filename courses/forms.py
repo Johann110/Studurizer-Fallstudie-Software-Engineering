@@ -27,6 +27,8 @@ class CourseForm(forms.ModelForm):
 
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
+        self.initial['start_date'] = self.instance.start_date.strftime('%Y-%m-%d') if self.instance.start_date else ''
+        self.initial['end_date'] = self.instance.end_date.strftime('%Y-%m-%d') if self.instance.end_date else ''
         for field in self.fields.values():
             existing_classes = field.widget.attrs.get('class', '')
             field.widget.attrs['class'] = f'{existing_classes} form-control'.strip()

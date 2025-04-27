@@ -9,175 +9,192 @@
 /* ---- Allgemeine Stile und Hilfsmittel ---- */
 
 :root {
-  --primary-color: #0056b3;
-  --secondary-color: #6c757d;
-  --success-color: #28a745;
-  --info-color: #17a2b8;
-  --warning-color: #ffc107;
-  --danger-color: #dc3545;
-  --light-color: #f8f9fa;
-  --dark-color: #343a40;
+    --primary-color: #0056b3;
+    --secondary-color: #6c757d;
+    --success-color: #28a745;
+    --info-color: #17a2b8;
+    --warning-color: #ffc107;
+    --danger-color: #dc3545;
+    --light-color: #f8f9fa;
+    --dark-color: #343a40;
 }
 
 body {
-  min-height: 100vh;
-  display: flex;
-  flex-direction: column;
-  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
-  line-height: 1.6;
-  color: #333;
-  background-color: #f9f9f9;
+    display: flex;
+    flex-direction: column;
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+    line-height: 1.6;
+    color: #333;
+    background-color: #f9f9f9;
 }
 
 main {
-  flex: 1;
+    flex: 1;
 }
 
 /* Barrierefreiheit: Versteckter Skip-Link, der beim Fokussieren sichtbar wird */
 .visually-hidden-focusable:not(:focus):not(:focus-within) {
-  position: absolute !important;
-  width: 1px !important;
-  height: 1px !important;
-  padding: 0 !important;
-  margin: -1px !important;
-  overflow: hidden !important;
-  clip: rect(0, 0, 0, 0) !important;
-  white-space: nowrap !important;
-  border: 0 !important;
+    position: absolute !important;
+    width: 1px !important;
+    height: 1px !important;
+    padding: 0 !important;
+    margin: -1px !important;
+    overflow: hidden !important;
+    clip: rect(0, 0, 0, 0) !important;
+    white-space: nowrap !important;
+    border: 0 !important;
 }
 
 .visually-hidden-focusable:focus {
-  position: fixed;
-  top: 0;
-  left: 0;
-  z-index: 2000;
-  padding: 10px 20px;
-  background-color: var(--primary-color);
-  color: white;
-  text-decoration: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: 2000;
+    padding: 10px 20px;
+    background-color: var(--primary-color);
+    color: white;
+    text-decoration: none;
 }
 
 /* ---- Erhöhte Kontraste für bessere Lesbarkeit ---- */
 
 .card {
-  border-radius: 8px;
-  overflow: hidden;
-  transition: transform 0.2s ease, box-shadow 0.2s ease;
+    border-radius: 8px;
+    overflow: hidden;
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
 }
 
-.card:focus-within, 
+.card:focus-within,
 .card:hover {
-  box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.15) !important;
+    box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.15) !important;
 }
 
 .card-header {
-  border-bottom: 2px solid rgba(0, 0, 0, 0.1);
+    border-bottom: 2px solid rgba(0, 0, 0, 0.1);
 }
 
 .btn {
-  border-radius: 4px;
-  transition: all 0.2s ease;
+    border-radius: 4px;
+    transition: all 0.2s ease;
 }
 
 /* Verbesserter Fokus für Tastaturnavigation */
-a:focus, 
-button:focus, 
-input:focus, 
-textarea:focus, 
-select:focus, 
+a:focus,
+button:focus,
+input:focus,
+textarea:focus,
+select:focus,
 .btn:focus {
-  outline: 3px solid rgba(0, 86, 179, 0.5) !important;
-  outline-offset: 2px !important;
-  box-shadow: none !important;
+    outline: 3px solid rgba(0, 86, 179, 0.5) !important;
+    outline-offset: 2px !important;
+    box-shadow: none !important;
 }
 
 /* ---- Spezifische Komponenten ---- */
 
 /* Navbar */
 .navbar {
-  box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }
 
 .navbar-brand {
-  font-weight: 600;
-  letter-spacing: 0.5px;
+    font-weight: 600;
+    letter-spacing: 0.5px;
 }
 
 /* Footer */
 .footer {
-  padding: 2rem 0;
-  margin-top: 3rem;
-  border-top: 1px solid rgba(0, 0, 0, 0.1);
+    padding: 2rem 0;
+    margin-top: 3rem;
+    border-top: 1px solid rgba(0, 0, 0, 0.1);
 }
 
-/* Kursübersichten */
-.course-card {
-  height: 100%;
-  display: flex;
-  flex-direction: column;
-}
-
-.course-card .card-body {
-  flex: 1;
-}
 
 /* ---- Responsive Anpassungen ---- */
 
 @media (max-width: 768px) {
-  .navbar .btn-group {
-    width: 100%;
-    margin-top: 1rem;
-  }
-  
-  .action-buttons .btn {
-    margin-bottom: 0.5rem;
-    width: 100%;
-  }
+    .navbar .btn-group {
+        width: 100%;
+        margin-top: 1rem;
+    }
+
+    .action-buttons .btn {
+        margin-bottom: 0.5rem;
+        width: 100%;
+    }
 }
 
 /* ---- Verbesserungen für Hilfstechnologien ---- */
 
 /* Für Screenreader: Zusätzliche versteckte Beschreibungen */
 .sr-only {
-  position: absolute;
-  width: 1px;
-  height: 1px;
-  padding: 0;
-  margin: -1px;
-  overflow: hidden;
-  clip: rect(0, 0, 0, 0);
-  border: 0;
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    padding: 0;
+    margin: -1px;
+    overflow: hidden;
+    clip: rect(0, 0, 0, 0);
+    border: 0;
 }
 
 /* Bessere Sichtbarkeit von Links */
 a:not(.btn):not(.badge):not(.navbar-brand):not(.dropdown-item) {
-  text-decoration: underline;
-  text-underline-offset: 2px;
+    text-decoration: underline;
+    text-underline-offset: 2px;
 }
 
 a:not(.btn):not(.badge):not(.navbar-brand):not(.dropdown-item):hover {
-  text-decoration: none;
+    text-decoration: none;
 }
 
 /* Verbesserte Tabellenlesbarkeit */
 .table {
-  border: 1px solid rgba(0, 0, 0, 0.125);
+    border: 1px solid rgba(0, 0, 0, 0.125);
 }
 
 .table thead th {
-  background-color: #f8f9fa;
-  border-bottom: 2px solid rgba(0, 0, 0, 0.2);
-  vertical-align: middle;
+    background-color: #f8f9fa;
+    border-bottom: 2px solid rgba(0, 0, 0, 0.2);
+    vertical-align: middle;
 }
 
 .table tbody tr:nth-of-type(odd) {
-  background-color: rgba(0, 0, 0, 0.03);
+    background-color: rgba(0, 0, 0, 0.03);
 }
 
 .table-hover tbody tr:hover {
-  background-color: rgba(0, 86, 179, 0.05);
+    background-color: rgba(0, 86, 179, 0.05);
 }
 
-.navbar-brand{
-  margin-left: -7rem;
+
+.list-group-item.active {
+    background-color: #0d6efd;
+    color: white;
+    border-color: #0d6efd;
+}
+
+.no-underline {
+    text-decoration: none !important;
+    color: white;
+}
+
+.navbar-default .navbar-brand {
+    padding: 0 !important;
+    display: flex !important;
+    align-items: center !important;
+}
+
+.nav-link:hover {
+    background-color: #444 !important;
+    border-radius: 0.25rem !important;
+}
+
+.nav-item {
+    transition: background-color 0.2s ease !important;
+}
+
+
+.same-size {
+    height: 22rem;
 }

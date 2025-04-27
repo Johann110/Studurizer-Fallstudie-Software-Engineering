@@ -1,21 +1,27 @@
 {% block content %}
-<div class="event-overview">
-  <h2 class="h4 mb-3">Anstehende Termine</h2>
-  <div class="card" style="width: 100%;">
-    <div class="card-body">
-      <div class="even-overview-inner">
+  {% if events %}
+    <h2 class="h4">Anstehende Termine</h2>
+    <div class="event-overview container py-4">
+      <div class="row g-3">
         {% for event in events %}
-          <div class="mb-3 border rounded p-2">
-            <h6 class="mb-1">{{ event.course.title }}</h6>
-            <small class="text-muted">
-              Start: {{ event.start_date }}<br>
-              Ende: {{ event.end_date }}
-            </small>
+          <div class="col-12">
+            <div class="card shadow-sm border-0">
+              <div class="card-body">
+                <h5 class="card-title mb-2 fw-semibold">{{ event.course.title }}</h5>
+                <p class="card-text text-muted mb-1">
+                  <i class="bi bi-calendar-event"></i>
+                  Start: {{ event.start_date|date:"d.m.Y H:i" }}
+                </p>
+                <p class="card-text text-muted">
+                  <i class="bi bi-calendar-check"></i>
+                  Ende: {{ event.end_date|date:"d.m.Y H:i" }}
+                </p>
+              </div>
+            </div>
           </div>
         {% endfor %}
       </div>
-      <a href="{% url "all_events" %}" class="btn btn-dark mt-2">Zur Terminübersicht</a>
     </div>
-  </div>
-</div>
+  <a href="{% url 'all_events' %}" class="btn btn-dark">Zur Terminübersicht</a>
+  {% endif %}
 {% endblock %}
