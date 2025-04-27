@@ -52,6 +52,7 @@ INSTALLED_APPS = [
     'accounts.apps.AccountsConfig',
     'courses.apps.CoursesConfig',
     'events.apps.EventsConfig',
+    'material.apps.MaterialConfig'
 
     # Project apps
 ]

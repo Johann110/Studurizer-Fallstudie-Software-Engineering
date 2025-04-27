@@ -1,6 +1,7 @@
 from django.db.models import Q
-from django.shortcuts import render
+from django.shortcuts import render, get_object_or_404, redirect
 from django.urls import reverse_lazy
+from django.views import View
 from django.views.generic import CreateView, UpdateView, DeleteView
 from django.utils import timezone
 
@@ -14,16 +15,13 @@ class CreateEvent(CreateView):
     form_class = EventForm
     success_url = reverse_lazy("home")
 
-class UpdateEvent(UpdateView):
-    model = Events
-    template_name = 'courses/update_course.html'
-    form_class = EventForm
-    success_url = reverse_lazy("home")
 
+class DeleteEvent(View):
+    def post(self, request, pk):
+        event = get_object_or_404(Events, pk=pk)
+        event.delete()
+        return redirect('all_events')
 
-class DeleteEvent(DeleteView):
-    model = Events
-    success_url = reverse_lazy('home')
 
 
 def events(request):

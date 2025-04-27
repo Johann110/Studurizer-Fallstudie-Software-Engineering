@@ -50,3 +50,29 @@ def imprint(request):
 
 def datapolicy(request):
     return render(request,"misc/datapolicy.html")
+
+def library(request):
+    return render(request,"information_services/library.html")
+
+def forum(request):
+    return render(request,"information_services/forum.html")
+
+def tools(request):
+    return render(request,"information_services/tools.html")
+
+def news(request):
+    return render(request,"information_services/news.html")
+
+
+
+
+
+
+
+
+
+
+
+
+
+

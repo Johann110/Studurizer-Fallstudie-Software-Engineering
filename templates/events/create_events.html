@@ -6,7 +6,7 @@
     </button>
 
     <div class="modal fade" id="createEventModal" tabindex="-1" aria-labelledby="createEventModalLabel"
-         aria-hidden="true">
+         aria-hidden="true" style="margin-top: 3rem">
         <div class="modal-dialog">
             <div class="modal-content">
                 <form method="post" action="{% url 'create_event' %}">
@@ -25,9 +25,4 @@
             </div>
         </div>
     </div>
-<script>
-  document.addEventListener("DOMContentLoaded", function() {
-    $('.select2').select2();
-  });
-</script>
 {% endblock %}

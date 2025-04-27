@@ -1,5 +1,9 @@
 # MyCampus-Learn-Fallstudie-Software-Engineering
 
+## Angaben zur Drittanbieter-Software
+
+Alle Quellen, Lizenzen und Copyrightangaben für verwendete Software befinden sich in der Datei CREDITS.md im Hauptverzeichnis.
+
 # Docker für Studurizer
 
 Diese Anleitung erklärt, wie du das Studurizer-Projekt mit Docker lokal ausführen kannst.
