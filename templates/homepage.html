@@ -29,15 +29,17 @@
 {% block extra_js %}
     <script>
         document.getElementById('searchInput').addEventListener('input', function(event) {
-            let searchTerm = event.target.value.toLowerCase();
-            let courses = document.querySelectorAll('.course-card');
-            courses.forEach(function(course) {
-                let title = course.querySelector('.card-header').innerText.toLowerCase();
-                let description = course.querySelector('.card-body').innerText.toLowerCase();
+            let columns = document.querySelectorAll('.col');
+            let searchTerm = event.target.value.toLowerCase().trim();
+            columns.forEach(function(col) {
+                let card = col.querySelector('.course-card');
+                if (!card) return;
+                let title = card.querySelector('.card-header').innerText.trim().toLowerCase();
+                let description = card.querySelector('.card-body').innerText.trim().toLowerCase();
                 if (title.includes(searchTerm) || description.includes(searchTerm)) {
-                    course.style.display = 'block';
+                    col.style.display = 'block';
                 } else {
-                    course.style.display = 'none';
+                    col.style.display = 'none';
                 }
             });
         });

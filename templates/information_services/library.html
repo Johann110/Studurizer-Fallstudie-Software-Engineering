@@ -4,7 +4,6 @@
         <h2 class="mb-4">Buchsuche</h2>
         <form class="d-flex">
             <input class="form-control me-2" type="search" placeholder="Buch suchen..." aria-label="Search" id="searchInput">
-            <button class="btn btn-outline-primary" type="submit">Suchen</button>
         </form>
     </section>
 
@@ -12,7 +11,7 @@
         <br>
         <div class="row" id="bookList">
             <div class="col-md-4 mb-4 book-card">
-                <div class="card">
+                <div class="card same-size">
                     <div class="card-header">
                         <i class="fas fa-book"></i> Einführung in die Mathematik
                     </div>
@@ -27,7 +26,7 @@
             </div>
 
             <div class="col-md-4 mb-4 book-card">
-                <div class="card">
+                <div class="card same-size">
                     <div class="card-header">
                         <i class="fas fa-book"></i> Computer Science für Einsteiger
                     </div>
@@ -42,7 +41,7 @@
             </div>
 
             <div class="col-md-4 mb-4 book-card">
-                <div class="card">
+                <div class="card same-size">
                     <div class="card-header">
                         <i class="fas fa-book"></i> Kreatives Schreiben für Studierende
                     </div>
@@ -57,7 +56,7 @@
             </div>
 
             <div class="col-md-4 mb-4 book-card">
-                <div class="card">
+                <div class="card same-size">
                     <div class="card-header">
                         <i class="fas fa-book"></i> Physik für Anfänger
                     </div>
@@ -72,7 +71,7 @@
             </div>
 
             <div class="col-md-4 mb-4 book-card">
-                <div class="card">
+                <div class="card same-size">
                     <div class="card-header">
                         <i class="fas fa-book"></i> Einführung in die Kunstgeschichte
                     </div>
@@ -91,11 +90,11 @@
 {% block extra_js %}
     <script>
         document.getElementById('searchInput').addEventListener('input', function(event) {
-            let searchTerm = event.target.value.toLowerCase();
+            let searchTerm = event.target.value.toLowerCase().trim();
             let books = document.querySelectorAll('.book-card');
             books.forEach(function(book) {
-                let title = book.querySelector('.card-header').innerText.toLowerCase();
-                let description = book.querySelector('.card-body').innerText.toLowerCase();
+                let title = book.querySelector('.card-header').innerText.toLowerCase().trim();
+                let description = book.querySelector('.card-body').innerText.toLowerCase().trim();
                 if (title.includes(searchTerm) || description.includes(searchTerm)) {
                     book.style.display = 'block';
                 } else {
