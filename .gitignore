@@ -1,7 +1,10 @@
-
 /.venv/*
 # Ignoriere Umgebungsvariablen-Datei
 .env
 .idea/*
 # Ignoriere SQLite-Datenbankdatei
 data/db.sqlite3
+# Ignoriere Hochgeladene medien
+/media/*
+# Ignoriere Migrationen
+/**/migrations/*
