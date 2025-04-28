@@ -17,7 +17,7 @@ def home(request):
     events = Events.objects.filter(
         Q(course__students=request.user) | Q(course__teachers=request.user),
         end_date__gt=timezone.now()
-    ).order_by('start_date')
+    ).order_by('start_date').distinct()
 
     if request.user.groups.filter(name="Teacher").exists():
         taught_courses_qs = Course.objects.filter(teachers=request.user)
