@@ -812,3 +812,20 @@ input[type="date"], input[type="time"], input[type="datetime-local"] {
 [data-theme="dark"] #course-dropzone {
     border: 1px solid var(--border-color) !important;
 }
+
+/* Modal über dem Header anzeigen */
+.modal-backdrop {
+    z-index: 10500 !important; /* Zwischen Header (10000) und Modal */
+}
+
+.modal {
+    z-index: 11000 !important; /* Höher als Header (10000) */
+}
+
+#createEventModal .modal-body {
+    text-align: left;
+}
+
+#createEventModal .modal-dialog {
+    margin-top: 3vh; /* Passt den Abstand nach oben an */
+}
