@@ -32,6 +32,12 @@ main {
     flex: 1;
 }
 
+/* Allgemeine responsive Anpassungen */
+.img-fluid {
+    max-width: 100%;
+    height: auto;
+}
+
 /* Barrierefreiheit: Versteckter Skip-Link, der beim Fokussieren sichtbar wird */
 .visually-hidden-focusable:not(:focus):not(:focus-within) {
     position: absolute !important;
@@ -109,10 +115,42 @@ select:focus,
     border-top: 1px solid rgba(0, 0, 0, 0.1);
 }
 
-
 /* ---- Responsive Anpassungen ---- */
 
-@media (max-width: 768px) {
+@media (max-width: 991.98px) {
+    /* Hauptlayout auf mobilen Geräten */
+    .main-content-wrapper {
+        flex-direction: column !important;
+    }
+
+    /* Seitenleiste auf mobilen Geräten */
+    .sidebar {
+        width: 100% !important;
+        min-height: auto !important;
+        padding: 0.5rem 1rem !important;
+    }
+
+    .sidebar ul.nav {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: space-around;
+    }
+
+    .sidebar .nav-item {
+        margin: 0.5rem;
+        width: auto;
+    }
+
+    .sidebar .nav-link {
+        padding: 0.5rem 1rem;
+        border-radius: 0.25rem;
+        background-color: rgba(255, 255, 255, 0.1);
+        width: auto;
+        text-align: center;
+        justify-content: center;
+    }
+
+    /* Verbesserte Komponentendarstellung */
     .navbar .btn-group {
         width: 100%;
         margin-top: 1rem;
@@ -120,6 +158,61 @@ select:focus,
 
     .action-buttons .btn {
         margin-bottom: 0.5rem;
+        width: 100%;
+    }
+
+    /* Footer-Anpassungen */
+    .footer-links a {
+        display: inline-block;
+        margin: 0.25rem 0.5rem;
+    }
+
+    /* Tabellenanpassungen */
+    .table-responsive {
+        margin-bottom: 1rem;
+        overflow-x: auto;
+    }
+}
+
+/* Kleine Geräte wie Smartphones */
+@media (max-width: 576px) {
+    .container {
+        padding-left: 10px;
+        padding-right: 10px;
+    }
+
+    /* Vertikales Menü für sehr kleine Bildschirme */
+    .sidebar ul.nav {
+        flex-direction: column;
+        align-items: stretch;
+    }
+
+    .sidebar .nav-item {
+        width: 100%;
+        margin: 0.25rem 0;
+    }
+
+    /* Anpassungen der Überschriften */
+    h1 {
+        font-size: 1.75rem;
+    }
+
+    h2 {
+        font-size: 1.5rem;
+    }
+
+    h3 {
+        font-size: 1.25rem;
+    }
+
+    /* Kurskarten auf kleinen Geräten */
+    .card {
+        margin-bottom: 1rem;
+    }
+
+    /* Optimierungen für das Dropdown-Menü */
+    .dropdown-menu {
+        position: static !important;
         width: 100%;
     }
 }
@@ -167,7 +260,6 @@ a:not(.btn):not(.badge):not(.navbar-brand):not(.dropdown-item):hover {
     background-color: rgba(0, 86, 179, 0.05);
 }
 
-
 .list-group-item.active {
     background-color: #0d6efd;
     color: white;
@@ -193,7 +285,6 @@ a:not(.btn):not(.badge):not(.navbar-brand):not(.dropdown-item):hover {
 .nav-item {
     transition: background-color 0.2s ease !important;
 }
-
 
 .same-size {
     height: 22rem;
