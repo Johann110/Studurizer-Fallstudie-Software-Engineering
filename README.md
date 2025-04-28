@@ -29,7 +29,7 @@ Diese Anleitung erklärt, wie du das Studurizer-Projekt mit Docker lokal ausfüh
 
 2. **Compose-Datei erstellen und Container starten**
 
-   Erstelle eine `compose.yaml` mit folgendem Inhalt und passe die Umgebungsvariablen an:
+   Erstelle eine `compose.yaml` mit folgendem Inhalt oder lade die [example.compose.yaml herunter](https://github.com/Johann110/Studurizer-Fallstudie-Software-Engineering/raw/refs/heads/main/example.compose.yaml) und passe die Umgebungsvariablen an:
 
    ```yaml
    services:
@@ -69,7 +69,7 @@ Die Docker-Konfiguration verwendet zwei wichtige Volumes:
 
 - **Mediendateien (`./media:/app/media`)**: Hochgeladene Dateien (z.B. Profilbilder, Kursunterlagen) werden im `media`-Verzeichnis gespeichert.
 
-- **Datenbank (`./data:/app/data`)**: Die SQLite-Datenbank wird direkt im Projektverzeichnis gespeichert und bleibt auch nach dem Neustart des Containers erhalten.
+- **Datenbank (`./data:/app/data`)**: Die SQLite-Datenbank wird direkt im Data Verzeichnis gespeichert und bleibt auch nach dem Neustart des Containers erhalten.
 
 ## Häufig verwendete Befehle
 
