@@ -97,7 +97,7 @@ def course_detail(request, pk):
     course = get_object_or_404(Course, pk=pk)
     files = course.materials.all()
 
-    # Termine für diesen Kurs abrufen
+
     from events.models import Events
     from django.utils import timezone
 
@@ -107,7 +107,6 @@ def course_detail(request, pk):
         end_date__gte=now
     ).order_by('start_date')
 
-    # Formular für neue Termine (für Lehrkräfte)
     from events.forms import EventForm
     event_form = EventForm(initial={'course': course})
 

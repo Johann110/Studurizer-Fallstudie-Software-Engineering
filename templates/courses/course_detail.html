@@ -20,9 +20,7 @@
 
                         <hr>
 
-                        <!-- Zwei-Spalten-Layout für Kursinhalt und Events -->
                         <div class="row">
-                            <!-- Linke Spalte - Kursinhalt -->
                             <div class="col-md-8 pe-md-4">
                                 <h5>Lehrende</h5>
                                 <ul class="list-group mb-3">
@@ -73,7 +71,6 @@
                                 </div>
                             </div>
 
-                            <!-- Rechte Spalte - Events-Widget mit fester Höhe und Scrolling -->
                             <div class="col-md-4">
                                 <div class="ps-md-2 border-start h-100">
                                     {% if request.user in course.teachers.all or request.user.is_superuser %}
@@ -107,7 +104,6 @@
                                         </div>
                                     {% endif %}
 
-                                    <!-- Termine anzeigen - mit scrollbarem Container -->
                                     <h5 class="mt-3">Anstehende Termine</h5>
                                     {% if events %}
                                         <div class="event-overview-container" style="max-height: 500px; overflow-y: auto;">
