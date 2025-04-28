@@ -7,7 +7,6 @@ from django.utils.translation import gettext_lazy as _
 from accounts.models import UserProfile, CustomUser
 from accounts.forms import UserProfileForm
 
-#Kein Loginrequired: Machen wir Templateseitig
 def profile_detail(request, id):
     logged_in_user = get_object_or_404(CustomUser, id=id)
     try:
