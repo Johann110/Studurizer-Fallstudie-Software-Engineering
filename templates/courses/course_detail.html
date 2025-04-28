@@ -9,7 +9,6 @@
                 Nur angemeldete Nutzer dürfen Kursinhalte sehen.
             </div>
         {% else %}
-            <!-- Quelle: Teilweise generiert mit Claude -->
             {% if request.user.is_superuser or request.user in course.students.all or request.user in course.teachers.all %}
                 <div class="card shadow-sm">
                     <div class="card-body">
@@ -21,54 +20,132 @@
 
                         <hr>
 
-                        <h5>Lehrende</h5>
-                        <ul class="list-group mb-3">
-                            {% for teacher in course.teachers.all %}
-                                <li class="list-group-item">{{ teacher.username }} ({{ teacher.email }})</li>
-                            {% empty %}
-                                <li class="list-group-item text-muted">Keine Lehrenden zugewiesen</li>
-                            {% endfor %}
-                        </ul>
+                        <div class="row">
+                            <div class="col-md-8 pe-md-4">
+                                <h5>Lehrende</h5>
+                                <ul class="list-group mb-3">
+                                    {% for teacher in course.teachers.all %}
+                                        <li class="list-group-item">{{ teacher.username }} ({{ teacher.email }})</li>
+                                    {% empty %}
+                                        <li class="list-group-item text-muted">Keine Lehrenden zugewiesen</li>
+                                    {% endfor %}
+                                </ul>
 
-                    
-                        <h5>Teilnehmende</h5>
-                        <ul class="list-group mb-3">
-                            {% for student in course.students.all %}
-                                <li class="list-group-item">{{ student.username }} ({{ student.email }})</li>
-                            {% empty %}
-                                <li class="list-group-item text-muted">Keine Studierenden eingeschrieben</li>
-                            {% endfor %}
-                        </ul>
+                                <h5>Teilnehmende</h5>
+                                <ul class="list-group mb-3">
+                                    {% for student in course.students.all %}
+                                        <li class="list-group-item">{{ student.username }} ({{ student.email }})</li>
+                                    {% empty %}
+                                        <li class="list-group-item text-muted">Keine Studierenden eingeschrieben</li>
+                                    {% endfor %}
+                                </ul>
 
+                                <h5>Kursmaterial</h5>
+                                <ul>
+                                    {% for file in files %}
+                                        <li>
+                                            <a href="{{ file.file.url }}" download>
+                                                {{ file.file.name|basename }}
+                                            </a>
+                                        </li>
+                                    {% empty %}
+                                        <li>Keine Dateien vorhanden.</li>
+                                    {% endfor %}
+                                </ul>
 
-                        <h5>Kursmaterial</h5>
-                        <ul>
-                            {% for file in files %}
-                                <li>
-                                    <a href="{{ file.file.url }}" download>
-                                        {{ file.file.name|basename }}
-                                    </a>
-                                </li>
-                            {% empty %}
-                                <li>Keine Dateien vorhanden.</li>
-                            {% endfor %}
-                        </ul>
+                                <h5>Abgaben</h5>
+                                <ul class="list-group mb-3">
+                                    <li class="list-group-item">Abgabe1</li>
+                                    <li class="list-group-item">Abgabe2</li>
+                                </ul>
 
-                        <h5>Abgaben</h5>
-                        <ul class="list-group mb-3">
-                            <li class="list-group-item">Abgabe1</li>
-                            <li class="list-group-item">Abgabe2</li>
-                        </ul>
+                                <div class="mt-4">
+                                    <a href="{% url 'home' %}" class="btn btn-secondary">Zurück</a>
+                                    {% if request.user.is_superuser or request.user in course.teachers.all %}
+                                        <a href="{% url 'update_course' course.pk %}" class="btn btn-primary">Bearbeiten</a>
+                                        <form method="post" action="{% url 'delete_course' course.pk %}" class="d-inline">
+                                            {% csrf_token %}
+                                            <button type="submit" class="btn btn-danger">Löschen</button>
+                                        </form>
+                                    {% endif %}
+                                </div>
+                            </div>
 
-                        <div class="mt-4">
-                            <a href="{% url 'home' %}" class="btn btn-secondary">Zurück</a>
-                            {% if request.user.is_superuser or request.user in course.teachers.all %}
-                                <a href="{% url 'update_course' course.pk %}" class="btn btn-primary">Bearbeiten</a>
-                                <form method="post" action="{% url 'delete_course' course.pk %}" class="d-inline">
-                                    {% csrf_token %}
-                                    <button type="submit" class="btn btn-danger">Löschen</button>
-                                </form>
-                            {% endif %}
+                            <div class="col-md-4">
+                                <div class="ps-md-2 border-start h-100">
+                                    {% if request.user in course.teachers.all or request.user.is_superuser %}
+                                        <div class="text-end mb-3">
+                                            <button class="btn btn-success" data-bs-toggle="modal" data-bs-target="#createEventModal">
+                                                <i class="bi bi-calendar-plus"></i> Termin erstellen
+                                            </button>
+                                        </div>
+
+                                        <!-- Modal für Terminerstellung -->
+                                        <div class="modal fade" id="createEventModal" tabindex="-1" aria-labelledby="createEventModalLabel"
+                                            aria-hidden="true">
+                                            <div class="modal-dialog">
+                                                <div class="modal-content">
+                                                    <form method="post" action="{% url 'create_event_for_course' course.id %}">
+                                                        {% csrf_token %}
+                                                        <div class="modal-header">
+                                                            <h5 class="modal-title" id="createEventModalLabel">Termin für "{{ course.title }}" anlegen</h5>
+                                                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Schließen"></button>
+                                                        </div>
+                                                        <div class="modal-body">
+                                                            {{ form.as_p }}
+                                                        </div>
+                                                        <div class="modal-footer">
+                                                            <button type="submit" class="btn btn-primary">Speichern</button>
+                                                        </div>
+                                                    </form>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    {% endif %}
+
+                                    <h5 class="mt-3">Anstehende Termine</h5>
+                                    {% if events %}
+                                        <div class="event-overview-container" style="max-height: 500px; overflow-y: auto;">
+                                            <div class="event-overview container py-2 px-0">
+                                                <div class="row g-3">
+                                                    {% for event in events %}
+                                                        <div class="col-12">
+                                                            <div class="card shadow-sm border-0">
+                                                                <div class="card-body">
+                                                                    <p class="card-text text-muted mb-1">
+                                                                        <i class="bi bi-calendar-event"></i>
+                                                                        Start: {{ event.start_date|date:"d.m.Y H:i" }}
+                                                                    </p>
+                                                                    <p class="card-text text-muted mb-1">
+                                                                        <i class="bi bi-calendar-check"></i>
+                                                                        Ende: {{ event.end_date|date:"d.m.Y H:i" }}
+                                                                    </p>
+                                                                    <p class="card-text">
+                                                                        {{ event.description }}
+                                                                    </p>
+                                                                    {% if request.user in course.teachers.all or request.user.is_superuser %}
+                                                                        <form action="{% url 'delete_event' event.id %}" method="post" class="mt-2">
+                                                                            {% csrf_token %}
+                                                                            <input type="hidden" name="redirect_to" value="{% url 'course_detail' course.id %}">
+                                                                            <button type="submit" class="btn btn-sm btn-outline-danger">
+                                                                                <i class="bi bi-trash"></i> Löschen
+                                                                            </button>
+                                                                        </form>
+                                                                    {% endif %}
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    {% endfor %}
+                                                </div>
+                                            </div>
+                                        </div>
+                                    {% else %}
+                                        <div class="alert alert-info">
+                                            Keine anstehenden Termine für diesen Kurs.
+                                        </div>
+                                    {% endif %}
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -84,7 +161,6 @@
                     </ul>
                 </div>
             {% endif %}
-            <!-- Ende der Generierung -->
         {% endif %}
     </div>
 {% endblock %}

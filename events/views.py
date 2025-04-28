@@ -15,14 +15,17 @@ class CreateEvent(CreateView):
     form_class = EventForm
     success_url = reverse_lazy("home")
 
-
 class DeleteEvent(View):
     def post(self, request, pk):
         event = get_object_or_404(Events, pk=pk)
         event.delete()
+
+        # Wenn eine Umleitungs-URL bereitgestellt wurde, dorthin umleiten
+        redirect_to = request.POST.get('redirect_to')
+        if redirect_to:
+            return redirect(redirect_to)
+
         return redirect('all_events')
-
-
 
 def events(request):
     user_courses_q = Q(course__students=request.user) | Q(course__teachers=request.user)
@@ -50,3 +53,22 @@ def events(request):
         'misc_events': misc_events
     }
     return render(request, 'events/eventsdetail.html',context)
+
+
+# In events/views.py
+class CreateEventForCourse(CreateView):
+    model = Events
+    form_class = EventForm
+
+    def form_valid(self, form):
+        # Kurs aus der URL setzen
+        course_id = self.kwargs.get('course_id')
+        course = get_object_or_404(Course, pk=course_id)
+        form.instance.course = course
+
+        # Erfolgsform speichern
+        return super().form_valid(form)
+
+    def get_success_url(self):
+        course_id = self.kwargs.get('course_id')
+        return reverse_lazy('course_detail', kwargs={'pk': course_id})
