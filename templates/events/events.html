@@ -8,12 +8,10 @@
                         <div class="card shadow-sm border-0">
                             <div class="card-body">
                                 <h5 class="card-title mb-2 fw-semibold text-center">{{ event.course.title }}</h5>
-                                <p class="card-text text-muted mb-1">
-                                    <i class="bi bi-calendar-event"></i>
+                                <p class="card-text date-info mb-1">
                                     Start: {{ event.start_date|date:"d.m.Y H:i" }}
                                 </p>
-                                <p class="card-text text-muted">
-                                    <i class="bi bi-calendar-check"></i>
+                                <p class="card-text date-info">
                                     Ende: {{ event.end_date|date:"d.m.Y H:i" }}
                                 </p>
                             </div>
@@ -25,4 +23,3 @@
         <a href="{% url 'all_events' %}" class="btn btn-dark">Zur Terminübersicht</a>
     {% endif %}
 {% endblock %}
-

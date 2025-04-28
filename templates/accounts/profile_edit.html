@@ -43,7 +43,7 @@
                                         <img src="{{ profile.profile_picture.url }}" alt="Aktuelles Profilbild" class="img-thumbnail" style="max-height: 100px;">
                                         <a href="{% url 'profile_delete_picture' %}" class="btn btn-sm btn-danger ms-2"
                                             onclick="return confirm('Sind Sie sicher, dass Sie Ihr Profilbild löschen möchten?');">
-                                                <i class="bi bi-trash"></i> Löschen
+                                                Löschen
                                         </a>
                                     </div>
                                 {% else %}
@@ -122,45 +122,45 @@
         // Zeichenzähler für Beschreibungsfeld
         const descriptionField = document.getElementById('{{ form.description.id_for_label }}');
         const descriptionCounter = document.getElementById('descriptionCounter');
-        
+
         function updateCounter() {
             const count = descriptionField.value.length;
             descriptionCounter.textContent = count + '/500 Zeichen';
-            
+
             if (count > 450) {
                 descriptionCounter.classList.add('text-warning');
             } else {
                 descriptionCounter.classList.remove('text-warning');
             }
-            
+
             if (count >= 500) {
                 descriptionCounter.classList.add('text-danger');
             } else {
                 descriptionCounter.classList.remove('text-danger');
             }
         }
-        
+
         // Initial zählen
         updateCounter();
-        
+
         // Bei Eingabe aktualisieren
         descriptionField.addEventListener('input', updateCounter);
-        
+
         // Bildvorschau
         const profilePictureInput = document.getElementById('{{ form.profile_picture.id_for_label }}');
-        
+
         profilePictureInput.addEventListener('change', function() {
             const previewContainer = document.querySelector('.profile-picture-preview');
-            
+
             // Alte Vorschau entfernen, falls vorhanden
             if (previewContainer) {
                 previewContainer.remove();
             }
-            
+
             // Neue Vorschau erstellen, wenn Datei ausgewählt wurde
             if (this.files && this.files[0]) {
                 const reader = new FileReader();
-                
+
                 reader.onload = function(e) {
                     const imgContainer = document.createElement('div');
                     imgContainer.className = 'mb-2';
@@ -179,11 +179,11 @@
 
                     imgContainer.appendChild(text);
                     imgContainer.appendChild(img);
-                    
+
                     const inputGroup = profilePictureInput.closest('.input-group');
                     inputGroup.parentNode.insertBefore(imgContainer, inputGroup);
                 };
-                
+
                 reader.readAsDataURL(this.files[0]);
             }
         });

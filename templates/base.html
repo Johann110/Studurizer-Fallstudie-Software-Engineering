@@ -14,37 +14,21 @@
     <script src="{% static 'libs/jquery.js' %}"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
     <style>
-        /* Responsive Styles */
-        @media (max-width: 991.98px) {
-            .sidebar {
-                width: 100% !important;
-                min-height: auto !important;
-                position: static !important;
-            }
+        /* Zentrierung des Dark Mode Toggles */
+        .theme-switch-wrapper {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            height: 100%;
+            margin-left: 15px;
+            margin-right: 15px;
+            padding: 0.25rem 0.5rem;
+        }
 
-            .sidebar ul.nav {
-                display: flex;
-                flex-wrap: wrap;
-                justify-content: center;
-            }
-
-            .sidebar .nav-item {
-                margin: 0 10px 10px 0;
-            }
-
-            .main-content-wrapper {
-                flex-direction: column !important;
-            }
-
-            .footer-links a {
-                display: block;
-                margin: 5px 0;
-            }
-
-            /* Show horizontal scrolling on tables */
-            .table-responsive {
-                overflow-x: auto;
-            }
+        /* Für ältere Browser, die :has nicht unterstützen */
+        .nav-item-centered {
+            display: flex;
+            align-items: center;
         }
     </style>
     {% block extra_head %}{% endblock %}
@@ -79,14 +63,28 @@
                                     <a class="nav-link text-decoration-none" href="{% url 'create_course' %}">Kurs anlegen</a>
                                 </li>
                             {% endif %}
+
+                            <!-- Dark Mode Toggle - mit besserem vertikalen Alignment -->
+                            <li class="nav-item nav-item-centered">
+                                <div class="theme-switch-wrapper">
+                                    <label class="theme-switch" for="darkModeToggle">
+                                        <input type="checkbox" id="darkModeToggle" />
+                                        <span class="slider">
+                                            <i class="fas fa-sun sun"></i>
+                                            <i class="fas fa-moon moon"></i>
+                                        </span>
+                                    </label>
+                                </div>
+                            </li>
+
                             <li class="nav-item dropdown" style="margin-left: 1rem">
                                 <a class="nav-link dropdown-toggle text-decoration-none" href="#" id="userDropdown"
-                                role="button"
-                                data-bs-toggle="dropdown" aria-expanded="false">
+                                   role="button"
+                                   data-bs-toggle="dropdown" aria-expanded="false">
                                     {% with user_profile=user.Nutzer.first %}
                                         {% if user_profile.profile_picture %}
                                             <img src="{{ user_profile.profile_picture.url }}" alt="Profilbild"
-                                                class="rounded-circle me-2" width="25" height="25" style="object-fit: cover;">
+                                                 class="rounded-circle me-2" width="25" height="25" style="object-fit: cover;">
                                         {% endif %}
                                     {% endwith %}
                                     {{ user.username }}
@@ -111,6 +109,18 @@
                                 </ul>
                             </li>
                         {% else %}
+                            <!-- Dark Mode Toggle für nicht-angemeldete Benutzer - mit besserem vertikalen Alignment -->
+                            <li class="nav-item nav-item-centered">
+                                <div class="theme-switch-wrapper">
+                                    <label class="theme-switch" for="darkModeToggle">
+                                        <input type="checkbox" id="darkModeToggle" />
+                                        <span class="slider">
+                                            <i class="fas fa-sun sun"></i>
+                                            <i class="fas fa-moon moon"></i>
+                                        </span>
+                                    </label>
+                                </div>
+                            </li>
                             <li class="nav-item">
                                 <a class="nav-link text-decoration-none" href="{% url 'login' %}">Anmelden</a>
                             </li>
@@ -123,8 +133,8 @@
 
     <div class="d-flex" style="min-height: 100vh; flex-direction: column; margin-top: 0">
         <div class="d-flex flex-grow-1 main-content-wrapper">
-            <!-- Sidebar Navigation -->
-            <nav class="p-4 sidebar" style="width: 14rem; background-color: #2c2c2c; min-height: 100vh;">
+            <!-- Sidebar Navigation - Now using the same bg-dark color as navbar and footer -->
+            <nav class="p-4 sidebar bg-dark" style="width: 14rem; min-height: 100vh;">
                 <ul class="nav flex-column mt-2">
                     <li class="nav-item mb-4">
                         <a class="nav-link text-white text-decoration-none fs-5 d-flex align-items-center gap-3"
@@ -148,7 +158,7 @@
                         </a>
                     </li>
                     <li class="nav-item mb-4">
-                        <a class="nav-link text-light disabled text-decoration-none fs-5 d-flex align-items-center gap-3"
+                        <a class="nav-link text-white disabled text-decoration-none fs-5 d-flex align-items-center gap-3"
                            href="#">
                             <i class="fa-solid fa-comment"></i>
                             <span>Forum</span>
@@ -170,8 +180,8 @@
         <footer class="bg-dark text-center text-white py-3 mt-auto">
             <div class="container">
                 <div class="footer-content">
-                    <p class="mb-2">&copy; {% now "Y" %} Studurizer | Barrierefreies Kursverwaltungssystem</p>
-                    <div class="footer-links">
+                    <div>&copy; {% now "Y" %} Studurizer | Barrierefreies Kursverwaltungssystem</div>
+                    <div class="footer-links mt-2">
                         <a href="{% url "contact" %}" class="text-white mx-2">Kontakt</a> |
                         <a href="{% url "imprint" %}" class="text-white mx-2">Impressum</a> |
                         <a href="{% url "datapolicy" %}" class="text-white mx-2">Datenschutz</a>
@@ -182,6 +192,104 @@
     </div>
 
     <script src="{% static 'libs/bootstrap_5.js' %}"></script>
+    <!-- Dark Mode Script -->
+    <script src="{% static 'js/darkmode.js' %}"></script>
+
+    <!-- Button Icons Script -->
+    <script>
+    document.addEventListener('DOMContentLoaded', function() {
+        // Buttons mit bestimmtem Text identifizieren und Icons hinzufügen
+        const buttons = document.querySelectorAll('button, .btn');
+
+        buttons.forEach(button => {
+            // Navbar, Header, Footer ausschließen
+            if (button.closest('header') || button.closest('footer') || button.closest('.navbar')) {
+                return;
+            }
+
+            // Prüfen, ob bereits ein Icon vorhanden ist
+            if (button.querySelector('i.fas, i.far, i.fab, i.bi')) {
+                return;
+            }
+
+            const buttonText = button.textContent.trim().toLowerCase();
+            let icon = '';
+
+            // Icon basierend auf Text zuweisen
+            if (buttonText.includes('speichern') || buttonText.includes('sichern')) {
+                icon = 'fa-save';
+            } else if (buttonText.includes('löschen') || buttonText.includes('entfernen')) {
+                icon = 'fa-trash';
+            } else if (buttonText.includes('hinzufügen') || buttonText.includes('neu')) {
+                icon = 'fa-plus';
+            } else if (buttonText.includes('bearbeiten') || buttonText.includes('ändern')) {
+                icon = 'fa-edit';
+            } else if (buttonText.includes('zurück')) {
+                icon = 'fa-arrow-left';
+            } else if (buttonText.includes('details') || buttonText.includes('anzeigen') || buttonText.includes('info')) {
+                icon = 'fa-info-circle';
+            } else if (buttonText.includes('kurs')) {
+                icon = 'fa-graduation-cap';
+            } else if (buttonText.includes('termin') || buttonText.includes('event') || buttonText.includes('kalender')) {
+                icon = 'fa-calendar-alt';
+            } else if (buttonText.includes('pdf') || buttonText.includes('dokument')) {
+                icon = 'fa-file-pdf';
+            } else if (buttonText.includes('suchen') || buttonText.includes('finden')) {
+                icon = 'fa-search';
+            } else if (buttonText.includes('abmelden') || buttonText.includes('logout')) {
+                icon = 'fa-sign-out-alt';
+            } else if (buttonText.includes('anmelden') || buttonText.includes('login')) {
+                icon = 'fa-sign-in-alt';
+            } else if (buttonText.includes('einstellung')) {
+                icon = 'fa-cog';
+            } else if (buttonText.includes('hilfe') || buttonText.includes('support')) {
+                icon = 'fa-question-circle';
+            } else if (buttonText.includes('download') || buttonText.includes('herunterladen')) {
+                icon = 'fa-download';
+            } else if (buttonText.includes('upload') || buttonText.includes('hochladen')) {
+                icon = 'fa-upload';
+            } else if (buttonText.includes('email') || buttonText.includes('mail')) {
+                icon = 'fa-envelope';
+            } else if (buttonText.includes('drucken')) {
+                icon = 'fa-print';
+            } else if (buttonText.includes('benutzer') || buttonText.includes('profil')) {
+                icon = 'fa-user';
+            } else if (buttonText.includes('teilen')) {
+                icon = 'fa-share-alt';
+            } else if (buttonText.includes('abbrechen') || buttonText.includes('cancel')) {
+                icon = 'fa-times';
+            } else if (buttonText.includes('ok') || buttonText.includes('bestätigen')) {
+                icon = 'fa-check';
+            } else if (buttonText.includes('admin') || buttonText.includes('verwalten')) {
+                icon = 'fa-cogs';
+            } else if (buttonText.includes('export')) {
+                icon = 'fa-file-export';
+            } else if (buttonText.includes('import')) {
+                icon = 'fa-file-import';
+            } else if (button.classList.contains('btn-primary')) {
+                // Fallback für Primary-Buttons ohne spezifischen Text
+                icon = 'fa-check';
+            } else if (button.classList.contains('btn-danger')) {
+                // Fallback für Danger-Buttons ohne spezifischen Text
+                icon = 'fa-exclamation-triangle';
+            } else if (button.classList.contains('btn-success')) {
+                // Fallback für Success-Buttons ohne spezifischen Text
+                icon = 'fa-check-circle';
+            }
+
+            // Icon hinzufügen, wenn eines gefunden wurde
+            if (icon) {
+                const iconElement = document.createElement('i');
+                iconElement.className = 'fas ' + icon + ' me-2';
+                // Textinhalt beibehalten, aber Icon am Anfang einfügen
+                const textNode = document.createTextNode(button.textContent);
+                button.textContent = '';
+                button.appendChild(iconElement);
+                button.appendChild(textNode);
+            }
+        });
+    });
+    </script>
     
     {% block extra_js %}{% endblock %}
 </body>

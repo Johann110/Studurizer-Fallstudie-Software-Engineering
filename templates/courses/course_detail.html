@@ -76,7 +76,7 @@
                                     {% if request.user in course.teachers.all or request.user.is_superuser %}
                                         <div class="text-end mb-3">
                                             <button class="btn btn-success" data-bs-toggle="modal" data-bs-target="#createEventModal">
-                                                <i class="bi bi-calendar-plus"></i> Termin erstellen
+                                                Termin erstellen
                                             </button>
                                         </div>
 
@@ -113,11 +113,9 @@
                                                             <div class="card shadow-sm border-0">
                                                                 <div class="card-body">
                                                                     <p class="card-text text-muted mb-1">
-                                                                        <i class="bi bi-calendar-event"></i>
                                                                         Start: {{ event.start_date|date:"d.m.Y H:i" }}
                                                                     </p>
                                                                     <p class="card-text text-muted mb-1">
-                                                                        <i class="bi bi-calendar-check"></i>
                                                                         Ende: {{ event.end_date|date:"d.m.Y H:i" }}
                                                                     </p>
                                                                     <p class="card-text">
@@ -128,7 +126,7 @@
                                                                             {% csrf_token %}
                                                                             <input type="hidden" name="redirect_to" value="{% url 'course_detail' course.id %}">
                                                                             <button type="submit" class="btn btn-sm btn-outline-danger">
-                                                                                <i class="bi bi-trash"></i> Löschen
+                                                                                Löschen
                                                                             </button>
                                                                         </form>
                                                                     {% endif %}
@@ -163,4 +161,22 @@
             {% endif %}
         {% endif %}
     </div>
+{% endblock %}
+
+{% block extra_head %}
+<style>
+    /* Mobile Anpassungen für die Kursdetailseite */
+    @media (max-width: 767.98px) {
+        .col-md-4 .border-start {
+            border-left: none !important;
+            border-top: 1px solid rgba(0,0,0,.125);
+            padding-top: 1.5rem;
+            margin-top: 1.5rem;
+        }
+
+        .event-overview-container {
+            max-height: 300px;
+        }
+    }
+</style>
 {% endblock %}

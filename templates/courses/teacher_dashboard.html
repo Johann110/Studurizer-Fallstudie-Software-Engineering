@@ -11,7 +11,7 @@
             </div>
             <div class="col-md-4 text-md-end">
                 <a href="{% url 'create_course' %}" class="btn btn-primary">
-                    <i class="bi bi-plus-circle me-1"></i> Neuen Kurs erstellen
+                    Neuen Kurs erstellen
                 </a>
                 {% include 'events/create_events.html' %}
             </div>
@@ -147,15 +147,17 @@
             const toggleHeader = document.querySelector(".toggle-header");
             const collapseTarget = document.getElementById("archivedCoursesCollapse");
 
-            collapseTarget.addEventListener("show.bs.collapse", () => {
-                toggleHeader.classList.remove("collapsed");
-                toggleHeader.classList.add("expanded");
-            });
+            if (toggleHeader && collapseTarget) {
+                collapseTarget.addEventListener("show.bs.collapse", () => {
+                    toggleHeader.classList.remove("collapsed");
+                    toggleHeader.classList.add("expanded");
+                });
 
-            collapseTarget.addEventListener("hide.bs.collapse", () => {
-                toggleHeader.classList.remove("expanded");
-                toggleHeader.classList.add("collapsed");
-            });
+                collapseTarget.addEventListener("hide.bs.collapse", () => {
+                    toggleHeader.classList.remove("expanded");
+                    toggleHeader.classList.add("collapsed");
+                });
+            }
         });
     </script>
 {% endblock %}
@@ -173,7 +175,7 @@
 
         .toggle-icon {
             transition: transform 0.3s ease;
-            color: gray;
+            color: var(--text-muted);
         }
 
         .collapsed .toggle-icon {
@@ -182,6 +184,45 @@
 
         .expanded .toggle-icon {
             transform: rotate(180deg);
+        }
+
+        /* Mobile Anpassungen */
+        @media (max-width: 767.98px) {
+            .d-flex.flex-wrap {
+                flex-direction: column;
+            }
+
+            .lead {
+                font-size: 1rem;
+            }
+
+            .col-md-4.text-md-end {
+                text-align: left !important;
+                margin-top: 1rem;
+                margin-bottom: 1rem;
+            }
+
+            .btn-group {
+                flex-direction: column;
+                width: 100%;
+            }
+
+            .btn-group .btn {
+                border-radius: 0.25rem !important;
+                margin-bottom: 0.25rem;
+            }
+
+            .card {
+                margin-bottom: 1rem;
+            }
+
+            .card-title {
+                font-size: 1rem;
+            }
+
+            .card-text {
+                font-size: 0.9rem;
+            }
         }
     </style>
 {% endblock %}
