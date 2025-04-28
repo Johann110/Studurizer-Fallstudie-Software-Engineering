@@ -9,12 +9,12 @@ from StudurizerApp import settings
 
 class Assignment(models.Model):
     course = models.ForeignKey('courses.Course', on_delete=models.CASCADE, related_name='assignments')
-    title = models.CharField(max_length=255)
-    description = models.TextField()
-    start_time = models.DateTimeField()
-    end_time = models.DateTimeField()
-    is_open = models.BooleanField(default=True)
-    created_at = models.DateTimeField(auto_now_add=True)
+    title = models.CharField(max_length=255,verbose_name="Titel")
+    description = models.TextField(verbose_name="Beschreibung")
+    start_time = models.DateTimeField(verbose_name="Startzeit")
+    end_time = models.DateTimeField(verbose_name="Endzeit")
+    is_open = models.BooleanField(default=True,verbose_name="Offen")
+    created_at = models.DateTimeField(auto_now_add=True,verbose_name="Erzeugt am")
 
     def delete(self, *args, **kwargs):
         assignment_folder = os.path.join(settings.MEDIA_ROOT, f'courses/course_{self.course.id}/assignments/{self.id}')
