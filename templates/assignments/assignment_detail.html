@@ -1,0 +1,43 @@
+{% extends 'base.html' %}
+{% load roles %}
+{% load filename %}
+
+{% block content %}
+    <div class="card shadow-sm">
+        <div class="card-body">
+            <h2 class="card-title">{{ assignment.title }}</h2>
+            <p><strong>Endet am:</strong> {{ assignment.end_time }}</p>
+            <p class="card-text">{{ assignment.description }}</p>
+
+            <h5>Beigelegte Dateien</h5>
+            <ul>
+                {% for file in files %}
+                    <li>
+                        <a href="{{ file.file.url }}" download>
+                            {{ file.file.name|basename }}
+                        </a>
+                    </li>
+                {% empty %}
+                    <li>Keine Dateien vorhanden.</li>
+                {% endfor %}
+            </ul>
+
+            <div class="mt-4">
+                <a href="{% url 'course_detail' course.id %}" class="btn btn-secondary">Zurück zum Kurs</a>
+                {% if user.is_authenticated and user|is_group:"Teacher" and request.user in course.teachers.all or user.is_staff %}
+                    <a href="{% url 'update_assignment' assignment.pk %}" class="btn btn-primary">Bearbeiten</a>
+                    <form method="post" action="{% url 'delete_assignment' assignment.pk %}" class="d-inline">
+                        {% csrf_token %}
+                        <button type="submit" class="btn btn-danger">Löschen</button>
+                    </form>
+
+                {% elif user.is_authenticated and user|is_group:"Student" and request.user in course.students.all %}
+
+                    Antwort Einreichen
+                {% else %}
+                    <p> Sie dürfen hier nicht sein!</p>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+{% endblock %}

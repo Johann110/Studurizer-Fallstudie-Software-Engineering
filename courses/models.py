@@ -5,6 +5,7 @@ from django.db import models
 
 from StudurizerApp import settings
 from accounts.models import CustomUser
+from assignments.models import Assignment
 
 
 class Course(models.Model):
@@ -17,13 +18,26 @@ class Course(models.Model):
 
     # Quelle: Codegenerierung mit Grok3
     def delete(self, *args, **kwargs):
-        course_folder = os.path.join(settings.MEDIA_ROOT, f'course_{self.id}')
+        course_folder = os.path.join(settings.MEDIA_ROOT, f'courses/course_{self.id}')
 
+        # delete all materials associated with the course
         for material in self.materials.all():
             if material.file and os.path.isfile(material.file.path):
                 os.remove(material.file.path)
             material.delete()
 
+        # delete all assignments associated with the course
+        for assignment in self.assignments.all():
+            assignment_folder = os.path.join(settings.MEDIA_ROOT, f'courses/course_{assignment.course.id}/assignments/{assignment.id}')
+            for file in assignment.files.all():
+                if file.file and os.path.isfile(file.file.path):
+                    os.remove(file.file.path)
+                file.delete()
+            if os.path.exists(assignment_folder):
+                shutil.rmtree(assignment_folder, ignore_errors=True)
+            assignment.delete()
+
+        # delete course folder
         if os.path.exists(course_folder):
             shutil.rmtree(course_folder, ignore_errors=True)
 

@@ -59,6 +59,18 @@
                                     <li class="list-group-item">Abgabe2</li>
                                 </ul>
 
+                        <h5>Abgaben</h5>
+                        <ul class="list-group mb-3">
+                            {% for assignment in assignments %}
+                                <li class="list-group-item"><a href="/assignments/assignment/{{ assignment.id }}">{{ assignment.title }}</a></li>
+                            {% empty %}
+                                <li class="list-group-item text-muted">Aktuell keine Abgaben</li>
+                            {% endfor %}
+                        </ul>
+                    
+                        {% if request.user.is_superuser or request.user in course.teachers.all %}
+                            <a href="{% url 'create_assignment' course.pk %}" class="btn btn-primary">Abgabe erstellen</a>
+                        {% endif %}
                                 <div class="mt-4">
                                     <a href="{% url 'home' %}" class="btn btn-secondary">Zurück</a>
                                     {% if request.user.is_superuser or request.user in course.teachers.all %}

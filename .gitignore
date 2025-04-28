@@ -1,4 +1,3 @@
-
 /.venv/*
 # Ignoriere Umgebungsvariablen-Datei
 .env
