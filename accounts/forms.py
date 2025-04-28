@@ -29,8 +29,7 @@ class CustomUserAuthenticationForm(AuthenticationForm):
 
 
 class UserProfileForm(forms.ModelForm):
-    # Aria Labels unnötig Felder haben ein Verbose name in den Models
-    # Ich und Johann haben für Form control eine Methode geschrieben
+    
     class Meta:
         model = UserProfile
         fields = ('profile_picture', 'description')
