@@ -1,4 +1,5 @@
 {% extends "base.html" %}
+{% load roles %}
 {% block content %}
     {% load static %}
     {% if user.is_authenticated %}
@@ -32,11 +33,12 @@
                                             </p>
                                             <hr>
                                             <span class="d-flex gap-2">
-                                                <form action="{% url 'delete_event' event.id %}" method="post" style="display:inline;">
-                                                    {% csrf_token %}
-                                                    <button type="submit" class="btn btn-sm btn-outline-danger">Löschen</button>
-                                                </form>
-
+                                                {% if user|is_group:"Teacher" or user.is_staff %}
+                                                    <form action="{% url 'delete_event' event.id %}" method="post" style="display:inline;">
+                                                        {% csrf_token %}
+                                                        <button type="submit" class="btn btn-sm btn-outline-danger">Löschen</button>
+                                                    </form>
+                                                {% endif %}
                                                 <a class="btn btn-sm btn-outline-secondary"
                                                    data-bs-toggle="collapse"
                                                    href="#desc-expired-{{ event.id }}"
@@ -76,11 +78,12 @@
                                             </p>
                                             <hr>
                                             <span class="d-flex gap-2">
-                                                <form action="{% url 'delete_event' event.id %}" method="post" style="display:inline;">
-                                                    {% csrf_token %}
-                                                    <button type="submit" class="btn btn-sm btn-outline-danger">Löschen</button>
-                                                </form>
-
+                                                {% if user|is_group:"Teacher" or user.is_staff %}
+                                                    <form action="{% url 'delete_event' event.id %}" method="post" style="display:inline;">
+                                                        {% csrf_token %}
+                                                        <button type="submit" class="btn btn-sm btn-outline-danger">Löschen</button>
+                                                    </form>
+                                                {% endif %}
                                                 <a class="btn btn-sm btn-outline-secondary"
                                                    data-bs-toggle="collapse"
                                                    href="#desc-expired-{{ event.id }}"
@@ -114,10 +117,12 @@
                                                 Ende: {{ event.end_date }}
                                             </p>
                                             <span class="d-flex gap-2">
-                                                <form action="{% url 'delete_event' event.id %}" method="post" style="display:inline;">
-                                                    {% csrf_token %}
-                                                    <button type="submit" class="btn btn-sm btn-outline-danger">Löschen</button>
-                                                </form>
+                                                {% if user|is_group:"Teacher" or user.is_staff %}
+                                                    <form action="{% url 'delete_event' event.id %}" method="post" style="display:inline;">
+                                                        {% csrf_token %}
+                                                        <button type="submit" class="btn btn-sm btn-outline-danger">Löschen</button>
+                                                    </form>
+                                                {% endif %}
                                             </span>
                                         </div>
                                     </div>

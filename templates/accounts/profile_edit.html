@@ -1,0 +1,192 @@
+{% extends "base.html" %}
+
+{% block title %}Profil bearbeiten | Studurizer{% endblock %}
+
+{% block content %}
+    {% if user.is_authenticated %}
+        <div class="row mb-4">
+            <div class="col-md-8">
+                <nav aria-label="breadcrumb">
+                    <ol class="breadcrumb">
+                        <li class="breadcrumb-item"><a href="{% url 'home' %}">Home</a></li>
+                        <li class="breadcrumb-item"><a href="{% url 'profile' user.id %}">Mein Profil</a></li>
+                        <li class="breadcrumb-item active" aria-current="page">Bearbeiten</li>
+                    </ol>
+                </nav>
+                <h1 class="h2">Profil bearbeiten</h1>
+                <p class="lead">Passen Sie Ihre persönlichen Informationen an</p>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-lg-8">
+                <div class="card shadow-sm">
+                    <div class="card-header bg-light">
+                        <h2 class="h5 mb-0">Profilinformationen</h2>
+                    </div>
+                    <div class="card-body">
+                        <form method="post" enctype="multipart/form-data" novalidate>
+                            {% csrf_token %}
+
+                            {% if form.non_field_errors %}
+                                <div class="alert alert-danger">
+                                    {% for error in form.non_field_errors %}
+                                        {{ error }}
+                                    {% endfor %}
+                                </div>
+                            {% endif %}
+
+                            <div class="mb-3">
+                                <label for="{{ form.profile_picture.id_for_label }}" class="form-label">Mein aktuelles Profilbild:</label>
+                                {% if profile and profile.profile_picture %}
+                                    <div class="mb-2">
+                                        <img src="{{ profile.profile_picture.url }}" alt="Aktuelles Profilbild" class="img-thumbnail" style="max-height: 100px;">
+                                        <a href="{% url 'profile_delete_picture' %}" class="btn btn-sm btn-danger ms-2"
+                                            onclick="return confirm('Sind Sie sicher, dass Sie Ihr Profilbild löschen möchten?');">
+                                                <i class="bi bi-trash"></i> Löschen
+                                        </a>
+                                    </div>
+                                {% else %}
+                                    <br>
+                                    <div class="placeholder-image d-inline-flex justify-content-center align-items-center bg-light rounded" style="width: 100px; height: 100px;">
+                                        <span class="text-secondary fs-3">{{ user.username|first|upper }}</span>
+                                    </div>
+                                {% endif %}
+                                <div class="input-group">
+                                    {{ form.profile_picture }}
+                                </div>
+                                <div class="form-text">Unterstützte Formate: JPG, JPEG, PNG, GIF. Maximale Größe: 5 MB.</div>
+                                {% if form.profile_picture.errors %}
+                                    <div class="invalid-feedback d-block">
+                                        {% for error in form.profile_picture.errors %}
+                                            {{ error }}
+                                        {% endfor %}
+                                    </div>
+                                {% endif %}
+                            </div>
+
+                            <div class="mb-3">
+                                <label for="{{ form.description.id_for_label }}" class="form-label">Über mich:</label>
+                                {{ form.description }}
+                                <div id="descriptionCounter" class="form-text text-end">0/500 Zeichen</div>
+                                {% if form.description.errors %}
+                                    <div class="invalid-feedback d-block">
+                                        {% for error in form.description.errors %}
+                                            {{ error }}
+                                        {% endfor %}
+                                    </div>
+                                {% endif %}
+                            </div>
+
+                            <div class="d-grid gap-2 d-md-flex justify-content-md-end">
+                                <a href="{% url 'profile' user.id %}" class="btn btn-outline-secondary">Abbrechen</a>
+                                <button type="submit" class="btn btn-primary">Änderungen speichern</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-lg-4">
+                <div class="card shadow-sm">
+                    <div class="card-header bg-light">
+                        <h2 class="h5 mb-0">Hinweise</h2>
+                    </div>
+                    <div class="card-body">
+                        <ul class="list-unstyled">
+                            <li class="mb-2">
+                                <i class="bi bi-info-circle text-primary me-2"></i>
+                                Ihr Profil ist für andere Nutzer:innen sichtbar.
+                            </li>
+                            <li class="mb-2">
+                                <i class="bi bi-image text-primary me-2"></i>
+                                Verwenden Sie ein Profilbild mit einem Seitenverhältnis von 1:1 für beste Ergebnisse.
+                            </li>
+                            <li class="mb-2">
+                                <i class="bi bi-pencil text-primary me-2"></i>
+                                Die Beschreibung ist auf 500 Zeichen begrenzt.
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    {% else %}
+        <p> Sie dürfen hier nicht sein!</p>
+    {% endif %}
+{% endblock %}
+
+{% block extra_js %}
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        // Zeichenzähler für Beschreibungsfeld
+        const descriptionField = document.getElementById('{{ form.description.id_for_label }}');
+        const descriptionCounter = document.getElementById('descriptionCounter');
+        
+        function updateCounter() {
+            const count = descriptionField.value.length;
+            descriptionCounter.textContent = count + '/500 Zeichen';
+            
+            if (count > 450) {
+                descriptionCounter.classList.add('text-warning');
+            } else {
+                descriptionCounter.classList.remove('text-warning');
+            }
+            
+            if (count >= 500) {
+                descriptionCounter.classList.add('text-danger');
+            } else {
+                descriptionCounter.classList.remove('text-danger');
+            }
+        }
+        
+        // Initial zählen
+        updateCounter();
+        
+        // Bei Eingabe aktualisieren
+        descriptionField.addEventListener('input', updateCounter);
+        
+        // Bildvorschau
+        const profilePictureInput = document.getElementById('{{ form.profile_picture.id_for_label }}');
+        
+        profilePictureInput.addEventListener('change', function() {
+            const previewContainer = document.querySelector('.profile-picture-preview');
+            
+            // Alte Vorschau entfernen, falls vorhanden
+            if (previewContainer) {
+                previewContainer.remove();
+            }
+            
+            // Neue Vorschau erstellen, wenn Datei ausgewählt wurde
+            if (this.files && this.files[0]) {
+                const reader = new FileReader();
+                
+                reader.onload = function(e) {
+                    const imgContainer = document.createElement('div');
+                    imgContainer.className = 'mb-2';
+
+                    const text = document.createElement('span');
+                    text.textContent = 'Neues Profilbild:';
+
+                    const lineBreak = document.createElement('br');
+                    text.appendChild(lineBreak);
+
+                    const img = document.createElement('img');
+                    img.src = e.target.result;
+                    img.alt = 'Neue Profilbildvorschau';
+                    img.className = 'img-thumbnail';
+                    img.style.maxHeight = '100px';
+
+                    imgContainer.appendChild(text);
+                    imgContainer.appendChild(img);
+                    
+                    const inputGroup = profilePictureInput.closest('.input-group');
+                    inputGroup.parentNode.insertBefore(imgContainer, inputGroup);
+                };
+                
+                reader.readAsDataURL(this.files[0]);
+            }
+        });
+    });
+</script>
+{% endblock %}

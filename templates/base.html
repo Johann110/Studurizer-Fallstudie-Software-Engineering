@@ -9,12 +9,17 @@
     <title>{% block title %}Studurizer{% endblock %}</title>
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <link href="{% static 'libs/bootstrap_5.css' %}" rel="stylesheet">
+    <link rel="stylesheet" href="{% static 'css/bootstrap-icons.css' %}">
     <link rel="stylesheet" href={% static 'css/style.css' %}>
     <script src="{% static 'libs/jquery.js' %}"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
     {% block extra_head %}{% endblock %}
 </head>
 <body>
+    <!-- Skip to main content link for screen readers -->
+    <a href="#main-content" class="visually-hidden-focusable">Skip to main content</a>
+    
+    <!-- Header/Navbar -->
 <header>
     <nav class="navbar navbar-expand-lg navbar-dark bg-dark" style="margin: 0; padding: 0; width: 100%; z-index: 10000">
         <a class="navbar-brand" href="{% url "home" %}" style="margin-left: 1rem">Studurizer</a>
@@ -26,6 +31,9 @@
         <div class="collapse navbar-collapse" id="navbarMain">
             <ul class="navbar-nav ms-auto">
                 {% if user.is_authenticated %}
+                    <li class="nav-item">
+                                <a class="nav-link text-decoration-none" href="{% url 'home' %}">Dashboard</a>
+                    </li>
                     <li class="nav-item">
                         <a class="nav-link text-decoration-none" href="{% url 'all_events' %}">Alle Termine</a>
                     </li>
@@ -39,6 +47,12 @@
                         <a class="nav-link dropdown-toggle text-decoration-none" href="#" id="userDropdown"
                            role="button"
                            data-bs-toggle="dropdown" aria-expanded="false">
+                            {% with user_profile=user.Nutzer.first %}
+                                        {% if user_profile.profile_picture %}
+                                            <img src="{{ user_profile.profile_picture.url }}" alt="Profilbild"
+                                                 class="rounded-circle me-2" width="25" height="25" style="object-fit: cover;">
+                                        {% endif %}
+                                    {% endwith %}
                             {{ user.username }}
                         </a>
                         <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="userDropdown">
@@ -46,6 +60,12 @@
                             <li>
                                 <hr class="dropdown-divider">
                             </li>
+                            {% if user.is_staff %}
+                                <li><a class="dropdown-item" href="{% url 'admin:index' %}">Admin</a></li>
+                                <li>
+                                    <hr class="dropdown-divider">
+                                </li>
+                            {% endif %}
                             <li>
                                 <form action="{% url 'logout' %}" method="post">
                                     {% csrf_token %}
@@ -63,60 +83,58 @@
         </div>
     </nav>
 </header>
+    <div class="d-flex" style="min-height: 100vh; flex-direction: column; margin-top: 0">
+        <div class="d-flex flex-grow-1">
+            <nav class="p-4" style="width: 14rem; background-color: #2c2c2c; min-height: 100vh; ">
+                <ul class="nav flex-column mt-2">
+                    <li class="nav-item mb-4">
+                        <a class="nav-link text-white text-decoration-none fs-5 d-flex align-items-center gap-3"
+                           href="{% url 'news' %}">
+                            <i class="fa-solid fa-bell"></i>
+                            News
+                        </a>
+                    </li>
+                    <li class="nav-item mb-4">
+                        <a class="nav-link text-white text-decoration-none fs-5 d-flex align-items-center gap-3"
+                           href="{% url 'tools' %}">
+                            <i class="fa-solid fa-wrench"></i>
+                            Tools
+                        </a>
+                    </li>
+                    <li class="nav-item mb-4">
+                        <a class="nav-link text-white text-decoration-none fs-5 d-flex align-items-center gap-3"
+                           href="{% url 'library' %}">
+                            <i class="fa-solid fa-book"></i>
+                            Bibliothek
+                        </a>
+                    </li>
+                    <li class="nav-item mb-4">
+                        <a class="nav-link text-light disabled text-decoration-none fs-5 d-flex align-items-center gap-3"
+                           href="#">
+                            <i class="fa-solid fa-comment"></i>
+                            Forum
+                        </a>
+                    </li>
+                </ul>
+            </nav>
 
-<div class="d-flex" style="min-height: 100vh; flex-direction: column; margin-top: 0">
-    <div class="d-flex flex-grow-1">
-        <nav class="p-4" style="width: 14rem; background-color: #2c2c2c; min-height: 100vh; ">
-            <ul class="nav flex-column mt-2">
-                <li class="nav-item mb-4">
-                    <a class="nav-link text-white text-decoration-none fs-5 d-flex align-items-center gap-3"
-                       href="{% url 'news' %}">
-                        <i class="fa-solid fa-bell"></i>
-                        News
-                    </a>
-                </li>
-                <li class="nav-item mb-4">
-                    <a class="nav-link text-white text-decoration-none fs-5 d-flex align-items-center gap-3"
-                       href="{% url 'tools' %}">
-                        <i class="fa-solid fa-wrench"></i>
-                        Tools
-                    </a>
-                </li>
-                <li class="nav-item mb-4">
-                    <a class="nav-link text-white text-decoration-none fs-5 d-flex align-items-center gap-3"
-                       href="{% url 'library' %}">
-                        <i class="fa-solid fa-book"></i>
-                        Bibliothek
-                    </a>
-                </li>
-                <li class="nav-item mb-4">
-                    <a class="nav-link text-light disabled text-decoration-none fs-5 d-flex align-items-center gap-3"
-                       href="#">
-                        <i class="fa-solid fa-comment"></i>
-                        Forum
-                    </a>
-                </li>
-            </ul>
-        </nav>
-
-        <main class="flex-grow-1 p-4">
-            {% block content %}
-                <div class="bg-light p-4 shadow-sm rounded">
-                </div>
-            {% endblock %}
-        </main>
+            <main class="flex-grow-1 p-4" id="main-content">
+                {% block content %}
+                    <div class="bg-light p-4 shadow-sm rounded">
+                    </div>
+                {% endblock %}
+            </main>
+        </div>
+        <footer class="bg-dark text-center text-white py-3 mt-auto">
+            &copy; {% now "Y" %} Studurizer | Barrierefreies Kursverwaltungssystem |
+            <a href="{% url "contact" %}" class="text-white">Kontakt</a> |
+            <a href="{% url "imprint" %}" class="text-white">Impressum</a> |
+            <a href="{% url "datapolicy" %}" class="text-white">Datenschutz</a>
+        </footer>
     </div>
-    <footer class="bg-dark text-center text-white py-3 mt-auto">
-        &copy; {% now "Y" %} Studurizer | Barrierefreies Kursverwaltungssystem |
-        <a href="{% url "contact" %}" class="text-white">Kontakt</a> |
-        <a href="{% url "imprint" %}" class="text-white">Impressum</a> |
-        <a href="{% url "datapolicy" %}" class="text-white">Datenschutz</a>
-    </footer>
 
-</div>
-
-<script src="{% static 'libs/bootstrap_5.js' %}"></script>
-
-{% block extra_js %}{% endblock %}
+    <script src="{% static 'libs/bootstrap_5.js' %}"></script>
+    
+    {% block extra_js %}{% endblock %}
 </body>
 </html>
