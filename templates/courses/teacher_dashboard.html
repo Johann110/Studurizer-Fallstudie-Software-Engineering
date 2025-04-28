@@ -21,119 +21,118 @@
         </div>
 
         <div class="d-flex flex-wrap gap-4">
-            <div class="flex-grow-1" style="min-width: 60%;">
-                <div class="mb-5">
-                    <h2 class="h4 mb-3">Aktive Kurse</h2>
+        <div class="flex-grow-1" style="min-width: 60%;">
+        <div class="mb-5">
+            <h2 class="h4 mb-3">Aktive Kurse</h2>
 
-                    {% if taught_courses %}
-                        {% if taught_courses|length > 0 %}
-                            <div class="row row-cols-1 row-cols-md-2 row-cols-lg-3 g-4">
-                                {% for course in taught_courses %}
-                                    {% if course and course.id %}
-                                        <div class="col">
-                                            <div class="card h-100 shadow-sm">
-                                                <div class="card-header bg-light">
-                                                    <h3 class="h5 card-title mb-0">{{ course.title }}</h3>
-                                                </div>
-                                                <div class="card-body">
-                                                    <p class="card-text">
-                                                        {% if course.description %}
-                                                            {{ course.description }}
-                                                        {% else %}
-                                                            <span class="text-muted">Keine Beschreibung verfügbar</span>
-                                                        {% endif %}
-                                                    </p>
-                                                    <div class="d-flex justify-content-between">
-                                                        <small class="text-muted">Start: {{ course.start_date|date:"d.m.Y" }}</small>
-                                                        <small class="text-muted">Ende: {{ course.end_date|date:"d.m.Y" }}</small>
-                                                    </div>
-                                                </div>
-                                                <div class="card-footer bg-transparent">
-                                                    <div class="btn-group w-100" role="group">
-                                                        <a href="{% url 'course_detail' course.id %}" class="btn btn-outline-primary">
-                                                            Zum Kurs
-                                                        </a>
-                                                        <a href="{% url 'update_course' course.id %}" class="btn btn-outline-secondary">
-                                                            <i class="bi bi-pencil-square"></i> Bearbeiten
-                                                        </a>
-                                                    </div>
-                                                </div>
+            {% if taught_courses %}
+                {% if taught_courses|length > 0 %}
+                    <div class="row row-cols-1 row-cols-md-2 row-cols-lg-3 g-4">
+                        {% for course in taught_courses %}
+                            {% if course %}
+                                <div class="col">
+                                    <div class="card h-100 shadow-sm bg-light course-card">
+                                        <div class="card-header bg-light">
+                                            <h3 class="h5 card-title mb-0">{{ course.title }}</h3>
+                                        </div>
+                                        <div class="card-body">
+                                            <p class="card-text">
+                                                {% if course.description %}
+                                                    {{ course.description }}
+                                                {% else %}
+                                                    <span class="text-muted">Keine Beschreibung verfügbar</span>
+                                                {% endif %}
+                                            </p>
+                                            <div class="d-flex justify-content-between">
+                                                <small class="text-muted">Start: {{ course.start_date|date:"d.m.Y" }}</small>
+                                                <small class="text-muted">Ende: {{ course.end_date|date:"d.m.Y" }}</small>
                                             </div>
                                         </div>
-                                    {% endif %}
-                                {% endfor %}
-                            </div>
-                        {% else %}
-                            <div class="alert alert-info" role="alert">
-                                Sie haben aktuell keine aktiven Kurse.
-                                <a href="{% url 'create_course' %}" class="alert-link">Erstellen Sie einen neuen Kurs</a>.
-                            </div>
-                        {% endif %}
-                    {% else %}
-                        <div class="alert alert-info" role="alert">
-                            Sie haben aktuell keine aktiven Kurse.
-                            <a href="{% url 'create_course' %}" class="alert-link">Erstellen Sie einen neuen Kurs</a>.
-                        </div>
-                    {% endif %}
-                </div>
-
-                <div class="mb-5">
-                    {% if archived_courses %}
-                        <div class="toggle-header collapsed" data-bs-toggle="collapse"
-                             data-bs-target="#archivedCoursesCollapse" aria-expanded="false"
-                             aria-controls="archivedCoursesCollapse">
-                            <h2 class="h4 mb-0">Archivierte Kurse</h2>
-                            <span class="toggle-icon">&#9660;</span>
-                        </div>
-
-                        <div class="collapse mt-3" id="archivedCoursesCollapse">
-                            <div class="row row-cols-1 row-cols-md-2 row-cols-lg-3 g-4">
-                                {% for course in archived_courses %}
-                                    {% if course and course.id %}
-                                        <div class="col">
-                                            <div class="card h-100 shadow-sm">
-                                                <div class="card-header bg-secondary text-white">
-                                                    <h3 class="h5 card-title mb-0">{{ course.title }}</h3>
-                                                </div>
-                                                <div class="card-body">
-                                                    <p class="card-text">
-                                                        {% if course.description %}
-                                                            {{ course.description }}
-                                                        {% else %}
-                                                            <span class="text-muted">Keine Beschreibung verfügbar</span>
-                                                        {% endif %}
-                                                    </p>
-                                                    <p class="card-text">
-                                                        <small class="text-muted">
-                                                            {% for teacher in course.teachers.all %}
-                                                                <strong>Dozent:</strong>
-                                                                {{ teacher.get_full_name|default:teacher.email }}
-                                                            {% endfor %}
-                                                        </small>
-                                                    </p>
-                                                </div>
-                                                <div class="card-footer bg-transparent">
-                                                    <div class="btn-group w-100" role="group">
-                                                        <a href="{% url 'course_detail' course.id %}" class="btn btn-outline-secondary">
-                                                            Zum Kurs
-                                                        </a>
-                                                        <a href="{% url 'update_course' course.id %}" class="btn btn-outline-secondary">
-                                                            <i class="bi bi-pencil-square"></i> Bearbeiten
-                                                        </a>
-                                                    </div>
-                                                </div>
+                                        <div class="card-footer bg-transparent border-0">
+                                            <div class="btn-group w-100" role="group">
+                                                <a href="{% url 'course_detail' course.id %}"
+                                                   class="btn btn-outline-primary">
+                                                    Zum Kurs
+                                                </a>
+                                                <a href="{% url 'update_course' course.id %}"
+                                                   class="btn btn-outline-secondary">
+                                                    Bearbeiten
+                                                </a>
                                             </div>
                                         </div>
-                                    {% endif %}
-                                {% endfor %}
+                                    </div>
+                                </div>
+                            {% endif %}
+                        {% endfor %}
+                    </div>
+                {% else %}
+                    <div class="alert alert-info" role="alert">
+                        Sie haben aktuell keine aktiven Kurse.
+                        <a href="{% url 'create_course' %}" class="alert-link">Erstellen Sie einen neuen Kurs</a>.
+                    </div>
+                {% endif %}
+            {% else %}
+                <div class="alert alert-info" role="alert">
+                    Sie haben aktuell keine aktiven Kurse.
+                    <a href="{% url 'create_course' %}" class="alert-link">Erstellen Sie einen neuen Kurs</a>.
+                </div>
+            {% endif %}
+        </div>
+
+        <div class="mb-5">
+            {% if archived_courses %}
+                <div class="mb-5">
+                <div class="toggle-header collapsed" data-bs-toggle="collapse"
+                     data-bs-target="#archivedCoursesCollapse" aria-expanded="false"
+                     aria-controls="archivedCoursesCollapse">
+                    <h2 class="h4 mb-0">Archivierte Kurse</h2>
+                    <span class="toggle-icon">&#9660;</span>
+                </div>
+
+                <div class="collapse mt-3" id="archivedCoursesCollapse">
+                <div class="row row-cols-1 row-cols-md-2 row-cols-lg-3 g-4">
+                    {% for course in archived_courses %}
+                        <div class="col">
+                            <div class="card h-100 shadow-sm bg-light course-card">
+                                <div class="card-header bg-secondary text-white">
+                                    <h3 class="h5 card-title mb-0">{{ course.title }}</h3>
+                                </div>
+                                <div class="card-body">
+                                    <p class="card-text">
+                                        {% if course.description %}
+                                            {{ course.description }}
+                                        {% else %}
+                                            <span class="text-muted">Keine Beschreibung verfügbar</span>
+                                        {% endif %}
+                                    </p>
+                                    <p class="card-text">
+                                        <small class="text-muted">
+                                            {% for teacher in course.teachers.all %}
+                                                <strong>Dozent:</strong>
+                                                {{ teacher.get_full_name|default:teacher.email }}
+                                            {% endfor %}
+                                        </small>
+                                    </p>
+                                </div>
+                                <div class="card-footer bg-transparent border-0">
+                                    <div class="btn-group w-100" role="group">
+                                        <a href="{% url 'course_detail' course.id %}" class="btn btn-outline-secondary">
+                                            Zum Kurs
+                                        </a>
+                                        <a href="{% url 'update_course' course.id %}" class="btn btn-outline-secondary">
+                                            Bearbeiten
+                                        </a>
+                                    </div>
+                                </div>
                             </div>
                         </div>
-                    {% else %}
-                        <p>Keine archivierten Kurse verfügbar.</p>
-                    {% endif %}
+                    {% endfor %}
                 </div>
+            {% else %}
+                <p>Keine archivierten Kurse verfügbar.</p>
+            {% endif %}
             </div>
-            
+            </div>
             <div style="width: 22rem; min-width: 280px;">
                 {% include "events/events.html" %}
             </div>
@@ -142,7 +141,6 @@
         <p>Sie dürfen hier nicht sein.</p>
     {% endif %}
 {% endblock %}
-
 {% block extra_js %}
     <script>
         document.addEventListener("DOMContentLoaded", () => {
@@ -161,6 +159,7 @@
         });
     </script>
 {% endblock %}
+
 
 {% block extra_head %}
     <style>
