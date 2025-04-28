@@ -1,27 +1,28 @@
 {% block content %}
-  {% if events %}
-    <h2 class="h4">Anstehende Termine</h2>
-    <div class="event-overview container py-4">
-      <div class="row g-3">
-        {% for event in events %}
-          <div class="col-12">
-            <div class="card shadow-sm border-0">
-              <div class="card-body">
-                <h5 class="card-title mb-2 fw-semibold">{{ event.course.title }}</h5>
-                <p class="card-text text-muted mb-1">
-                  <i class="bi bi-calendar-event"></i>
-                  Start: {{ event.start_date|date:"d.m.Y H:i" }}
-                </p>
-                <p class="card-text text-muted">
-                  <i class="bi bi-calendar-check"></i>
-                  Ende: {{ event.end_date|date:"d.m.Y H:i" }}
-                </p>
-              </div>
+    {% if events %}
+        <h2 class="h4">Anstehende Termine</h2>
+        <div class="event-overview container py-4">
+            <div class="row g-3">
+                {% for event in events %}
+                    <div class="col-12 col-md-6 col-lg-4">
+                        <div class="card shadow-sm border-0">
+                            <div class="card-body">
+                                <h5 class="card-title mb-2 fw-semibold text-center">{{ event.course.title }}</h5>
+                                <p class="card-text text-muted mb-1">
+                                    <i class="bi bi-calendar-event"></i>
+                                    Start: {{ event.start_date|date:"d.m.Y H:i" }}
+                                </p>
+                                <p class="card-text text-muted">
+                                    <i class="bi bi-calendar-check"></i>
+                                    Ende: {{ event.end_date|date:"d.m.Y H:i" }}
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                {% endfor %}
             </div>
-          </div>
-        {% endfor %}
-      </div>
-    </div>
-  <a href="{% url 'all_events' %}" class="btn btn-dark">Zur Terminübersicht</a>
-  {% endif %}
+        </div>
+        <a href="{% url 'all_events' %}" class="btn btn-dark">Zur Terminübersicht</a>
+    {% endif %}
 {% endblock %}
+
