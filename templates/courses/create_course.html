@@ -6,6 +6,76 @@
     <link href="{% static 'libs/bootstrap_duallistbox.css' %}" rel="stylesheet">
     <link href="{% static 'libs/dropzone-css.css' %}" rel="stylesheet">
     <script src="{% static 'libs/dropzoneCode.js' %}"></script>
+    <style>
+        /* Mobile Anpassungen */
+        @media (max-width: 767.98px) {
+            .form-control {
+                margin-bottom: 1rem;
+            }
+
+            .dropzone {
+                min-height: 200px !important;
+            }
+        }
+
+        /* Dark Mode Anpassungen */
+        select,
+        option,
+        select.form-control,
+        select.form-select {
+            background-color: var(--bg-card);
+            color: var(--text-main);
+            border-color: var(--border-color);
+        }
+
+        /* Wichtig für Select2 und Dual-Listboxen */
+        .bootstrap-duallistbox-container .box1,
+        .bootstrap-duallistbox-container .box2 {
+            background-color: var(--bg-card);
+            color: var(--text-main);
+            border-color: var(--border-color);
+        }
+
+        .bootstrap-duallistbox-container select {
+            background-color: var(--bg-card);
+            color: var(--text-main);
+        }
+
+        .bootstrap-duallistbox-container .btn {
+            background-color: var(--bg-card);
+            color: var(--text-main);
+            border-color: var(--border-color);
+        }
+
+        /* Dropzone Anpassungen */
+        .dropzone {
+            background-color: var(--bg-card);
+            border-color: var(--border-color);
+        }
+
+        .dropzone .dz-message {
+            color: var(--text-main);
+        }
+
+        .dropzone .dz-preview .dz-details {
+            background-color: var(--bg-card);
+            color: var(--text-main);
+        }
+
+        /* Form-Control generell für alle Formularelemente */
+        .form-control {
+            background-color: var(--bg-card);
+            color: var(--text-main);
+            border-color: var(--border-color);
+        }
+
+        /* Multiselect Anpassungen */
+        .select-all, .deselect-all {
+            background-color: var(--bg-card) !important;
+            color: var(--text-main) !important;
+            border-color: var(--border-color) !important;
+        }
+    </style>
 {% endblock %}
 
 {% block content %}
@@ -24,7 +94,7 @@
             </div>
 
             <button type="submit" id="submit-btn" class="btn btn-success">Speichern</button>
-            <button type="button" class="btn btn-danger" onclick="window.location.href='{% url "home" %}">Abbrechen
+            <button type="button" class="btn btn-danger" onclick="window.location.href='{% url "home" %}'">Abbrechen
             </button>
         </form>
     {% else %}
@@ -132,13 +202,55 @@
             console.log("Dropzone already initialized");
         }
         let dropzoneElement = document.getElementById("course-dropzone");
-        dropzoneElement.style.border = '1px solid lightgray';
+        dropzoneElement.style.border = '1px solid var(--border-color)';
         dropzoneElement.style.borderRadius = '5px';
         dropzoneElement.style.marginBottom = '20px';
         dropzoneElement.style.minHeight = '300px';
 
         let messageElement = dropzoneElement.querySelector('.dz-message');
-        messageElement.style.color = 'black';
+        messageElement.style.color = 'var(--text-main)';
+
+        // Dark Mode Anpassungen für Bootstrap Dual Listbox
+        document.addEventListener('DOMContentLoaded', function() {
+            // Finde alle select-Elemente, die mit bootstrap-duallistbox initialisiert wurden
+            const dualListboxes = document.querySelectorAll('.bootstrap-duallistbox-container select');
+
+            // Wende Dark Mode Stile an
+            function applyDarkModeStyles() {
+                dualListboxes.forEach(function(select) {
+                    // Finde die zugehörigen Container
+                    const container = select.closest('.bootstrap-duallistbox-container');
+                    if (container) {
+                        const boxes = container.querySelectorAll('.box1, .box2');
+                        const buttons = container.querySelectorAll('.btn');
+
+                        // Wende Stile an
+                        boxes.forEach(function(box) {
+                            box.style.backgroundColor = 'var(--bg-card)';
+                            box.style.color = 'var(--text-main)';
+                            box.style.borderColor = 'var(--border-color)';
+                        });
+
+                        buttons.forEach(function(btn) {
+                            btn.style.backgroundColor = 'var(--bg-card)';
+                            btn.style.color = 'var(--text-main)';
+                            btn.style.borderColor = 'var(--border-color)';
+                        });
+                    }
+                });
+            }
+
+            // Initial anwenden
+            applyDarkModeStyles();
+
+            // Bei Dark Mode-Änderung erneut anwenden
+            const darkModeToggle = document.getElementById('darkModeToggle');
+            if (darkModeToggle) {
+                darkModeToggle.addEventListener('change', function() {
+                    setTimeout(applyDarkModeStyles, 100); // Kurze Verzögerung für DOM-Update
+                });
+            }
+        });
     </script>
     <script src="{% static 'libs/bootstrap_duallistbox.js' %}"></script>
     <script src="{% static 'courses/js/courses.js' %}"></script>

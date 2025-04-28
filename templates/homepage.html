@@ -1,47 +1,103 @@
 {% extends 'base.html' %}
-{% load roles %}
 
-{% block title %}Dashboard | Studurizer{% endblock %}
+{% block title %}Willkommen bei Studurizer{% endblock %}
 
 {% block content %}
-    {% if user.is_authenticated %}
-        {% if user|is_group:"Student" %}
-            <div class="container-fluid px-0 mt-4">
-                <div class="d-flex flex-wrap gap-3 justify-content-between">
-                    <div class="flex-grow-1" style="min-width: 65%;">
-                        {% include "courses/student_dashboard.html" %}
+    <div class="container py-4">
+        <div class="row g-4 align-items-center">
+            <!-- Header Section - stacked on mobile -->
+            <div class="col-12 col-lg-7 order-2 order-lg-1">
+                <h1 class="fw-bold mb-3">Willkommen bei Studurizer</h1>
+                <p class="lead mb-3">Das barrierefreie Kursverwaltungssystem für moderne Bildungseinrichtungen</p>
+                <p class="mb-4">Studurizer bietet eine intuitive Plattform für Lehrende und Studierende, um Kurse zu verwalten, Lernmaterialien zu teilen und den Lehralltag zu organisieren.</p>
+
+                <div class="d-grid gap-2 d-sm-flex">
+                    <a href="{% url 'login' %}" class="btn btn-primary btn-lg px-4 me-sm-3 w-100 w-sm-auto">Anmelden</a>
+                    <a href="{% url 'contact' %}" class="btn btn-outline-secondary btn-lg px-4 w-100 w-sm-auto">Mehr erfahren</a>
+                </div>
+            </div>
+
+            <!-- Features Card - full width on mobile -->
+            <div class="col-12 col-lg-5 order-1 order-lg-2">
+                <div class="card shadow border-0 rounded-lg">
+                    <div class="card-body p-3 p-sm-4">
+                        <h3 class="card-title mb-3">Vorteile auf einen Blick</h3>
+                        <ul class="list-unstyled">
+                            <li class="mb-2 d-flex align-items-center">
+                                <i class="fas fa-check-circle text-success me-2"></i>
+                                <span>Barrierefrei und inklusiv gestaltet</span>
+                            </li>
+                            <li class="mb-2 d-flex align-items-center">
+                                <i class="fas fa-check-circle text-success me-2"></i>
+                                <span>Einfache Kursverwaltung für Lehrende</span>
+                            </li>
+                            <li class="mb-2 d-flex align-items-center">
+                                <i class="fas fa-check-circle text-success me-2"></i>
+                                <span>Übersichtliche Kursübersicht für Studierende</span>
+                            </li>
+                            <li class="mb-2 d-flex align-items-center">
+                                <i class="fas fa-check-circle text-success me-2"></i>
+                                <span>Zentrale Materialablage und Terminverwaltung</span>
+                            </li>
+                            <li class="d-flex align-items-center">
+                                <i class="fas fa-check-circle text-success me-2"></i>
+                                <span>Optimiert für alle Geräte</span>
+                            </li>
+                        </ul>
                     </div>
                 </div>
             </div>
-        {% elif user|is_group:"Teacher" or user.is_staff   %}
-            <div class="container-fluid px-0 mt-4">
-                <div class="d-flex flex-wrap gap-3 justify-content-between">
-                    <div class="flex-grow-1" style="min-width: 65%;">
-                        {% include "courses/teacher_dashboard.html" %}
+        </div>
+
+        <!-- Features Section -->
+        <div class="row mt-4 g-3">
+            <div class="col-12 mb-2">
+                <h2 class="text-center fs-3">Entdecken Sie unsere Funktionen</h2>
+            </div>
+
+            <div class="col-12 col-md-4">
+                <div class="card h-100 border-0 shadow-sm">
+                    <div class="card-body text-center p-3">
+                        <div class="mb-2">
+                            <i class="fas fa-graduation-cap fa-2x text-primary"></i>
+                        </div>
+                        <h3 class="card-title fs-5">Kursverwaltung</h3>
+                        <p class="card-text small">Erstellen und verwalten Sie Kurse mit wenigen Klicks. Laden Sie Materialien hoch und organisieren Sie Termine.</p>
                     </div>
                 </div>
             </div>
-        {% endif %}
-    {% else %}
-        <p>Bitte melden Sie sich an.</p>
-    {% endif %}
-{% endblock %}
-{% block extra_js %}
-    <script>
-        document.getElementById('searchInput').addEventListener('input', function(event) {
-            let columns = document.querySelectorAll('.col');
-            let searchTerm = event.target.value.toLowerCase().trim();
-            columns.forEach(function(col) {
-                let card = col.querySelector('.course-card');
-                if (!card) return;
-                let title = card.querySelector('.card-header').innerText.trim().toLowerCase();
-                let description = card.querySelector('.card-body').innerText.trim().toLowerCase();
-                if (title.includes(searchTerm) || description.includes(searchTerm)) {
-                    col.style.display = 'block';
-                } else {
-                    col.style.display = 'none';
-                }
-            });
-        });
-    </script>
+
+            <div class="col-12 col-md-4">
+                <div class="card h-100 border-0 shadow-sm">
+                    <div class="card-body text-center p-3">
+                        <div class="mb-2">
+                            <i class="fas fa-calendar-alt fa-2x text-primary"></i>
+                        </div>
+                        <h3 class="card-title fs-5">Terminplanung</h3>
+                        <p class="card-text small">Behalten Sie den Überblick über alle wichtigen Termine und Fristen. Mit automatischen Erinnerungen verpassen Sie nichts mehr.</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-12 col-md-4">
+                <div class="card h-100 border-0 shadow-sm">
+                    <div class="card-body text-center p-3">
+                        <div class="mb-2">
+                            <i class="fas fa-book fa-2x text-primary"></i>
+                        </div>
+                        <h3 class="card-title fs-5">Materialverwaltung</h3>
+                        <p class="card-text small">Alle Lernmaterialien an einem Ort. Mit der Suchfunktion finden Sie schnell genau das, was Sie brauchen.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- CTA Section -->
+        <div class="row mt-4">
+            <div class="col-12 text-center">
+                <p class="fw-bold mb-3">Bereit loszulegen?</p>
+                <a href="{% url 'login' %}" class="btn btn-primary px-4 py-2">Jetzt anmelden</a>
+            </div>
+        </div>
+    </div>
 {% endblock %}

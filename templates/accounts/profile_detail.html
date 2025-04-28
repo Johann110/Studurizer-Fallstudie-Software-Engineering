@@ -17,7 +17,7 @@
     <div class="col-md-4 text-md-end">
         {% if request.user.id == logged_in_user.id %}
             <a href="{% url 'profile_edit' %}" class="btn btn-primary">
-                <i class="bi bi-pencil"></i> Profil bearbeiten
+                Profil bearbeiten
             </a>
         {% endif %}
     </div>
@@ -31,7 +31,7 @@
             </div>
             <div class="card-body text-center">
                 {% if profile and profile.profile_picture %}
-                    <img src="{{ profile.profile_picture.url }}" alt="Profilbild von {{ logged_in_user.get_full_name|default:logged_in_user.username }}" 
+                    <img src="{{ profile.profile_picture.url }}" alt="Profilbild von {{ logged_in_user.get_full_name|default:logged_in_user.username }}"
                          class="img-fluid rounded-circle profile-image mb-3" style="max-height: 200px; max-width: 200px;">
                 {% else %}
                     <div class="profile-placeholder rounded-circle mb-3 d-inline-flex justify-content-center align-items-center bg-light">
@@ -41,6 +41,13 @@
                         .profile-placeholder {
                             width: 200px;
                             height: 200px;
+                        }
+
+                        @media (max-width: 576px) {
+                            .profile-placeholder {
+                                width: 150px;
+                                height: 150px;
+                            }
                         }
                     </style>
                 {% endif %}
