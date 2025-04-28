@@ -95,10 +95,16 @@ class DeleteCourse(DeleteView):
 def course_detail(request, pk):
     course = get_object_or_404(Course, pk=pk)
     files = course.materials.all()
+    assignments = course.assignments.all()
+
+    # Check and close assignments if end datetime reached
+    for assignment in assignments:
+        assignment.check_and_close()
 
     context = {
         'course': course,
-        'files': files
+        'files': files,
+        'assignments': assignments,
     }
 
     return render(request, 'courses/course_detail.html', context)
