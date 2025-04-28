@@ -134,14 +134,19 @@ main {
 }
 
 /* Verbesserter Fokus für Tastaturnavigation */
+.btn:focus {
+    outline: 3px solid rgba(0, 86, 179, 0.5) !important;
+    outline-offset: 2px !important;
+    box-shadow: none !important;
+}
+
 a:focus,
 button:focus,
 input:focus,
 textarea:focus,
-select:focus,
-.btn:focus {
-    outline: 3px solid rgba(0, 86, 179, 0.5) !important;
-    outline-offset: 2px !important;
+select:focus {
+    outline: 1px solid rgb(38, 116, 243) !important;
+    outline-offset: 0 !important;
     box-shadow: none !important;
 }
 
