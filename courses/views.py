@@ -92,6 +92,7 @@ class DeleteCourse(DeleteView):
     success_url = reverse_lazy('home')
 
 
+# In courses/views.py
 def course_detail(request, pk):
     course = get_object_or_404(Course, pk=pk)
     files = course.materials.all()
@@ -101,10 +102,25 @@ def course_detail(request, pk):
     for assignment in assignments:
         assignment.check_and_close()
 
+
+    from events.models import Events
+    from django.utils import timezone
+
+    now = timezone.now()
+    course_events = Events.objects.filter(
+        course=course,
+        end_date__gte=now
+    ).order_by('start_date')
+
+    from events.forms import EventForm
+    event_form = EventForm(initial={'course': course})
+
     context = {
         'course': course,
         'files': files,
         'assignments': assignments,
+        'events': course_events,
+        'form': event_form
     }
 
     return render(request, 'courses/course_detail.html', context)

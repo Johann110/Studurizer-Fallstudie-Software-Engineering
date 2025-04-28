@@ -1,21 +1,86 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Title</title>
-</head>
-<body>
-    {% if profile %}
-    	    <img class="thumbnail" src="{{ profile.profile_picture.url }}" alt="ERROR KEIN PROFILBILD GEFUNDEN">
-            <p>Vorname: {{ logged_in_user.first_name }}</p>
-            <p>Nachname: {{ logged_in_user.last_name }}</p>
-            <p>Email> {{ logged_in_user.email }}</p>
-            <hr>
-            <p>{{ profile.description}}</p>
-    {% else %}
-        nicht gut lol
-    {% endif %} 
+{% extends "base.html" %}
+{% load roles %}
 
+{% block title %}Profil von {{ logged_in_user.username }} | Studurizer{% endblock %}
 
-</body>
-</html>
+{% block content %}
+<div class="row mb-4">
+    <div class="col-md-8">
+        <nav aria-label="breadcrumb">
+            <ol class="breadcrumb">
+                <li class="breadcrumb-item"><a href="{% url 'home' %}">Home</a></li>
+                <li class="breadcrumb-item active" aria-current="page">Benutzerprofil</li>
+            </ol>
+        </nav>
+        <h1 class="h2">Profil von {{ logged_in_user.get_full_name|default:logged_in_user.username }}</h1>
+    </div>
+    <div class="col-md-4 text-md-end">
+        {% if request.user.id == logged_in_user.id %}
+            <a href="{% url 'profile_edit' %}" class="btn btn-primary">
+                Profil bearbeiten
+            </a>
+        {% endif %}
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-md-4 mb-4">
+        <div class="card shadow-sm">
+            <div class="card-header bg-light">
+                <h2 class="h5 mb-0">Profilinformationen</h2>
+            </div>
+            <div class="card-body text-center">
+                {% if profile and profile.profile_picture %}
+                    <img src="{{ profile.profile_picture.url }}" alt="Profilbild von {{ logged_in_user.get_full_name|default:logged_in_user.username }}"
+                         class="img-fluid rounded-circle profile-image mb-3" style="max-height: 200px; max-width: 200px;">
+                {% else %}
+                    <div class="profile-placeholder rounded-circle mb-3 d-inline-flex justify-content-center align-items-center bg-light">
+                        <span class="display-4 text-secondary">{{ logged_in_user.username|first|upper }}</span>
+                    </div>
+                    <style>
+                        .profile-placeholder {
+                            width: 200px;
+                            height: 200px;
+                        }
+
+                        @media (max-width: 576px) {
+                            .profile-placeholder {
+                                width: 150px;
+                                height: 150px;
+                            }
+                        }
+                    </style>
+                {% endif %}
+                <h3 class="h4">{{ logged_in_user.get_full_name|default:logged_in_user.username }}</h3>
+                {% if logged_in_user.is_staff or user|is_group:"Teacher" %}
+                    <span class="badge bg-primary mb-2">Dozent</span>
+                {% else %}
+                    <span class="badge bg-info mb-2">Student</span>
+                {% endif %}
+                <p class="text-muted">{{ logged_in_user.email }}</p>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-8">
+        <div class="card shadow-sm">
+         <div class="card-header bg-light d-flex justify-content-between align-items-center">
+             <h2 class="h5 mb-0">Über mich</h2>
+            </div>
+         <div class="card-body">
+             {% if profile and profile.description %}
+                 <p>{{ profile.description|linebreaks }}</p>
+                {% else %}
+                   <p class="text-muted">
+                       {% if request.user.id == logged_in_user.id %}
+                           Keine Beschreibung vorhanden.
+                         <a href="{% url 'profile_edit' %}">Jetzt hinzufügen</a>
+                     {% else %}
+                          Keine Beschreibung vorhanden.
+                     {% endif %}
+                    </p>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

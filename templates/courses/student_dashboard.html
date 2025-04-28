@@ -111,7 +111,7 @@
                     <p>Keine alten Kurse verfügbar</p>
                 {% endif %}
             </div>
-            <div style="width: 22rem; min-width: 280px;">
+            <div style="float: left; width: 100%">
                 {% include "events/events.html" %}
             </div>
         </div>
@@ -121,7 +121,7 @@
     {% endif %}
 {% endblock %}
 {% block extra_js %}
-  <script>
+<script>
   document.addEventListener("DOMContentLoaded", () => {
     const toggleHeader = document.querySelector(".toggle-header");
     const collapseTarget = document.getElementById("archivedCoursesCollapse");
@@ -139,27 +139,53 @@
 </script>
 {% endblock %}
 {% block extra_head %}
-	<style>
-
+<style>
     .toggle-header {
-          cursor: pointer;
-          display: flex;
-          justify-content: space-between;
-          align-items: center;
-          padding-bottom: 15px;
+        cursor: pointer;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding-bottom: 15px;
+    }
+
+    .toggle-icon {
+        transition: transform 0.3s ease;
+        color: var(--text-muted);
+    }
+
+    .collapsed .toggle-icon {
+        transform: rotate(0deg);
+    }
+
+    .expanded .toggle-icon {
+        transform: rotate(180deg);
+    }
+
+    /* Mobile Anpassungen */
+    @media (max-width: 767.98px) {
+        .d-flex.flex-wrap {
+            flex-direction: column;
         }
 
-        .toggle-icon {
-          transition: transform 0.3s ease;
-          color: gray;
+        .lead {
+            font-size: 1rem;
         }
 
-        .collapsed .toggle-icon {
-          transform: rotate(0deg);
+        .toggle-header {
+            padding-bottom: 10px;
         }
 
-        .expanded .toggle-icon {
-          transform: rotate(180deg);
+        .card {
+            margin-bottom: 1rem;
         }
-        </style>
+
+        .card-title {
+            font-size: 1rem;
+        }
+
+        .card-text {
+            font-size: 0.9rem;
+        }
+    }
+</style>
 {% endblock %}

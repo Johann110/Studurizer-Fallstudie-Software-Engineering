@@ -8,16 +8,15 @@ from events.models import Events
 
 
 def home(request):
-    if(request.user.is_authenticated):
-        form = EventForm(user=request.user)
-    else:
-        form = EventForm()
+
     if not request.user.is_authenticated:
-        return render(request, 'homepage.html')
+        return render(request, 'welcome.html')  # Die neue Willkommensseite
+
+    form = EventForm(user=request.user)
     events = Events.objects.filter(
         Q(course__students=request.user) | Q(course__teachers=request.user),
         end_date__gt=timezone.now()
-    ).order_by('start_date')
+    ).order_by('start_date').distinct()
 
     if request.user.groups.filter(name="Teacher").exists():
         taught_courses_qs = Course.objects.filter(teachers=request.user)
@@ -33,13 +32,13 @@ def home(request):
         courses_qs = Course.objects.filter(students=request.user)
         active_courses = courses_qs.filter(end_date__gte=timezone.now()).order_by('start_date')
         archived_courses = courses_qs.filter(end_date__lt=timezone.now()).order_by('-end_date')
-        print(archived_courses)
         context = {
             'form': form,
             'active_courses': active_courses,
             'archived_courses': archived_courses,
             'events': events
         }
+
     return render(request, 'homepage.html', context)
 
 def contact(request):

@@ -1,14 +1,15 @@
 /**
  * Studurizer - Barrierefreies Kursverwaltungssystem
  * Hauptstildatei
- * 
+ *
  * Dieses Stylesheet enthält benutzerdefinierte Stile für das Studurizer-System,
  * die auf die Bootstrap-Basis aufbauen und die Barrierefreiheit verbessern.
  */
 
-/* ---- Allgemeine Stile und Hilfsmittel ---- */
+/* ---- Farbvariablen für Light und Dark Mode ---- */
 
 :root {
+    /* Farbvariablen für Light Mode */
     --primary-color: #0056b3;
     --secondary-color: #6c757d;
     --success-color: #28a745;
@@ -17,19 +18,69 @@
     --danger-color: #dc3545;
     --light-color: #f8f9fa;
     --dark-color: #343a40;
+
+    /* Hintergrund- und Textfarben für Light Mode */
+    --bg-main: #f9f9f9;
+    --bg-card: #ffffff;
+    --bg-sidebar: #343a40; /* Gleiche Farbe wie Navbar (bg-dark) */
+    --bg-navbar: #343a40;
+    --bg-footer: #343a40;
+    --text-main: #333333;
+    --text-muted: #6c757d;
+    --text-sidebar: #ffffff;
+    --text-navbar: #ffffff;
+    --text-footer: #ffffff;
+    --border-color: rgba(0, 0, 0, 0.125);
+    --hover-bg: rgba(0, 0, 0, 0.03);
+    --card-shadow: 0 0.125rem 0.25rem rgba(0, 0, 0, 0.075);
 }
+
+[data-theme="dark"] {
+    /* Farbvariablen für Dark Mode */
+    --primary-color: #90caf9;
+    --secondary-color: #aab0b6;
+    --success-color: #81c784;
+    --info-color: #64b5f6;
+    --warning-color: #ffb74d;
+    --danger-color: #e57373;
+    --light-color: #464646;
+    --dark-color: #d9d9d9;
+
+    /* Hintergrund- und Textfarben für Dark Mode */
+    --bg-main: #121212;
+    --bg-card: #1e1e1e;
+    --bg-sidebar: #1a1a1a; /* Einheitliche Dunkelfarbe für Sidebar */
+    --bg-navbar: #1a1a1a;
+    --bg-footer: #1a1a1a;
+    --text-main: #e0e0e0;
+    --text-muted: #b0b0b0;
+    --text-sidebar: #e0e0e0;
+    --text-navbar: #e0e0e0;
+    --text-footer: #e0e0e0;
+    --border-color: rgba(255, 255, 255, 0.125);
+    --hover-bg: rgba(255, 255, 255, 0.05);
+    --card-shadow: 0 0.125rem 0.25rem rgba(0, 0, 0, 0.3);
+}
+
+/* ---- Allgemeine Stile und Hilfsmittel ---- */
 
 body {
     display: flex;
     flex-direction: column;
     font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
     line-height: 1.6;
-    color: #333;
-    background-color: #f9f9f9;
+    color: var(--text-main);
+    background-color: var(--bg-main);
 }
 
 main {
     flex: 1;
+}
+
+/* Allgemeine responsive Anpassungen */
+.img-fluid {
+    max-width: 100%;
+    height: auto;
 }
 
 /* Barrierefreiheit: Versteckter Skip-Link, der beim Fokussieren sichtbar wird */
@@ -59,9 +110,13 @@ main {
 /* ---- Erhöhte Kontraste für bessere Lesbarkeit ---- */
 
 .card {
+    background-color: var(--bg-card);
+    border-color: var(--border-color);
     border-radius: 8px;
     overflow: hidden;
     transition: transform 0.2s ease, box-shadow 0.2s ease;
+    box-shadow: var(--card-shadow);
+    color: var(--text-main);
 }
 
 .card:focus-within,
@@ -70,7 +125,7 @@ main {
 }
 
 .card-header {
-    border-bottom: 2px solid rgba(0, 0, 0, 0.1);
+    border-bottom: 2px solid var(--border-color);
 }
 
 .btn {
@@ -79,20 +134,25 @@ main {
 }
 
 /* Verbesserter Fokus für Tastaturnavigation */
-a:focus,
-button:focus,
-input:focus,
-textarea:focus,
-select:focus,
 .btn:focus {
     outline: 3px solid rgba(0, 86, 179, 0.5) !important;
     outline-offset: 2px !important;
     box-shadow: none !important;
 }
 
+a:focus,
+button:focus,
+input:focus,
+textarea:focus,
+select:focus {
+    outline: 1px solid rgb(38, 116, 243) !important;
+    outline-offset: 0 !important;
+    box-shadow: none !important;
+}
+
 /* ---- Spezifische Komponenten ---- */
 
-/* Navbar */
+/* Navbar und Sidebar */
 .navbar {
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }
@@ -102,17 +162,155 @@ select:focus,
     letter-spacing: 0.5px;
 }
 
-/* Footer */
-.footer {
-    padding: 2rem 0;
-    margin-top: 3rem;
-    border-top: 1px solid rgba(0, 0, 0, 0.1);
+.navbar-dark {
+    background-color: var(--bg-navbar) !important;
+    color: var(--text-navbar);
 }
 
+.sidebar {
+    background-color: var(--bg-sidebar) !important;
+    color: var(--text-sidebar);
+}
+
+.sidebar .nav-link {
+    color: var(--text-sidebar) !important;
+}
+
+/* Footer */
+footer.bg-dark {
+    background-color: var(--bg-footer) !important;
+    color: var(--text-footer);
+    padding: 2rem 0;
+    margin-top: 3rem;
+    border-top: 1px solid var(--border-color);
+}
+
+/* Dark Mode Toggle Button Styles */
+.theme-switch-wrapper {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 100%;
+    margin-left: 15px;
+    margin-right: 15px;
+    padding: 0.25rem 0.5rem;
+}
+
+/* Für ältere Browser, die :has nicht unterstützen */
+.nav-item-centered {
+    display: flex;
+    align-items: center;
+}
+
+.theme-switch {
+    display: inline-block;
+    position: relative;
+    width: 50px;
+    height: 25px;
+}
+
+.theme-switch input {
+    opacity: 0;
+    width: 0;
+    height: 0;
+}
+
+.slider {
+    position: absolute;
+    cursor: pointer;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: #ccc;
+    transition: .4s;
+    border-radius: 25px;
+}
+
+.slider:before {
+    position: absolute;
+    content: "";
+    height: 19px;
+    width: 19px;
+    left: 3px;
+    bottom: 3px;
+    background-color: white;
+    transition: .4s;
+    border-radius: 50%;
+}
+
+input:checked + .slider {
+    background-color: var(--primary-color);
+}
+
+input:checked + .slider:before {
+    transform: translateX(25px);
+}
+
+.slider .moon, .slider .sun {
+    position: absolute;
+    top: 5px;
+    font-size: 14px;
+}
+
+.slider .sun {
+    left: 6px;
+    color: #fff;
+    opacity: 1;
+    transition: .4s;
+}
+
+.slider .moon {
+    right: 6px;
+    color: #333;
+    opacity: 0;
+    transition: .4s;
+}
+
+input:checked + .slider .sun {
+    opacity: 0;
+}
+
+input:checked + .slider .moon {
+    opacity: 1;
+}
 
 /* ---- Responsive Anpassungen ---- */
 
-@media (max-width: 768px) {
+@media (max-width: 991.98px) {
+    /* Hauptlayout auf mobilen Geräten */
+    .main-content-wrapper {
+        flex-direction: column !important;
+    }
+
+    /* Seitenleiste auf mobilen Geräten */
+    .sidebar {
+        width: 100% !important;
+        min-height: auto !important;
+        padding: 0.5rem 1rem !important;
+    }
+
+    .sidebar ul.nav {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: space-around;
+    }
+
+    .sidebar .nav-item {
+        margin: 0.5rem;
+        width: auto;
+    }
+
+    .sidebar .nav-link {
+        padding: 0.5rem 1rem;
+        border-radius: 0.25rem;
+        background-color: rgba(255, 255, 255, 0.1);
+        width: auto;
+        text-align: center;
+        justify-content: center;
+    }
+
+    /* Verbesserte Komponentendarstellung */
     .navbar .btn-group {
         width: 100%;
         margin-top: 1rem;
@@ -120,6 +318,61 @@ select:focus,
 
     .action-buttons .btn {
         margin-bottom: 0.5rem;
+        width: 100%;
+    }
+
+    /* Footer-Anpassungen */
+    .footer-links a {
+        display: inline-block;
+        margin: 0.25rem 0.5rem;
+    }
+
+    /* Tabellenanpassungen */
+    .table-responsive {
+        margin-bottom: 1rem;
+        overflow-x: auto;
+    }
+}
+
+/* Kleine Geräte wie Smartphones */
+@media (max-width: 576px) {
+    .container {
+        padding-left: 10px;
+        padding-right: 10px;
+    }
+
+    /* Vertikales Menü für sehr kleine Bildschirme */
+    .sidebar ul.nav {
+        flex-direction: column;
+        align-items: stretch;
+    }
+
+    .sidebar .nav-item {
+        width: 100%;
+        margin: 0.25rem 0;
+    }
+
+    /* Anpassungen der Überschriften */
+    h1 {
+        font-size: 1.75rem;
+    }
+
+    h2 {
+        font-size: 1.5rem;
+    }
+
+    h3 {
+        font-size: 1.25rem;
+    }
+
+    /* Kurskarten auf kleinen Geräten */
+    .card {
+        margin-bottom: 1rem;
+    }
+
+    /* Optimierungen für das Dropdown-Menü */
+    .dropdown-menu {
+        position: static !important;
         width: 100%;
     }
 }
@@ -150,28 +403,35 @@ a:not(.btn):not(.badge):not(.navbar-brand):not(.dropdown-item):hover {
 
 /* Verbesserte Tabellenlesbarkeit */
 .table {
-    border: 1px solid rgba(0, 0, 0, 0.125);
+    color: var(--text-main);
+    border: 1px solid var(--border-color);
 }
 
 .table thead th {
-    background-color: #f8f9fa;
-    border-bottom: 2px solid rgba(0, 0, 0, 0.2);
+    background-color: var(--light-color);
+    border-bottom: 2px solid var(--border-color);
     vertical-align: middle;
+    color: var(--text-main);
 }
 
 .table tbody tr:nth-of-type(odd) {
-    background-color: rgba(0, 0, 0, 0.03);
+    background-color: var(--hover-bg);
 }
 
 .table-hover tbody tr:hover {
-    background-color: rgba(0, 86, 179, 0.05);
+    background-color: var(--hover-bg);
 }
 
+.list-group-item {
+    background-color: var(--bg-card);
+    color: var(--text-main);
+    border-color: var(--border-color);
+}
 
 .list-group-item.active {
-    background-color: #0d6efd;
+    background-color: var(--primary-color);
     color: white;
-    border-color: #0d6efd;
+    border-color: var(--primary-color);
 }
 
 .no-underline {
@@ -186,7 +446,7 @@ a:not(.btn):not(.badge):not(.navbar-brand):not(.dropdown-item):hover {
 }
 
 .nav-link:hover {
-    background-color: #444 !important;
+    background-color: rgba(255, 255, 255, 0.1) !important;
     border-radius: 0.25rem !important;
 }
 
@@ -194,12 +454,378 @@ a:not(.btn):not(.badge):not(.navbar-brand):not(.dropdown-item):hover {
     transition: background-color 0.2s ease !important;
 }
 
-
 .same-size {
     height: 22rem;
 }
 
-button:focus, button:active, input:focus, input:active, select:focus, select:active, textarea:focus, textarea:active, a:focus, a:active {
-   outline: none !important;
-   box-shadow: none;
+/* Dark Mode Anpassungen für weitere UI-Elemente */
+.dropdown-menu {
+    background-color: var(--bg-card);
+    border-color: var(--border-color);
+}
+
+.dropdown-item {
+    color: var(--text-main);
+}
+
+.dropdown-item:hover, .dropdown-item:focus {
+    background-color: var(--hover-bg);
+}
+
+.btn-outline-secondary {
+    color: var(--secondary-color);
+    border-color: var(--secondary-color);
+}
+
+.form-control {
+    background-color: var(--bg-card);
+    color: var(--text-main);
+    border-color: var(--border-color);
+}
+
+.form-control:focus {
+    background-color: var(--bg-card);
+    color: var(--text-main);
+}
+
+.modal-content {
+    background-color: var(--bg-card);
+    color: var(--text-main);
+}
+
+.bg-light {
+    background-color: var(--bg-card) !important;
+    color: var(--text-main);
+}
+
+/* Anpassung der text-muted Klasse für den Dark Mode */
+.text-muted {
+    color: var(--text-muted) !important;
+}
+
+/* Verbesserte Sichtbarkeit für Eingabefelder */
+input.form-control,
+textarea.form-control,
+select.form-control {
+    background-color: var(--bg-card);
+    color: var(--text-main);
+    border-color: var(--border-color);
+}
+
+input.form-control::placeholder,
+textarea.form-control::placeholder {
+    color: var(--text-muted);
+    opacity: 0.8;
+}
+
+/* Anpassung für Suchfelder */
+input[type="search"] {
+    background-color: var(--bg-card);
+    color: var(--text-main);
+    border-color: var(--border-color);
+}
+
+/* Anpassung für Datumsanzeigen und kleine Texte */
+small,
+.small {
+    color: var(--text-muted);
+}
+
+/* Anpassung für Kartenelemente */
+.card-text {
+    color: var(--text-main);
+}
+
+/* Spezielle Anpassung für das Datum in Karten */
+.card .text-muted {
+    color: var(--text-muted) !important;
+}
+
+/* Verbesserungen für Dark Mode */
+[data-theme="dark"] .text-muted {
+    color: rgba(255, 255, 255, 0.7) !important;
+}
+
+[data-theme="dark"] small,
+[data-theme="dark"] .small {
+    color: rgba(255, 255, 255, 0.7);
+}
+
+/* Anpassung für Platzhaltertext in Suchfeldern im Dark Mode */
+[data-theme="dark"] input::placeholder {
+    color: rgba(255, 255, 255, 0.5);
+}
+
+/* Verbesserungen für alle Formularelemente im Dark Mode */
+
+/* Select-Elemente und ihre Optionen */
+select,
+option,
+select.form-control,
+select.form-select {
+    background-color: var(--bg-card);
+    color: var(--text-main);
+    border-color: var(--border-color);
+}
+
+/* Bootstrap Dual Listbox Anpassungen */
+.bootstrap-duallistbox-container .box1,
+.bootstrap-duallistbox-container .box2,
+.bootstrap-duallistbox-container select {
+    background-color: var(--bg-card);
+    color: var(--text-main);
+    border-color: var(--border-color);
+}
+
+.bootstrap-duallistbox-container .filter,
+.bootstrap-duallistbox-container .clear1,
+.bootstrap-duallistbox-container .clear2 {
+    background-color: var(--bg-card);
+    color: var(--text-main);
+    border-color: var(--border-color);
+}
+
+.bootstrap-duallistbox-container label {
+    color: var(--text-main);
+}
+
+.bootstrap-duallistbox-container .btn {
+    background-color: var(--bg-card);
+    color: var(--text-main);
+    border-color: var(--border-color);
+}
+
+/* Dropzone Anpassungen */
+.dropzone {
+    background-color: var(--bg-card);
+    border-color: var(--border-color);
+}
+
+.dropzone .dz-message {
+    color: var(--text-main);
+}
+
+.dropzone .dz-preview .dz-details {
+    background-color: var(--bg-card);
+    color: var(--text-main);
+}
+
+.dropzone .dz-preview .dz-progress {
+    background: var(--border-color);
+}
+
+.dropzone .dz-preview .dz-progress .dz-upload {
+    background: var(--primary-color);
+}
+
+/* Multi-Select Anpassungen */
+.multiselect-container {
+    background-color: var(--bg-card);
+    color: var(--text-main);
+    border-color: var(--border-color);
+}
+
+.multiselect-container li a {
+    color: var(--text-main);
+}
+
+.multiselect-container li a:hover {
+    background-color: var(--hover-bg);
+}
+
+.multiselect-container li.active a {
+    background-color: var(--primary-color);
+}
+
+/* Select2 Anpassungen (falls verwendet) */
+.select2-container--default .select2-selection--single,
+.select2-container--default .select2-selection--multiple {
+    background-color: var(--bg-card);
+    color: var(--text-main);
+    border-color: var(--border-color);
+}
+
+.select2-container--default .select2-results__option {
+    background-color: var(--bg-card);
+    color: var(--text-main);
+}
+
+.select2-container--default .select2-results__option--highlighted[aria-selected] {
+    background-color: var(--primary-color);
+    color: #fff;
+}
+
+.select2-dropdown {
+    background-color: var(--bg-card);
+    border-color: var(--border-color);
+}
+
+.select2-search__field {
+    background-color: var(--bg-card);
+    color: var(--text-main);
+}
+
+/* Tabellen-Anpassungen für bessere Sichtbarkeit im Dark Mode */
+.table tbody tr {
+    color: var(--text-main);
+}
+
+.table tbody tr:hover {
+    background-color: var(--hover-bg);
+}
+
+.table thead th {
+    border-color: var(--border-color);
+}
+
+/* Generelle Form-Controls */
+.form-control, .form-control:focus {
+    background-color: var(--bg-card);
+    color: var(--text-main);
+    border-color: var(--border-color);
+}
+
+textarea, input[type="text"], input[type="email"],
+input[type="password"], input[type="number"],
+input[type="date"], input[type="time"], input[type="datetime-local"] {
+    background-color: var(--bg-card);
+    color: var(--text-main);
+    border-color: var(--border-color);
+}
+
+/* Listen, Checkboxes und Radiobuttons */
+.list-group-item {
+    background-color: var(--bg-card);
+    color: var(--text-main);
+    border-color: var(--border-color);
+}
+
+.form-check-input {
+    background-color: var(--bg-card);
+    border-color: var(--border-color);
+}
+
+.form-check-input:checked {
+    background-color: var(--primary-color);
+    border-color: var(--primary-color);
+}
+
+/* Für modals, falls verwendet */
+.modal-content {
+    background-color: var(--bg-card);
+    color: var(--text-main);
+    border-color: var(--border-color);
+}
+
+.modal-header, .modal-footer {
+    border-color: var(--border-color);
+}
+
+/* Für Tooltips */
+.tooltip-inner {
+    background-color: var(--bg-card);
+    color: var(--text-main);
+    border: 1px solid var(--border-color);
+}
+
+.tooltip.bs-tooltip-top .tooltip-arrow::before {
+    border-top-color: var(--border-color);
+}
+
+.tooltip.bs-tooltip-bottom .tooltip-arrow::before {
+    border-bottom-color: var(--border-color);
+}
+
+/* Für Popovers */
+.popover {
+    background-color: var(--bg-card);
+    color: var(--text-main);
+    border-color: var(--border-color);
+}
+
+.popover-header {
+    background-color: var(--light-color);
+    border-bottom: 1px solid var(--border-color);
+}
+
+.popover-body {
+    color: var(--text-main);
+}
+
+/* Besondere Anpassungen für Form-Group Labels */
+.form-group label {
+    color: var(--text-main);
+}
+
+/* Datepickers und ähnliche Widgets */
+.datepicker, .ui-datepicker, .daterangepicker, .timepicker {
+    background-color: var(--bg-card);
+    color: var(--text-main);
+    border-color: var(--border-color);
+}
+
+.datepicker td, .datepicker th,
+.ui-datepicker td, .ui-datepicker th,
+.daterangepicker td, .daterangepicker th,
+.timepicker td, .timepicker th {
+    color: var(--text-main);
+}
+
+/* Dropdown-Item Hover-Anpassung für besseren Kontrast */
+.dropdown-item:hover, .dropdown-item:focus {
+    background-color: var(--hover-bg);
+    color: var(--text-main); /* Text-Farbe beibehalten beim Hover */
+}
+
+/* Spezifisch für Dark Mode */
+[data-theme="dark"] .dropdown-item:hover,
+[data-theme="dark"] .dropdown-item:focus {
+    background-color: var(--primary-color); /* Verwende Primärfarbe für bessere Sichtbarkeit */
+    color: #fff; /* Weißer Text für besseren Kontrast */
+}
+
+/* Umfassende Dark Mode Anpassungen für alle Formularelemente */
+[data-theme="dark"] input,
+[data-theme="dark"] textarea,
+[data-theme="dark"] select,
+[data-theme="dark"] .form-control,
+[data-theme="dark"] .form-select,
+[data-theme="dark"] .form-check-input,
+[data-theme="dark"] .custom-select {
+    background-color: var(--bg-card) !important;
+    color: var(--text-main) !important;
+    border-color: var(--border-color) !important;
+}
+
+/* Spezifisch für Dropzone im Dark Mode */
+[data-theme="dark"] .dropzone {
+    background-color: var(--bg-card) !important;
+    border-color: var(--border-color) !important;
+}
+
+[data-theme="dark"] .dropzone .dz-message,
+[data-theme="dark"] .dropzone .dz-preview .dz-details {
+    color: var(--text-main) !important;
+}
+
+/* Korrektur für das Dropzone-Element in update_course.html */
+[data-theme="dark"] #course-dropzone {
+    border: 1px solid var(--border-color) !important;
+}
+
+/* Modal über dem Header anzeigen */
+.modal-backdrop {
+    z-index: 10500 !important; /* Zwischen Header (10000) und Modal */
+}
+
+.modal {
+    z-index: 11000 !important; /* Höher als Header (10000) */
+}
+
+#createEventModal .modal-body {
+    text-align: left;
+}
+
+#createEventModal .modal-dialog {
+    margin-top: 3vh; /* Passt den Abstand nach oben an */
 }

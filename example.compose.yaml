@@ -1,0 +1,12 @@
+services:
+  studurizer:
+    container_name: studurizer
+    image: ghcr.io/johann110/studurizer-fallstudie-software-engineering:latest
+    ports:
+      - "8000:8000"  # Exponiert Port 8000
+    volumes:
+      - ./data:/app/data # Pfad zur lokalen SQLite-Datenbank (links anpassen, falls nötig)
+      - ./media:/app/media            # Ordner für Medien-Dateien (links anpassen, falls nötig)
+    environment:
+      - SECRET_KEY=${SECRET_KEY:-default_development_key}  # SECRET_KEY generieren: https://djecrety.ir oder z. B. python -c "import secrets; print(secrets.token_urlsafe(50))"
+ #     - DOMAIN=${SECRET_KEY:-DOMAIN} # Domain setzen wenn SSL benutzt wird oder eine Domain um auf die App zugreifen (optional)
