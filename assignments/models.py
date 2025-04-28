@@ -1,5 +1,10 @@
+import os
+import shutil
+
 from django.db import models
 from django.utils import timezone
+
+from StudurizerApp import settings
 
 
 class Assignment(models.Model):
@@ -10,6 +15,19 @@ class Assignment(models.Model):
     end_time = models.DateTimeField()
     is_open = models.BooleanField(default=True)
     created_at = models.DateTimeField(auto_now_add=True)
+
+    def delete(self, *args, **kwargs):
+        assignment_folder = os.path.join(settings.MEDIA_ROOT, f'courses/course_{self.course.id}/assignments/{self.id}')
+
+        for file in self.files.all():
+            if file.file and os.path.isfile(file.file.path):
+                os.remove(file.file.path)
+            file.delete()
+
+        if os.path.exists(assignment_folder):
+            shutil.rmtree(assignment_folder, ignore_errors=True)
+
+        super().delete(*args, **kwargs)
 
     # im view:
     # assignment = Assignment.objects.get(pk=assignment_id)
