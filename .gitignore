@@ -8,8 +8,4 @@ data/db.sqlite3
 # Ignoriere Hochgeladene medien
 /media/*
 # Ignoriere Migrationen
-/events/migrations/*
-/accounts/migrations/*
-/courses/migrations/*
-/material/migrations/*
-/courses/migrations/*
+/**/migrations/*
