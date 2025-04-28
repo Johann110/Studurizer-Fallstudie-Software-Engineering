@@ -33,6 +33,9 @@
                     <ul class="navbar-nav ms-auto">
                         {% if user.is_authenticated %}
                             <li class="nav-item">
+                                <a class="nav-link text-decoration-none" href="{% url 'home' %}">Dashboard</a>
+                            </li>
+                            <li class="nav-item">
                                 <a class="nav-link text-decoration-none" href="{% url 'all_events' %}">Alle Termine</a>
                             </li>
                             {% if user|is_group:"Teacher" or user.is_staff %}
