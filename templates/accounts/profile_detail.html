@@ -44,7 +44,6 @@
                     </style>
                 {% endif %}
                 <h3 class="h4">{{ logged_in_user.get_full_name|default:logged_in_user.username }}</h3>
-                        <!-- Status-Badge einfügen (Lehrer oder Student) -->
                 {% if logged_in_user.is_staff %}
                     <span class="badge bg-primary mb-2">Dozent</span>
                 {% else %}
