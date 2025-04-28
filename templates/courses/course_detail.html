@@ -1,5 +1,5 @@
 {% extends "base.html" %}
-
+{% load filename %}
 {% block title %}{{ course.title }} | Studurizer{% endblock %}
 
 {% block content %}
@@ -9,6 +9,7 @@
                 Nur angemeldete Nutzer dürfen Kursinhalte sehen.
             </div>
         {% else %}
+            <!-- Quelle: Teilweise generiert mit Claude -->
             {% if request.user.is_superuser or request.user in course.students.all or request.user in course.teachers.all %}
                 <div class="card shadow-sm">
                     <div class="card-body">
@@ -29,22 +30,28 @@
                             {% endfor %}
                         </ul>
 
-                        {% comment %}
-          <!-- eventuell gar nicht anzeigen lassen -->
-          <h5>Teilnehmende</h5>
-          <ul class="list-group mb-3">
-            {% for student in course.students.all %}
-              <li class="list-group-item">{{ student.username }} ({{ student.email }})</li>
-            {% empty %}
-              <li class="list-group-item text-muted">Keine Studierenden eingeschrieben</li>
-            {% endfor %}
-          </ul>
-          {% endcomment %}
+                    
+                        <h5>Teilnehmende</h5>
+                        <ul class="list-group mb-3">
+                            {% for student in course.students.all %}
+                                <li class="list-group-item">{{ student.username }} ({{ student.email }})</li>
+                            {% empty %}
+                                <li class="list-group-item text-muted">Keine Studierenden eingeschrieben</li>
+                            {% endfor %}
+                        </ul>
+
 
                         <h5>Kursmaterial</h5>
-                        <ul class="list-group mb-3">
-                            <li class="list-group-item">material1</li>
-                            <li class="list-group-item">material2</li>
+                        <ul>
+                            {% for file in files %}
+                                <li>
+                                    <a href="{{ file.file.url }}" download>
+                                        {{ file.file.name|basename }}
+                                    </a>
+                                </li>
+                            {% empty %}
+                                <li>Keine Dateien vorhanden.</li>
+                            {% endfor %}
                         </ul>
 
                         <h5>Abgaben</h5>
@@ -77,6 +84,7 @@
                     </ul>
                 </div>
             {% endif %}
+            <!-- Ende der Generierung -->
         {% endif %}
     </div>
 {% endblock %}

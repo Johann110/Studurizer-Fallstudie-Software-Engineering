@@ -50,7 +50,10 @@ def profile_delete_picture(request):
         profile = UserProfile.objects.get(user=request.user)
         if profile.profile_picture:
             if os.path.isfile(profile.profile_picture.path):
-                os.remove(profile.profile_picture.path)
+                try:
+                    os.remove(profile.profile_picture.path)
+                except OSError as e:
+                    messages.error(request, 'Das Profilbild konnte nicht gelöscht werden: ' + str(e))
             profile.profile_picture = None
             profile.save()
 
