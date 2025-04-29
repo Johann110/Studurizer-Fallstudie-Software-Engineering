@@ -44,7 +44,7 @@ jobs:
       - name: Test server availability on port 80
         run: |
           if curl -sSf http://localhost:80/ > /dev/null; then
-            echo "✅ Server is reachable on port 80
+            echo "✅ Server is reachable on port 80"
           else
             echo "❌ Server is not reachable on port 80"
             docker compose logs
