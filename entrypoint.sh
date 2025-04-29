@@ -16,11 +16,6 @@ python manage.py collectstatic --noinput
 echo "Starting Gunicorn..."
 gunicorn StudurizerApp.wsgi:application --bind 0.0.0.0:8000 &
 
-
-# Teste Nginx-Konfiguration
-echo "Testing Nginx configuration..."
-nginx -t || { echo "Nginx configuration test failed"; exit 1; }
-
 # Starte Nginx im Hintergrund
 echo "Starting Nginx..."
 nginx -g "daemon off;"
