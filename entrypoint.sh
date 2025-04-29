@@ -12,10 +12,10 @@ python manage.py seedgroups
 echo "Collecting static files..."
 python manage.py collectstatic --noinput
 
+# Starte Gunicorn
+echo "Starting Gunicorn..."
+gunicorn StudurizerApp.wsgi:application --bind 0.0.0.0:8000
+
 # Starte Nginx im Hintergrund
 echo "Starting Nginx..."
 nginx -g "daemon on;"
-
-# Starte Gunicorn
-echo "Starting Gunicorn..."
-gunicorn studurizer.wsgi:application --bind 0.0.0.0:8000
