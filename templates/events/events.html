@@ -7,11 +7,13 @@
                     <div class="col-12 col-md-6 col-lg-4">
                         <div class="card shadow-sm border-0">
                             <div class="card-body">
-                                <h5 class="card-title mb-2 fw-semibold text-center">{{ event.course.title }}</h5>
-                                <p class="card-text date-info mb-1">
+                                <h5 class="card-title mb-2 fw-semibold" style="color: var(--text-main);">{{ event.course.title }}</h5>
+                                <p class="card-text date-info mb-1" style="color: var(--text-main);">
+                                    <i class="fas fa-calendar-alt"></i>
                                     Start: {{ event.start_date|date:"d.m.Y H:i" }}
                                 </p>
-                                <p class="card-text date-info">
+                                <p class="card-text date-info" style="color: var(--text-main);">
+                                    <i class="fas fa-calendar-check"></i>
                                     Ende: {{ event.end_date|date:"d.m.Y H:i" }}
                                 </p>
                             </div>

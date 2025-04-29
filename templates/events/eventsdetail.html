@@ -16,20 +16,20 @@
                 <div class="row">
                     {% if expired_events %}
                         <div class="col-md-4">
-                            <h2>Vergangene Termine</h2>
+                            <h2 style="color: var(--text-main);">Vergangene Termine</h2>
                             <div class="overflowing-hidden">
                                 {% for event in expired_events %}
                                     <div class="card mb-3">
                                         <div class="card-body">
                                             {% if event.course %}
                                                 <a href="{% url 'course_detail' event.course.id %}"
-                                                   class="text-decoration-none text-dark">
+                                                   class="text-decoration-none" style="color: var(--text-main);">
                                                     <h5 class="card-title">{{ event.course.title }}</h5>
                                                 </a>
                                             {% endif %}
                                             <p class="card-text">
-                                                Start: {{ event.start_date }}<br>
-                                                Ende: {{ event.end_date }}
+                                                <i class="fas fa-calendar-alt"></i> Start: {{ event.start_date }}<br>
+                                                <i class="fas fa-calendar-check"></i> Ende: {{ event.end_date }}
                                             </p>
                                             <hr>
                                             <span class="d-flex gap-2">
@@ -61,20 +61,20 @@
                     {% endif %}
                     {% if events %}
                         <div class="col-md-4">
-                            <h2>Bevorstehende Termine</h2>
+                            <h2 style="color: var(--text-main);">Bevorstehende Termine</h2>
                             <div class="overflowing-hidden">
                                 {% for event in events %}
                                     <div class="card mb-3">
                                         <div class="card-body">
                                             {% if event.course %}
                                                 <a href="{% url 'course_detail' event.course.id %}"
-                                                   class="text-decoration-none text-dark">
+                                                   class="text-decoration-none" style="color: var(--text-main);">
                                                     <h5 class="card-title">{{ event.course.title }}</h5>
                                                 </a>
                                             {% endif %}
                                             <p class="card-text">
-                                                Start: {{ event.start_date }}<br>
-                                                Ende: {{ event.end_date }}
+                                                <i class="fas fa-calendar-alt"></i> Start: {{ event.start_date }}<br>
+                                                <i class="fas fa-calendar-check"></i> Ende: {{ event.end_date }}
                                             </p>
                                             <hr>
                                             <span class="d-flex gap-2">
@@ -106,15 +106,15 @@
                     {% endif %}
                     {% if misc_events %}
                         <div class="col-md-4">
-                            <h2>Sonstige Termine</h2>
+                            <h2 style="color: var(--text-main);">Sonstige Termine</h2>
                             <div class="overflowing-hidden">
                                 {% for event in misc_events %}
                                     <div class="card mb-3">
                                         <div class="card-body">
                                             <h5 class="card-title">{{ event.description }}</h5>
                                             <p class="card-text">
-                                                Start: {{ event.start_date }}<br>
-                                                Ende: {{ event.end_date }}
+                                                <i class="fas fa-calendar-alt"></i> Start: {{ event.start_date }}<br>
+                                                <i class="fas fa-calendar-check"></i> Ende: {{ event.end_date }}
                                             </p>
                                             <span class="d-flex gap-2">
                                                 {% if user|is_group:"Teacher" or user.is_staff %}
