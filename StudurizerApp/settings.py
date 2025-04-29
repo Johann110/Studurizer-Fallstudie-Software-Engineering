@@ -53,7 +53,8 @@ INSTALLED_APPS = [
     'courses.apps.CoursesConfig',
     'events.apps.EventsConfig',
     'material.apps.MaterialConfig',
-    "assignments.apps.AssignmentsConfig"
+    "assignments.apps.AssignmentsConfig",
+    "submissions.apps.SubmissionsConfig"
 
     # Project apps
 ]

@@ -37,6 +37,7 @@ urlpatterns = [
     path('events/', include('events.urls')),
     path('material/', include('material.urls')),
     path('assignments/', include('assignments.urls')),
+    path('submissions/', include('submissions.urls')),
 ]
 
 # Serve media files in development
