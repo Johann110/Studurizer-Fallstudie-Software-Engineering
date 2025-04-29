@@ -32,8 +32,7 @@
                     </form>
 
                 {% elif user.is_authenticated and user|is_group:"Student" and request.user in course.students.all %}
-
-                    Antwort Einreichen
+                    <a href="{% url 'create_submission' assignment.pk %}" class="btn btn-primary">Antwort Einreichen</a>
                 {% else %}
                     <p> Sie dürfen hier nicht sein!</p>
                 {% endif %}
