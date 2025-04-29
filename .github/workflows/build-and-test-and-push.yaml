@@ -38,7 +38,7 @@ jobs:
       - name: Start container with Docker Compose
         run: |
           docker compose up -d
-          sleep 10  # Warten bis der Server gestartet ist
+          sleep 30  # Warten bis der Server gestartet ist
 
       # Test auf Port 80
       - name: Test server availability on port 80
