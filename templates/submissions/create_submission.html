@@ -1,4 +1,5 @@
 {% extends 'base.html' %}
+{% load submitted %}
 {% load roles %}
 {% load static %}
 
@@ -26,165 +27,164 @@
             padding-top: 0 !important;
         }
 
-        /* Stepper Steps kompakter darstellen */
         .step-title {
             margin-bottom: 0.2rem !important;
             padding-bottom: 0 !important;
         }
 
-        /* Verkleinert Abstand innerhalb des Contents */
         .stepper-content {
             padding-top: 10px !important;
         }
 
         #stepper-container {
             display: flex;
-            justify-content: center; /* horizontal */
-            align-items: center; /* vertikal */
-            height: 100%;
+            justify-content: center;
+            align-items: flex-start;
+            min-height: 80vh;
         }
+
     </style>
 {% endblock %}
 
 {% block content %}
-    <div id="stepper-container">
-        <div class="stepper" id="stepper">
-            <div class="steps-container">
-                <div class="steps">
-                    <div class="step" icon="fa fa-info-circle" id="1" style="pointer-events: none">
-                        <div class="step-title">
-                            <span class="step-number">01</span>
-                            <div class="step-text">Anleitung zur Abgabe</div>
+    {% if not user|has_submitted:assignment.id %}
+        <div id="stepper-container">
+            <div class="stepper" id="stepper">
+                <div class="steps-container">
+                    <div class="steps">
+                        <div class="step" icon="fa fa-info-circle" id="1" style="pointer-events: none">
+                            <div class="step-title">
+                                <span class="step-number">01</span>
+                                <div class="step-text">Anleitung zur Abgabe</div>
+                            </div>
                         </div>
-                    </div>
-                    <div class="step" icon="fa fa-shield-alt" id="2" style="pointer-events: none">
-                        <div class="step-title">
-                            <span class="step-number">02</span>
-                            <div class="step-text">Datenschutz</div>
+                        <div class="step" icon="fa fa-shield-alt" id="2" style="pointer-events: none">
+                            <div class="step-title">
+                                <span class="step-number">02</span>
+                                <div class="step-text">Datenschutz</div>
+                            </div>
                         </div>
-                    </div>
-                    <div class="step" icon="fa fa-certificate" id="3" style="pointer-events: none">
-                        <div class="step-title">
-                            <span class="step-number">03</span>
-                            <div class="step-text">Eidesstattiliche Erklärung</div>
+                        <div class="step" icon="fa fa-certificate" id="3" style="pointer-events: none">
+                            <div class="step-title">
+                                <span class="step-number">03</span>
+                                <div class="step-text">Eidesstattiliche Erklärung</div>
+                            </div>
                         </div>
-                    </div>
-                    <div class="step" icon="fa fa-file" id="4" style="pointer-events: none">
-                        <div class="step-title">
-                            <span class="step-number">04</span>
-                            <div class="step-text">Dateiupload</div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="stepper-content-container">
-                <!-- Step 1: Manual -->
-                <div class="stepper-content fade-in" stepper-label="1">
-                    <div class="w-100 h-100" style="padding: 30px 10px; background: #f9f9f9">
-                        <div class="my-0 mx-auto" style="max-width: 600px; border-radius: 10px; background: #f5f5f5">
-                            <div class="p-10">
-                                <h3 class="text-center">Anleitung zur Abgabe</h3>
-                                <p>
-                                    Bitte lesen Sie die folgenden Informationen sorgfältig durch:
-                                </p>
-                                <ul>
-                                    <li>Die Abgabe erfolgt ausschließlich als PDF-Datei.</li>
-                                    <li>Stellen Sie sicher, dass Ihre Matrikelnummer auf dem Dokument steht.</li>
-                                    <li>Sie müssen im nächsten Schritt der Datenschutzerklärung zustimmen.</li>
-                                </ul>
-                                <div class="d-flex justify-content-end">
-                                    <button class="btn btn-dark mt-4" onclick="navigate('2');">Weiter</button>
-                                </div>
+                        <div class="step" icon="fa fa-file" id="4" style="pointer-events: none">
+                            <div class="step-title">
+                                <span class="step-number">04</span>
+                                <div class="step-text">Dateiupload</div>
                             </div>
                         </div>
                     </div>
                 </div>
-
-
-                <!-- Step 2: data privacy -->
-                <div class="stepper-content fade-in" stepper-label="2">
-                    <div class="w-100 h-100" style="padding: 30px 10px; background: #f9f9f9">
-                        <div class="my-0 mx-auto" style="max-width: 600px; border-radius: 10px; background: #f5f5f5">
-                            <div class="p-10">
-                                <h3 class="text-center">Datenschutzerklärung</h3>
-                                <p>
-                                    Ich erkläre mich damit einverstanden, dass meine Daten im Rahmen der Abgabe
-                                    verarbeitet
-                                    werden.
-                                </p>
-                                <div class="form-check">
-                                    <input class="form-check-input" type="checkbox" id="privacy_check"
-                                           onchange="toggleButton('privacy_check', 'next_btn_2')"/>
-                                    <label class="form-check-label" for="dataPrivacyConsent">
-                                        Ich stimme der Datenschutzerklärung zu.
-                                    </label>
-                                </div>
-                                <div class="d-flex justify-content-between mt-4">
-                                    <button class="btn btn-dark" onclick="navigate('1');">Zurück</button>
-                                    <button id="next_btn_2" class="btn btn-dark" onclick="navigate('3');" disabled>
-                                        Weiter
-                                    </button>
+                <div class="stepper-content-container">
+                    <!-- Step 1: Manual -->
+                    <div class="stepper-content fade-in" stepper-label="1">
+                        <div class="w-100 h-100" style="padding: 30px 10px; background: #f9f9f9">
+                            <div class="my-0 mx-auto" style="max-width: 600px; border-radius: 10px; background: #f5f5f5">
+                                <div class="p-10">
+                                    <h3 class="text-center">Anleitung zur Abgabe</h3>
+                                    <p>
+                                        Bitte lesen Sie die folgenden Informationen sorgfältig durch:
+                                    </p>
+                                    <ul>
+                                        <li>Die Abgabe erfolgt ausschließlich als PDF-Datei.</li>
+                                        <li>Stellen Sie sicher, dass Ihre Matrikelnummer auf dem Dokument steht.</li>
+                                        <li>Sie müssen im nächsten Schritt der Datenschutzerklärung zustimmen.</li>
+                                    </ul>
+                                    <div class="d-flex justify-content-end">
+                                        <button class="btn btn-dark mt-4" onclick="navigate('2');">Weiter</button>
+                                    </div>
                                 </div>
                             </div>
                         </div>
                     </div>
-                </div>
 
-                <!-- Step 3: statuary -->
-                <div class="stepper-content fade-in" stepper-label="3">
-                    <div class="w-100 h-100" style="padding: 30px 10px; background: #f9f9f9">
-                        <div class="my-0 mx-auto" style="max-width: 600px; border-radius: 10px; background: #f5f5f5">
-                            <div class="p-10">
-                                <h3 class="text-center">Eidesstattliche Erklärung</h3>
-                                <p>
-                                    Ich versichere hiermit an Eides statt, dass ich die eingereichte Arbeit
-                                    selbstständig
-                                    und ohne fremde Hilfe angefertigt habe.
-                                </p>
-                                <div class="form-check">
-                                    <input class="form-check-input" type="checkbox" id="declaration_check"
-                                           onchange="toggleButton('declaration_check', 'next_btn_3')">
-                                    <label class="form-check-label" for="honorStatement">
-                                        Ich bestätige die eidesstattliche Erklärung.
-                                    </label>
-                                </div>
-                                <div class="d-flex justify-content-between mt-4">
-                                    <button class="btn btn-dark" onclick="navigate('2');">Zurück</button>
-                                    <button id="next_btn_3" class="btn btn-dark" onclick="navigate('4');" disabled>
-                                        Weiter
-                                    </button>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Step 4: file upload -->
-                <div class="stepper-content fade-in" stepper-label="4">
-                    <div class="w-100 h-100" style="padding: 30px 10px; background: #f9f9f9">
-                        <div class="my-0 mx-auto" style="max-width: 600px; border-radius: 10px; background: #f5f5f5">
-                            <div class="p-10">
-                                <h3 class="text-center">Abgabe</h3>
-                                <form method="POST" enctype="multipart/form-data">
-                                    {% csrf_token %}
-                                    <div id="submission-dropzone" class="dropzone">
-                                        <div class="dz-default dz-message" data-dz-message>
-                                            <span>Datei hier ablegen oder klicken, um eine Datei hochzuladen</span>
-                                        </div>
+                    <div class="stepper-content fade-in" stepper-label="2">
+                        <div class="w-100 h-100" style="padding: 30px 10px; background: #f9f9f9">
+                            <div class="my-0 mx-auto" style="max-width: 600px; border-radius: 10px; background: #f5f5f5">
+                                <div class="p-10">
+                                    <h3 class="text-center">Datenschutzerklärung</h3>
+                                    <p>
+                                        Ich erkläre mich damit einverstanden, dass meine Daten im Rahmen der Abgabe
+                                        verarbeitet
+                                        werden.
+                                    </p>
+                                    <div class="form-check">
+                                        <input class="form-check-input" type="checkbox" id="privacy_check"
+                                               onchange="toggleButton('privacy_check', 'next_btn_2')"/>
+                                        <label class="form-check-label" for="dataPrivacyConsent">
+                                            Ich stimme der Datenschutzerklärung zu.
+                                        </label>
                                     </div>
                                     <div class="d-flex justify-content-between mt-4">
-                                        <button class="btn btn-dark" onclick="navigate('3');" type="button">Zurück
+                                        <button class="btn btn-dark" onclick="navigate('1');">Zurück</button>
+                                        <button id="next_btn_2" class="btn btn-dark" onclick="navigate('3');" disabled>
+                                            Weiter
                                         </button>
-                                        <button type="button" id="submit-btn" class="btn btn-success">Abgeben</button>
                                     </div>
-                                </form>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="stepper-content fade-in" stepper-label="3">
+                        <div class="w-100 h-100" style="padding: 30px 10px; background: #f9f9f9">
+                            <div class="my-0 mx-auto" style="max-width: 600px; border-radius: 10px; background: #f5f5f5">
+                                <div class="p-10">
+                                    <h3 class="text-center">Eidesstattliche Erklärung</h3>
+                                    <p>
+                                        Ich versichere hiermit an Eides statt, dass ich die eingereichte Arbeit
+                                        selbstständig
+                                        und ohne fremde Hilfe angefertigt habe.
+                                    </p>
+                                    <div class="form-check">
+                                        <input class="form-check-input" type="checkbox" id="declaration_check"
+                                               onchange="toggleButton('declaration_check', 'next_btn_3')">
+                                        <label class="form-check-label" for="honorStatement">
+                                            Ich bestätige die eidesstattliche Erklärung.
+                                        </label>
+                                    </div>
+                                    <div class="d-flex justify-content-between mt-4">
+                                        <button class="btn btn-dark" onclick="navigate('2');">Zurück</button>
+                                        <button id="next_btn_3" class="btn btn-dark" onclick="navigate('4');" disabled>
+                                            Weiter
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="stepper-content fade-in" stepper-label="4">
+                        <div class="w-100 h-100" style="padding: 30px 10px; background: #f9f9f9">
+                            <div class="my-0 mx-auto" style="max-width: 600px; border-radius: 10px; background: #f5f5f5">
+                                <div class="p-10">
+                                    <h3 class="text-center">Abgabe</h3>
+                                    <form method="POST" enctype="multipart/form-data">
+                                        {% csrf_token %}
+                                        <div id="submission-dropzone" class="dropzone">
+                                            <div class="dz-default dz-message" data-dz-message>
+                                                <span>Datei hier ablegen oder klicken, um eine Datei hochzuladen</span>
+                                            </div>
+                                        </div>
+                                        <div class="d-flex justify-content-between mt-4">
+                                            <button class="btn btn-dark" onclick="navigate('3');" type="button">Zurück
+                                            </button>
+                                            <button type="button" id="submit-btn" class="btn btn-success">Abgeben</button>
+                                        </div>
+                                    </form>
+                                </div>
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
-    </div>
+    {% else %}
+        <p> Sie dürfen hier nicht sein! </p>
+    {% endif %}
 {% endblock %}
 
 {% block extra_js %}

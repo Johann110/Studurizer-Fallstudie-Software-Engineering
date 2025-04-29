@@ -8,29 +8,6 @@ from assignments.models import Assignment
 from .forms import SubmissionForm
 
 
-# def create_submission(request, assignment_id):
-#     assignment = get_object_or_404(Assignment, pk=assignment_id)
-#
-#     if request.method == 'POST':
-#         form = SubmissionForm(request.POST, request.FILES)
-#         if form.is_valid():
-#             submission = form.save(commit=False)
-#             submission.assignment = assignment
-#             submission.user = request.user
-#             submission.save()
-#             return redirect('assignment_detail', assignment_id=assignment.id)
-#         else:
-#             return JsonResponse({'errors': form.errors}, status=400)
-#
-#     else:
-#         form = SubmissionForm()
-#
-#     context = {
-#         'form': form,
-#         'assignment': assignment,
-#     }
-#     return render(request, 'submissions/create_submission.html', context)
-
 def create_submission(request, assignment_id):
     assignment = get_object_or_404(Assignment, pk=assignment_id)
 

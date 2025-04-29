@@ -1,4 +1,5 @@
 {% extends 'base.html' %}
+{% load submitted %}
 {% load roles %}
 {% load filename %}
 
@@ -31,8 +32,10 @@
                         <button type="submit" class="btn btn-danger">Löschen</button>
                     </form>
 
-                {% elif user.is_authenticated and user|is_group:"Student" and request.user in course.students.all %}
-                    <a href="{% url 'create_submission' assignment.pk %}" class="btn btn-primary">Antwort Einreichen</a>
+                {% elif user.is_authenticated and user|is_group:"Student" and request.user in course.students.all%}
+                    {% if not user|has_submitted:assignment.pk  %}
+                        <a href="{% url 'create_submission' assignment.pk %}" class="btn btn-primary">Antwort Einreichen</a>
+                    {% endif %}
                 {% else %}
                     <p> Sie dürfen hier nicht sein!</p>
                 {% endif %}
