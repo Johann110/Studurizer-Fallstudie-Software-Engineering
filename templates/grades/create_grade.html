@@ -1,0 +1,26 @@
+{% extends "base.html" %}
+{% load roles %}
+{% block content %}
+    {% if user.is_authenticated and user|is_group:"Teacher" or user.is_staff %}
+        <h2>Kurs erstellen</h2>
+        <form id="course-form" class="form-control" method="post" enctype="multipart/form-data">
+            {% csrf_token %}
+            <fieldset class="mb-4">
+                <legend>Abgabe einsehen</legend>
+                <embed src="{% url 'embedded_pdf' path=submission.file.name %}" type="application/pdf" width="100%" height="600px" />
+            </fieldset>
+
+            <fieldset class="mb-4">
+                <legend>Bewertung erfassen</legend>
+                {{ form.as_p }}
+            </fieldset>
+
+
+            <button type="submit" id="submit-btn" class="btn btn-success">Speichern</button>
+            <button type="button" class="btn btn-danger" onclick="window.location.href='{% url "home" %}'">Abbrechen
+            </button>
+        </form>
+    {% else %}
+        <p> Sie dürfen hier nicht sein!</p>
+    {% endif %}
+{% endblock %}

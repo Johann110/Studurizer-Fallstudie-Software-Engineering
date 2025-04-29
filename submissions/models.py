@@ -6,8 +6,6 @@ from django.db import models
 from StudurizerApp import settings
 from assignments.models import Assignment
 from accounts.models import CustomUser
-#from grades.models import Grade
-
 
 def submission_file_upload_path(instance, filename):
     return f'submissions/user_{instance.user.id}/assignment_{instance.assignment.id}/{filename}'
@@ -16,8 +14,6 @@ def submission_file_upload_path(instance, filename):
 class Submission(models.Model):
     assignment = models.ForeignKey(Assignment, on_delete=models.CASCADE, related_name='submissions')
     user = models.ForeignKey(CustomUser, on_delete=models.CASCADE, related_name='submissions')
-    #grade = models.OneToOneField(Grade, on_delete=models.SET_NULL, null=True, blank=True)
-
     file = models.FileField(upload_to=submission_file_upload_path)
 
     agreed_to_data_policy = models.BooleanField(default=False)
