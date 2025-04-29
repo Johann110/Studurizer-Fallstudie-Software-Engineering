@@ -14,7 +14,7 @@ python manage.py collectstatic --noinput
 
 # Starte Gunicorn
 echo "Starting Gunicorn..."
-gunicorn StudurizerApp.wsgi:application --bind 0.0.0.0:8000
+gunicorn StudurizerApp.wsgi:application --bind 0.0.0.0:8000 &
 
 sleep 2
 
