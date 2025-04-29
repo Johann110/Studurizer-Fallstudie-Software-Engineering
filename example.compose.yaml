@@ -3,7 +3,7 @@ services:
     container_name: studurizer
     image: ghcr.io/johann110/studurizer-fallstudie-software-engineering:latest
     ports:
-      - "8000:8000"  # Exponiert Port 8000
+      - "80:80"  # Exponiert Port 80
     volumes:
       - ./data:/app/data # Pfad zur lokalen SQLite-Datenbank (links anpassen, falls nötig)
       - ./media:/app/media            # Ordner für Medien-Dateien (links anpassen, falls nötig)

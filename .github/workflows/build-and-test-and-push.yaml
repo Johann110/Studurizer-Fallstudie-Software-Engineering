@@ -40,13 +40,13 @@ jobs:
           docker compose up -d
           sleep 10  # Warten bis der Server gestartet ist
 
-      # Test auf Port 8000
-      - name: Test server availability on port 8000
+      # Test auf Port 80
+      - name: Test server availability on port 80
         run: |
-          if curl -sSf http://localhost:8000/ > /dev/null; then
-            echo "✅ Server is reachable on port 8000"
+          if curl -sSf http://localhost:80/ > /dev/null; then
+            echo "✅ Server is reachable on port 80
           else
-            echo "❌ Server is not reachable on port 8000"
+            echo "❌ Server is not reachable on port 80"
             docker compose logs
             exit 1
           fi
