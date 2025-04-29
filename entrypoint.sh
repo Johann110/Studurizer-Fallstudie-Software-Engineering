@@ -16,6 +16,10 @@ python manage.py collectstatic --noinput
 echo "Starting Gunicorn..."
 gunicorn StudurizerApp.wsgi:application --bind 0.0.0.0:8000
 
+sleep 2
+
 # Starte Nginx im Hintergrund
 echo "Starting Nginx..."
 nginx -g "daemon on;"
+
+sleep 2
