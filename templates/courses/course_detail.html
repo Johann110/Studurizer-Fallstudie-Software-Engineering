@@ -25,7 +25,17 @@
                                 <h5>Lehrende</h5>
                                 <ul class="list-group mb-3">
                                     {% for teacher in course.teachers.all %}
-                                        <li class="list-group-item">{{ teacher.username }} ({{ teacher.email }})</li>
+                                        <li class="list-group-item d-flex align-items-center">
+                                            <span class="me-auto">{{ teacher.first_name }} {{ teacher.last_name }}</span>
+                                            <div class="d-flex">
+                                                <a href="mailto:{{ teacher.email }}" class="btn btn-sm btn-link" title="E-Mail an {{ teacher.first_name }} senden">
+                                                    <i class="fas fa-envelope"></i>
+                                                </a>
+                                                <a href="{% url 'profile' teacher.id %}" class="btn btn-sm btn-link" title="Profil anzeigen">
+                                                    <i class="fas fa-user"></i>
+                                                </a>
+                                            </div>
+                                        </li>
                                     {% empty %}
                                         <li class="list-group-item text-muted">Keine Lehrenden zugewiesen</li>
                                     {% endfor %}
@@ -34,7 +44,17 @@
                                 <h5>Teilnehmende</h5>
                                 <ul class="list-group mb-3">
                                     {% for student in course.students.all %}
-                                        <li class="list-group-item">{{ student.username }} ({{ student.email }})</li>
+                                        <li class="list-group-item d-flex align-items-center">
+                                            <span class="me-auto">{{ student.first_name }} {{ student.last_name }}</span>
+                                            <div class="d-flex">
+                                                <a href="mailto:{{ student.email }}" class="btn btn-sm btn-link" title="E-Mail an {{ student.first_name }} senden">
+                                                    <i class="fas fa-envelope"></i>
+                                                </a>
+                                                <a href="{% url 'profile' student.id %}" class="btn btn-sm btn-link" title="Profil anzeigen">
+                                                    <i class="fas fa-user"></i>
+                                                </a>
+                                            </div>
+                                        </li>
                                     {% empty %}
                                         <li class="list-group-item text-muted">Keine Studierenden eingeschrieben</li>
                                     {% endfor %}
@@ -55,22 +75,16 @@
 
                                 <h5>Abgaben</h5>
                                 <ul class="list-group mb-3">
-                                    <li class="list-group-item">Abgabe1</li>
-                                    <li class="list-group-item">Abgabe2</li>
+                                    {% for assignment in assignments %}
+                                        <li class="list-group-item"><a href="/assignments/assignment/{{ assignment.id }}">{{ assignment.title }}</a></li>
+                                    {% empty %}
+                                        <li class="list-group-item text-muted">Aktuell keine Abgaben</li>
+                                    {% endfor %}
                                 </ul>
 
-                        <h5>Abgaben</h5>
-                        <ul class="list-group mb-3">
-                            {% for assignment in assignments %}
-                                <li class="list-group-item"><a href="/assignments/assignment/{{ assignment.id }}">{{ assignment.title }}</a></li>
-                            {% empty %}
-                                <li class="list-group-item text-muted">Aktuell keine Abgaben</li>
-                            {% endfor %}
-                        </ul>
-                    
-                        {% if request.user.is_superuser or request.user in course.teachers.all %}
-                            <a href="{% url 'create_assignment' course.pk %}" class="btn btn-primary">Abgabe erstellen</a>
-                        {% endif %}
+                                {% if request.user.is_superuser or request.user in course.teachers.all %}
+                                    <a href="{% url 'create_assignment' course.pk %}" class="btn btn-primary">Abgabe erstellen</a>
+                                {% endif %}
                                 <div class="mt-4">
                                     <a href="{% url 'home' %}" class="btn btn-secondary">Zurück</a>
                                     {% if request.user.is_superuser or request.user in course.teachers.all %}
@@ -125,10 +139,10 @@
                                                             <div class="card shadow-sm border-0">
                                                                 <div class="card-body">
                                                                     <p class="card-text text-muted mb-1">
-                                                                        Start: {{ event.start_date|date:"d.m.Y H:i" }}
+                                                                        <i class="fas fa-calendar-alt"></i> Start: {{ event.start_date|date:"d.m.Y H:i" }}
                                                                     </p>
                                                                     <p class="card-text text-muted mb-1">
-                                                                        Ende: {{ event.end_date|date:"d.m.Y H:i" }}
+                                                                        <i class="fas fa-calendar-check"></i> Ende: {{ event.end_date|date:"d.m.Y H:i" }}
                                                                     </p>
                                                                     <p class="card-text">
                                                                         {{ event.description }}
@@ -138,7 +152,7 @@
                                                                             {% csrf_token %}
                                                                             <input type="hidden" name="redirect_to" value="{% url 'course_detail' course.id %}">
                                                                             <button type="submit" class="btn btn-sm btn-outline-danger">
-                                                                                Löschen
+                                                                                <i class="fas fa-trash-alt"></i> Löschen
                                                                             </button>
                                                                         </form>
                                                                     {% endif %}
@@ -164,7 +178,17 @@
                     Du bist nicht für diesen Kurs eingeschrieben. Bitte wende dich an einen der Lehrenden:
                     <ul class="mt-2">
                         {% for teacher in course.teachers.all %}
-                            <li>{{ teacher.username }} ({{ teacher.email }})</li>
+                            <li class="d-flex align-items-center">
+                                <span class="me-auto">{{ teacher.first_name }} {{ teacher.last_name }}</span>
+                                <div class="d-flex">
+                                    <a href="mailto:{{ teacher.email }}" class="btn btn-sm btn-link" title="E-Mail an {{ teacher.first_name }} senden">
+                                        <i class="fas fa-envelope"></i>
+                                    </a>
+                                    <a href="{% url 'profile' teacher.id %}" class="btn btn-sm btn-link" title="Profil anzeigen">
+                                        <i class="fas fa-user"></i>
+                                    </a>
+                                </div>
+                            </li>
                         {% empty %}
                             <li>Keine Lehrenden verfügbar.</li>
                         {% endfor %}
@@ -177,6 +201,16 @@
 
 {% block extra_head %}
 <style>
+    /* Anpassungen für die Benutzerlisten */
+    .list-group-item .btn-link {
+        color: var(--text-muted);
+        padding: 0.25rem 0.5rem;
+    }
+
+    .list-group-item .btn-link:hover {
+        color: var(--primary-color);
+    }
+
     /* Mobile Anpassungen für die Kursdetailseite */
     @media (max-width: 767.98px) {
         .col-md-4 .border-start {
