@@ -23,3 +23,8 @@
   Lizenz: MIT License
   Quelle: https://fontawesome.com
   Copyright 2023 Fonticons, Inc.
+
+- **PDF.JS (Version 6.5.0)**
+  Lizenz: Apache Licence
+  Quelle: https://github.com/mozilla/pdf.js
+  Copyright 2024 Mozilla Foundation
