@@ -19,12 +19,12 @@
   Quelle: https://jquery.com/  
   Copyright 2025 OpenJS Foundation and jQuery contributors
 
-- **Fontawesome (Version 6.5.0)**
-  Lizenz: MIT License
-  Quelle: https://fontawesome.com
+- **Fontawesome (Version 6.5.0)**<br>
+  Lizenz: MIT License<br>
+  Quelle: https://fontawesome.com<br>
   Copyright 2023 Fonticons, Inc.
 
-- **PDF.JS (Version 6.5.0)**
-  Lizenz: Apache Licence
-  Quelle: https://github.com/mozilla/pdf.js
+- **PDF.JS (Version 6.5.0)**<br>
+  Lizenz: Apache Licence<br>
+  Quelle: https://github.com/mozilla/pdf.js<br>
   Copyright 2024 Mozilla Foundation
