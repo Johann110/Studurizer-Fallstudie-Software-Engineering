@@ -65,12 +65,15 @@
                         <ul class="list-group">
                             {% for submission in submissions %}
                                 <li class="list-group-item d-flex justify-content-between align-items-center">
-                                    {{ submission.user.get_full_name | default:user  }}
+                                    {{ submission.user.get_full_name | default:submission.user  }}
                                     <a href="{{ submission.file.url }}" target="_blank" class="btn btn-sm btn-outline-primary">Ansehen</a>
                                     {% if not submission.grade %}
                                         <a href="{% url 'create_grade' submission.id %}" class="btn btn-sm btn-success">Bewerten</a>
                                     {% else %}
-                                        <span class="badge bg-success">Note: {{ submission.grade.grade }}</span>
+                                        <span>
+                                            <span class="badge bg-success">Note: {{ submission.grade.grade }}</span>
+                                            <a href="{% url 'update_grade' submission.id submission.grade.id %}" class="btn btn-sm btn-success">Bewertung aktualisieren</a>
+                                        </span>
                                     {% endif %}
                                 </li>
                             {% endfor %}
