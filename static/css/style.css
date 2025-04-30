@@ -605,17 +605,24 @@ select.form-select {
     color: var(--text-main);
 }
 
-.dropzone .dz-preview .dz-details {
-    background-color: var(--bg-card);
-    color: var(--text-main);
-}
-
 .dropzone .dz-preview .dz-progress {
     background: var(--border-color);
 }
 
 .dropzone .dz-preview .dz-progress .dz-upload {
     background: var(--primary-color);
+}
+
+.dz-details {
+    background: transparent !important;
+}
+
+.dz-preview .dz-filename span {
+    color: black !important;
+}
+
+[data-dz-size] {
+    color: black !important;
 }
 
 /* Multi-Select Anpassungen */

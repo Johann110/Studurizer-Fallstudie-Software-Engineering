@@ -19,7 +19,7 @@
   Quelle: https://jquery.com/  
   Copyright 2025 OpenJS Foundation and jQuery contributors
 
-- **Select2 (Version 4.1.0)**  
-  Lizenz: MIT License  
-  Quelle: https://select2.org/  
-  Copyright (c) 2012-2017 Kevin Brown, Igor Vaynberg, and Select2 contributors
+- **Fontawesome (Version 6.5.0)**
+  Lizenz: MIT License
+  Quelle: https://fontawesome.com
+  Copyright 2023 Fonticons, Inc.
