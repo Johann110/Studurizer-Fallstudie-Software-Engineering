@@ -1,5 +1,7 @@
 # MyCampus-Learn-Fallstudie-Software-Engineering
 
+[https://studurizer.atris.dev](https://studurizer.atris.dev)
+
 ## Angaben zur Drittanbieter-Software
 
 Alle Quellen, Lizenzen und Copyrightangaben für verwendete Software befinden sich in der Datei CREDITS.md im Hauptverzeichnis.
