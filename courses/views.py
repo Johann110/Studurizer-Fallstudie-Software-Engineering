@@ -6,7 +6,9 @@ from django.views.generic import CreateView, UpdateView, DeleteView
 from courses.forms import CourseForm
 from courses.models import Course
 from material.models import Material
-
+from events.models import Events
+from django.utils import timezone
+from events.forms import EventForm
 
 def create_course(request):
     # Quelle: Codegenerierung mit ChatGPT
@@ -101,18 +103,11 @@ def course_detail(request, pk):
     # Check and close assignments if end datetime reached
     for assignment in assignments:
         assignment.check_and_close()
-
-
-    from events.models import Events
-    from django.utils import timezone
-
     now = timezone.now()
     course_events = Events.objects.filter(
         course=course,
         end_date__gte=now
     ).order_by('start_date')
-
-    from events.forms import EventForm
     event_form = EventForm(initial={'course': course})
 
     context = {

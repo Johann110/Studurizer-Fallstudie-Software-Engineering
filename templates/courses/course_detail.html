@@ -3,14 +3,14 @@
 {% block title %}{{ course.title }} | Studurizer{% endblock %}
 
 {% block content %}
-    <div class="container mt-4">
+    <div class="container mt-0">
         {% if not request.user.is_authenticated %}
             <div class="alert alert-warning" role="alert">
                 Nur angemeldete Nutzer dürfen Kursinhalte sehen.
             </div>
         {% else %}
             {% if request.user.is_superuser or request.user in course.students.all or request.user in course.teachers.all %}
-                <div class="card shadow-sm">
+                <div class="card shadow-sm pb-2">
                     <ul class="nav nav-tabs" id="courses" role="tablist">
                         <li class="nav-item" role="presentation">
                             <button class="nav-link active" id="main-tab" data-bs-toggle="tab" data-bs-target="#main"
@@ -21,6 +21,16 @@
                         <li class="nav-item" role="presentation">
                             <button class="nav-link" id="material-tab" data-bs-toggle="tab" data-bs-target="#material"
                                     type="button" role="tab" aria-controls="material" aria-selected="false">Materialien
+                            </button>
+                        </li>
+                        <li class="nav-item" role="presentation">
+                            <button class="nav-link" id="members-tab" data-bs-toggle="tab" data-bs-target="#members"
+                                    type="button" role="tab" aria-controls="members" aria-selected="false">Teilnehmer
+                            </button>
+                        </li>
+                        <li class="nav-item" role="presentation">
+                            <button class="nav-link" id="events-tab" data-bs-toggle="tab" data-bs-target="#events"
+                                    type="button" role="tab" aria-controls="events" aria-selected="false">Termine
                             </button>
                         </li>
                         <li class="nav-item" role="presentation">
@@ -39,7 +49,6 @@
                                 <p><strong>Gestartet am:</strong> {{ course.start_date }}</p>
                                 <p><strong>Endet am:</strong> {{ course.end_date }}</p>
                             </div>
-
                             <div class="tab-pane fade" id="material" role="tabpanel" aria-labelledby="material-tab">
                                 <h5>Kursmaterial</h5>
                                 <ul>
@@ -54,10 +63,101 @@
                                     {% endfor %}
                                 </ul>
                             </div>
+                            <div class="tab-pane fade" id="events" role="tabpanel" aria-labelledby="events-tab">
+                                <h5 class="mt-3">Anstehende Termine</h5>
+                                {% if events %}
+                                    <div class="event-overview-container" style="max-height: 60%;">
+                                        <div class="event-overview container py-2 px-0">
+                                            <div class="row g-3">
+                                                {% for event in events %}
+                                                    <div class="col-12 col-md-6 col-lg-4">
+                                                        <div class="card shadow-sm border-0 h-100">
+                                                            <div class="card-body d-flex flex-column">
+                                                                <h5 class="card-title mb-2 fw-semibold"
+                                                                    style="color: var(--text-main);">
+                                                                    {{ event.description }}
+                                                                </h5>
+                                                                <p class="card-text date-info mb-1"
+                                                                   style="color: var(--text-main);">
+                                                                    <i class="fas fa-calendar-alt"></i>
+                                                                    Start: {{ event.start_date|date:"d.m.Y H:i" }}
+                                                                </p>
+                                                                <p class="card-text date-info"
+                                                                   style="color: var(--text-main);">
+                                                                    <i class="fas fa-calendar-check"></i>
+                                                                    Ende: {{ event.end_date|date:"d.m.Y H:i" }}
+                                                                </p>
 
+                                                                {% if request.user in course.teachers.all or request.user.is_superuser %}
+                                                                    <form action="{% url 'delete_event' event.id %}"
+                                                                          method="post" class="mt-auto">
+                                                                        {% csrf_token %}
+                                                                        <input type="hidden" name="redirect_to"
+                                                                               value="{% url 'course_detail' course.id %}">
+                                                                        <button type="submit"
+                                                                                class="btn btn-sm btn-outline-danger">
+                                                                            <i class="fas fa-trash-alt"></i> Löschen
+                                                                        </button>
+                                                                    </form>
+                                                                {% endif %}
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                {% endfor %}
+                                            </div>
+                                        </div>
+                                    </div>
+                                {% else %}
+                                    <div class="alert alert-info">
+                                        Keine anstehenden Termine für diesen Kurs.
+                                    </div>
+                                {% endif %}
+                            </div>
+                            <div class="tab-pane fade" id="members" role="tabpanel" aria-labelledby="members-tab">
+                                <h5>Teilnehmende Lehrer</h5>
+                                <ul class="list-group mb-3">
+                                    {% for teacher in course.teachers.all %}
+                                        <li class="list-group-item d-flex align-items-center">
+                                            <span class="me-auto">{{ teacher.first_name }} {{ teacher.last_name }}</span>
+                                            <div class="d-flex">
+                                                <a href="mailto:{{ teacher.email }}" class="btn btn-sm btn-link"
+                                                   title="E-Mail an {{ teacher.first_name }} senden">
+                                                    <i class="fas fa-envelope"></i>
+                                                </a>
+                                                <a href="{% url 'profile' teacher.id %}" class="btn btn-sm btn-link"
+                                                   title="Profil anzeigen">
+                                                    <i class="fas fa-user"></i>
+                                                </a>
+                                            </div>
+                                        </li>
+                                    {% empty %}
+                                        <li class="list-group-item text-muted">Keine Lehrenden zugewiesen</li>
+                                    {% endfor %}
+                                </ul>
+                                <h5>Teilnehmende Schüler</h5>
+                                <ul class="list-group mb-3">
+                                    {% for student in course.students.all %}
+                                        <li class="list-group-item d-flex align-items-center">
+                                            <span class="me-auto">{{ student.first_name }} {{ student.last_name }}</span>
+                                            <div class="d-flex">
+                                                <a href="mailto:{{ student.email }}" class="btn btn-sm btn-link"
+                                                   title="E-Mail an {{ student.first_name }} senden">
+                                                    <i class="fas fa-envelope"></i>
+                                                </a>
+                                                <a href="{% url 'profile' student.id %}" class="btn btn-sm btn-link"
+                                                   title="Profil anzeigen">
+                                                    <i class="fas fa-user"></i>
+                                                </a>
+                                            </div>
+                                        </li>
+                                    {% empty %}
+                                        <li class="list-group-item text-muted">Keine Studierenden eingeschrieben</li>
+                                    {% endfor %}
+                                </ul>
+                            </div>
                             <div class="tab-pane fade" id="contact" role="tabpanel" aria-labelledby="contact-tab">
                                 <h5>Abgaben</h5>
-                                <ul class="list-group mb-3">
+                                <ul class="list-group mb-3 mt-0">
                                     {% for assignment in assignments %}
                                         <li class="list-group-item"><a
                                                 href="/assignments/assignment/{{ assignment.id }}">{{ assignment.title }}</a>
@@ -75,7 +175,7 @@
                             </div>
                         </div>
 
-                        <div class="mt-4">
+                        <div class="mt-2">
                             <a href="{% url 'home' %}" class="btn btn-secondary">Zurück</a>
                             {% if request.user.is_superuser or request.user in course.teachers.all %}
                                 <a href="{% url 'update_course' course.pk %}" class="btn btn-primary">Bearbeiten</a>
@@ -83,6 +183,34 @@
                                     {% csrf_token %}
                                     <button type="submit" class="btn btn-danger">Löschen</button>
                                 </form>
+
+                                <button class="btn btn-success" data-bs-toggle="modal"
+                                        data-bs-target="#createEventModal">
+                                    Termin erstellen
+                                </button>
+                                <div class="modal fade" id="createEventModal" tabindex="-1"
+                                     aria-labelledby="createEventModalLabel"
+                                     aria-hidden="true">
+                                    <div class="modal-dialog">
+                                        <div class="modal-content">
+                                            <form method="post" action="{% url 'create_event_for_course' course.id %}">
+                                                {% csrf_token %}
+                                                <div class="modal-header">
+                                                    <h5 class="modal-title" id="createEventModalLabel">Termin für
+                                                        "{{ course.title }}" anlegen</h5>
+                                                    <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                                            aria-label="Schließen"></button>
+                                                </div>
+                                                <div class="modal-body">
+                                                    {{ form.as_p }}
+                                                </div>
+                                                <div class="modal-footer">
+                                                    <button type="submit" class="btn btn-primary">Speichern</button>
+                                                </div>
+                                            </form>
+                                        </div>
+                                    </div>
+                                </div>
                             {% endif %}
                         </div>
                     </div>
@@ -125,6 +253,14 @@
 
         .list-group-item .btn-link:hover {
             color: var(--primary-color);
+        }
+
+        .tab-content {
+            min-height: auto !important;
+        }
+
+        .tab-pane {
+            min-height: auto !important;
         }
 
         /* Mobile Anpassungen für die Kursdetailseite */
