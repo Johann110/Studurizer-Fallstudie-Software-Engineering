@@ -1,7 +1,5 @@
 # MyCampus-Learn-Fallstudie-Software-Engineering
 
-# URL zur Website
-
 [https://studurizer.atris.dev](https://studurizer.atris.dev)
 
 ## Angaben zur Drittanbieter-Software
