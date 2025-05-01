@@ -2,8 +2,7 @@
 
 # URL zur Website
 
-Development Umgebung: [https://studurizer.atris.dev](https://studurizer.atris.dev)<br>
-Production Umgebung:
+[https://studurizer.atris.dev](https://studurizer.atris.dev)
 
 ## Angaben zur Drittanbieter-Software
 
