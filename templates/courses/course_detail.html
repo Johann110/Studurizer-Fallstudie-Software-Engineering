@@ -11,55 +11,36 @@
         {% else %}
             {% if request.user.is_superuser or request.user in course.students.all or request.user in course.teachers.all %}
                 <div class="card shadow-sm">
+                    <ul class="nav nav-tabs" id="courses" role="tablist">
+                        <li class="nav-item" role="presentation">
+                            <button class="nav-link active" id="main-tab" data-bs-toggle="tab" data-bs-target="#main"
+                                    type="button" role="tab" aria-controls="main" aria-selected="true">
+                                Hauptinformationen
+                            </button>
+                        </li>
+                        <li class="nav-item" role="presentation">
+                            <button class="nav-link" id="material-tab" data-bs-toggle="tab" data-bs-target="#material"
+                                    type="button" role="tab" aria-controls="material" aria-selected="false">Materialien
+                            </button>
+                        </li>
+                        <li class="nav-item" role="presentation">
+                            <button class="nav-link" id="contact-tab" data-bs-toggle="tab" data-bs-target="#contact"
+                                    type="button" role="tab" aria-controls="contact" aria-selected="false">Abgaben &
+                                Noten
+                            </button>
+                        </li>
+                    </ul>
+
                     <div class="card-body">
-                        <h2 class="card-title">{{ course.title }}</h2>
-                        <p class="card-text">{{ course.description }}</p>
+                        <div class="tab-content" id="courseTabContent">
+                            <div class="tab-pane fade show active" id="main" role="tabpanel" aria-labelledby="main-tab">
+                                <h2 class="card-title">{{ course.title }}</h2>
+                                <p class="card-text">{{ course.description }}</p>
+                                <p><strong>Gestartet am:</strong> {{ course.start_date }}</p>
+                                <p><strong>Endet am:</strong> {{ course.end_date }}</p>
+                            </div>
 
-                        <p><strong>Gestartet am:</strong> {{ course.start_date }}</p>
-                        <p><strong>Endet am:</strong> {{ course.end_date }}</p>
-
-                        <hr>
-
-                        <div class="row">
-                            <div class="col-md-8 pe-md-4">
-                                <h5>Lehrende</h5>
-                                <ul class="list-group mb-3">
-                                    {% for teacher in course.teachers.all %}
-                                        <li class="list-group-item d-flex align-items-center">
-                                            <span class="me-auto">{{ teacher.first_name }} {{ teacher.last_name }}</span>
-                                            <div class="d-flex">
-                                                <a href="mailto:{{ teacher.email }}" class="btn btn-sm btn-link" title="E-Mail an {{ teacher.first_name }} senden">
-                                                    <i class="fas fa-envelope"></i>
-                                                </a>
-                                                <a href="{% url 'profile' teacher.id %}" class="btn btn-sm btn-link" title="Profil anzeigen">
-                                                    <i class="fas fa-user"></i>
-                                                </a>
-                                            </div>
-                                        </li>
-                                    {% empty %}
-                                        <li class="list-group-item text-muted">Keine Lehrenden zugewiesen</li>
-                                    {% endfor %}
-                                </ul>
-
-                                <h5>Teilnehmende</h5>
-                                <ul class="list-group mb-3">
-                                    {% for student in course.students.all %}
-                                        <li class="list-group-item d-flex align-items-center">
-                                            <span class="me-auto">{{ student.first_name }} {{ student.last_name }}</span>
-                                            <div class="d-flex">
-                                                <a href="mailto:{{ student.email }}" class="btn btn-sm btn-link" title="E-Mail an {{ student.first_name }} senden">
-                                                    <i class="fas fa-envelope"></i>
-                                                </a>
-                                                <a href="{% url 'profile' student.id %}" class="btn btn-sm btn-link" title="Profil anzeigen">
-                                                    <i class="fas fa-user"></i>
-                                                </a>
-                                            </div>
-                                        </li>
-                                    {% empty %}
-                                        <li class="list-group-item text-muted">Keine Studierenden eingeschrieben</li>
-                                    {% endfor %}
-                                </ul>
-
+                            <div class="tab-pane fade" id="material" role="tabpanel" aria-labelledby="material-tab">
                                 <h5>Kursmaterial</h5>
                                 <ul>
                                     {% for file in files %}
@@ -72,104 +53,37 @@
                                         <li>Keine Dateien vorhanden.</li>
                                     {% endfor %}
                                 </ul>
+                            </div>
 
+                            <div class="tab-pane fade" id="contact" role="tabpanel" aria-labelledby="contact-tab">
                                 <h5>Abgaben</h5>
                                 <ul class="list-group mb-3">
                                     {% for assignment in assignments %}
-                                        <li class="list-group-item"><a href="/assignments/assignment/{{ assignment.id }}">{{ assignment.title }}</a></li>
+                                        <li class="list-group-item"><a
+                                                href="/assignments/assignment/{{ assignment.id }}">{{ assignment.title }}</a>
+                                        </li>
                                     {% empty %}
                                         <li class="list-group-item text-muted">Aktuell keine Abgaben</li>
                                     {% endfor %}
                                 </ul>
 
                                 {% if request.user.is_superuser or request.user in course.teachers.all %}
-                                    <a href="{% url 'create_assignment' course.pk %}" class="btn btn-primary">Abgabe erstellen</a>
+                                    <a href="{% url 'create_assignment' course.pk %}" class="btn btn-primary">Abgabe
+                                        erstellen</a>
                                 {% endif %}
-                                <div class="mt-4">
-                                    <a href="{% url 'home' %}" class="btn btn-secondary">Zurück</a>
-                                    {% if request.user.is_superuser or request.user in course.teachers.all %}
-                                        <a href="{% url 'update_course' course.pk %}" class="btn btn-primary">Bearbeiten</a>
-                                        <form method="post" action="{% url 'delete_course' course.pk %}" class="d-inline">
-                                            {% csrf_token %}
-                                            <button type="submit" class="btn btn-danger">Löschen</button>
-                                        </form>
-                                    {% endif %}
-                                </div>
+
                             </div>
+                        </div>
 
-                            <div class="col-md-4">
-                                <div class="ps-md-2 border-start h-100">
-                                    {% if request.user in course.teachers.all or request.user.is_superuser %}
-                                        <div class="text-end mb-3">
-                                            <button class="btn btn-success" data-bs-toggle="modal" data-bs-target="#createEventModal">
-                                                Termin erstellen
-                                            </button>
-                                        </div>
-
-                                        <!-- Modal für Terminerstellung -->
-                                        <div class="modal fade" id="createEventModal" tabindex="-1" aria-labelledby="createEventModalLabel"
-                                            aria-hidden="true">
-                                            <div class="modal-dialog">
-                                                <div class="modal-content">
-                                                    <form method="post" action="{% url 'create_event_for_course' course.id %}">
-                                                        {% csrf_token %}
-                                                        <div class="modal-header">
-                                                            <h5 class="modal-title" id="createEventModalLabel">Termin für "{{ course.title }}" anlegen</h5>
-                                                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Schließen"></button>
-                                                        </div>
-                                                        <div class="modal-body">
-                                                            {{ form.as_p }}
-                                                        </div>
-                                                        <div class="modal-footer">
-                                                            <button type="submit" class="btn btn-primary">Speichern</button>
-                                                        </div>
-                                                    </form>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    {% endif %}
-
-                                    <h5 class="mt-3">Anstehende Termine</h5>
-                                    {% if events %}
-                                        <div class="event-overview-container" style="max-height: 500px; overflow-y: auto;">
-                                            <div class="event-overview container py-2 px-0">
-                                                <div class="row g-3">
-                                                    {% for event in events %}
-                                                        <div class="col-12">
-                                                            <div class="card shadow-sm border-0">
-                                                                <div class="card-body">
-                                                                    <p class="card-text text-muted mb-1">
-                                                                        <i class="fas fa-calendar-alt"></i> Start: {{ event.start_date|date:"d.m.Y H:i" }}
-                                                                    </p>
-                                                                    <p class="card-text text-muted mb-1">
-                                                                        <i class="fas fa-calendar-check"></i> Ende: {{ event.end_date|date:"d.m.Y H:i" }}
-                                                                    </p>
-                                                                    <p class="card-text">
-                                                                        {{ event.description }}
-                                                                    </p>
-                                                                    {% if request.user in course.teachers.all or request.user.is_superuser %}
-                                                                        <form action="{% url 'delete_event' event.id %}" method="post" class="mt-2">
-                                                                            {% csrf_token %}
-                                                                            <input type="hidden" name="redirect_to" value="{% url 'course_detail' course.id %}">
-                                                                            <button type="submit" class="btn btn-sm btn-outline-danger">
-                                                                                <i class="fas fa-trash-alt"></i> Löschen
-                                                                            </button>
-                                                                        </form>
-                                                                    {% endif %}
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                    {% endfor %}
-                                                </div>
-                                            </div>
-                                        </div>
-                                    {% else %}
-                                        <div class="alert alert-info">
-                                            Keine anstehenden Termine für diesen Kurs.
-                                        </div>
-                                    {% endif %}
-                                </div>
-                            </div>
+                        <div class="mt-4">
+                            <a href="{% url 'home' %}" class="btn btn-secondary">Zurück</a>
+                            {% if request.user.is_superuser or request.user in course.teachers.all %}
+                                <a href="{% url 'update_course' course.pk %}" class="btn btn-primary">Bearbeiten</a>
+                                <form method="post" action="{% url 'delete_course' course.pk %}" class="d-inline">
+                                    {% csrf_token %}
+                                    <button type="submit" class="btn btn-danger">Löschen</button>
+                                </form>
+                            {% endif %}
                         </div>
                     </div>
                 </div>
@@ -181,10 +95,12 @@
                             <li class="d-flex align-items-center">
                                 <span class="me-auto">{{ teacher.first_name }} {{ teacher.last_name }}</span>
                                 <div class="d-flex">
-                                    <a href="mailto:{{ teacher.email }}" class="btn btn-sm btn-link" title="E-Mail an {{ teacher.first_name }} senden">
+                                    <a href="mailto:{{ teacher.email }}" class="btn btn-sm btn-link"
+                                       title="E-Mail an {{ teacher.first_name }} senden">
                                         <i class="fas fa-envelope"></i>
                                     </a>
-                                    <a href="{% url 'profile' teacher.id %}" class="btn btn-sm btn-link" title="Profil anzeigen">
+                                    <a href="{% url 'profile' teacher.id %}" class="btn btn-sm btn-link"
+                                       title="Profil anzeigen">
                                         <i class="fas fa-user"></i>
                                     </a>
                                 </div>
@@ -200,29 +116,29 @@
 {% endblock %}
 
 {% block extra_head %}
-<style>
-    /* Anpassungen für die Benutzerlisten */
-    .list-group-item .btn-link {
-        color: var(--text-muted);
-        padding: 0.25rem 0.5rem;
-    }
-
-    .list-group-item .btn-link:hover {
-        color: var(--primary-color);
-    }
-
-    /* Mobile Anpassungen für die Kursdetailseite */
-    @media (max-width: 767.98px) {
-        .col-md-4 .border-start {
-            border-left: none !important;
-            border-top: 1px solid rgba(0,0,0,.125);
-            padding-top: 1.5rem;
-            margin-top: 1.5rem;
+    <style>
+        /* Anpassungen für die Benutzerlisten */
+        .list-group-item .btn-link {
+            color: var(--text-muted);
+            padding: 0.25rem 0.5rem;
         }
 
-        .event-overview-container {
-            max-height: 300px;
+        .list-group-item .btn-link:hover {
+            color: var(--primary-color);
         }
-    }
-</style>
+
+        /* Mobile Anpassungen für die Kursdetailseite */
+        @media (max-width: 767.98px) {
+            .col-md-4 .border-start {
+                border-left: none !important;
+                border-top: 1px solid rgba(0, 0, 0, .125);
+                padding-top: 1.5rem;
+                margin-top: 1.5rem;
+            }
+
+            .event-overview-container {
+                max-height: 300px;
+            }
+        }
+    </style>
 {% endblock %}

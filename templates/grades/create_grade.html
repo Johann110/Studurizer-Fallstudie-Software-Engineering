@@ -1,0 +1,51 @@
+{% extends "base.html" %}
+{% load roles %}
+{% block content %}
+    {% if user.is_authenticated and user|is_group:"Teacher" or user.is_staff  %}
+        {% if not submission.grade %}
+            <h2>Bewertung erstellen</h2>
+            <form id="course-form" class="form-control" method="post" enctype="multipart/form-data">
+                {% csrf_token %}
+                <fieldset class="mb-4">
+                    <legend>Abgabe einsehen</legend>
+                    <iframe
+                        src="/static/libs/pdfjs/web/viewer.html?file={{ submission.file.url }}"
+                        width="100%"
+                        height="600px"
+                        style="border: none;"
+                        id="pdfViewer"
+                    ></iframe>
+                </fieldset>
+
+                <fieldset class="mb-4">
+                    <legend>Bewertung erfassen</legend>
+                    {{ form.as_p }}
+                </fieldset>
+
+
+                <button type="submit" id="submit-btn" class="btn btn-success">Speichern</button>
+                <button type="button" class="btn btn-danger" onclick="window.location.href='{% url "home" %}'">Abbrechen
+                </button>
+            </form>
+        {% else %}
+            <p> Sie dürfen hier nicht sein!</p>
+        {% endif %}
+    {% else %}
+        <p> Sie dürfen hier nicht sein!</p>
+    {% endif %}
+{% endblock %}
+{% block extra_js %}
+<script>
+      const iframe = document.getElementById('pdfViewer');
+      iframe.onload = function () {
+        const toolbar = iframe.contentWindow.document.getElementById('toolbarContainer');
+        if (toolbar) {
+          toolbar.style.display = 'none';
+        }
+        const sidebar = iframe.contentWindow.document.getElementById('sidebarContainer');
+        if (sidebar) {
+          sidebar.style.display = 'none';
+        }
+      };
+</script>
+{% endblock %}

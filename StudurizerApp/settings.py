@@ -54,7 +54,8 @@ INSTALLED_APPS = [
     'events.apps.EventsConfig',
     'material.apps.MaterialConfig',
     "assignments.apps.AssignmentsConfig",
-    "submissions.apps.SubmissionsConfig"
+    "submissions.apps.SubmissionsConfig",
+    'grades.apps.GradesConfig'
 
     # Project apps
 ]

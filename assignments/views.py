@@ -8,6 +8,8 @@ from django.views.generic import DeleteView
 from assignments.forms import AssignmentForm
 from assignments.models import AssignmentFile, Assignment
 from courses.models import Course
+from grades.models import Grade
+from submissions.models import Submission
 
 
 def create_assignment(request, course_id):
@@ -46,12 +48,21 @@ class DeleteAssignment(DeleteView):
 
 def assignment_detail(request, assignment_id):
     assignment = get_object_or_404(Assignment, pk=assignment_id)
+    submissions = Submission.objects.filter(assignment=assignment)
+    try:
+        user_submission = Submission.objects.get(assignment=assignment, user=request.user)
+        grade = Grade.objects.filter(submission=user_submission).first()
+    except:
+        user_submission = None
+        grade = None
     assignment.check_and_close()
     files = assignment.files.all()
     course = assignment.course
-
     context = {
         'course': course,
+        'submissions': submissions,
+        'user_submission': user_submission,
+        'grade': grade,
         'files': files,
         'assignment': assignment,
     }
