@@ -110,7 +110,7 @@
                                 </a>
                             </td>
                             <td>
-                                <button type="button" class="btn btn-danger" onclick="deleteMaterial({{ file.id }})">
+                                <button type="button" class="btn btn-danger" onclick="openDeleteModal({{ file.id }})">
                                     Löschen
                                 </button>
                             </td>
@@ -140,6 +140,23 @@
     {% else %}
         <p> Sie dürfen hier nicht sein!</p>
     {% endif %}
+
+    <div class="modal fade" id="deleteMaterialModal" tabindex="-1" aria-labelledby="deleteMaterialModalLabel"
+         aria-hidden="true" style="margin-top: 3rem">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <p class="modal-title" id="deleteMaterialModalLabel">Möchten Sie die Datei löschen?<br>Diese Aktion
+                        kann nicht rückgängig gemacht werden.</p>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Schließen"></button>
+                </div>
+                <div class="modal-footer">
+                    <button type="submit" class="btn btn-primary" onclick="deleteMaterial()">Ja</button>
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Nein</button>
+                </div>
+            </div>
+        </div>
+    </div>
 {% endblock %}
 {% block extra_js %}
     <script src="{% static 'js/cookies.js' %}"></script>
@@ -253,13 +270,13 @@
         messageElement.style.color = 'var(--text-main)';
 
         // Dark Mode Anpassungen für Bootstrap Dual Listbox
-        document.addEventListener('DOMContentLoaded', function() {
+        document.addEventListener('DOMContentLoaded', function () {
             // Finde alle select-Elemente, die mit bootstrap-duallistbox initialisiert wurden
             const dualListboxes = document.querySelectorAll('.bootstrap-duallistbox-container select');
 
             // Wende Dark Mode Stile an
             function applyDarkModeStyles() {
-                dualListboxes.forEach(function(select) {
+                dualListboxes.forEach(function (select) {
                     // Finde die zugehörigen Container
                     const container = select.closest('.bootstrap-duallistbox-container');
                     if (container) {
@@ -267,13 +284,13 @@
                         const buttons = container.querySelectorAll('.btn');
 
                         // Wende Stile an
-                        boxes.forEach(function(box) {
+                        boxes.forEach(function (box) {
                             box.style.backgroundColor = 'var(--bg-card)';
                             box.style.color = 'var(--text-main)';
                             box.style.borderColor = 'var(--border-color)';
                         });
 
-                        buttons.forEach(function(btn) {
+                        buttons.forEach(function (btn) {
                             btn.style.backgroundColor = 'var(--bg-card)';
                             btn.style.color = 'var(--text-main)';
                             btn.style.borderColor = 'var(--border-color)';
@@ -288,16 +305,26 @@
             // Bei Dark Mode-Änderung erneut anwenden
             const darkModeToggle = document.getElementById('darkModeToggle');
             if (darkModeToggle) {
-                darkModeToggle.addEventListener('change', function() {
+                darkModeToggle.addEventListener('change', function () {
                     setTimeout(applyDarkModeStyles, 100); // Kurze Verzögerung für DOM-Update
                 });
             }
         });
     </script>
     <script>
+        let selectedMaterialId = null;
+
+        function openDeleteModal(materialId) {
+            selectedMaterialId = materialId;
+            const modal = new bootstrap.Modal(document.getElementById('deleteMaterialModal'));
+            modal.show();
+        }
+
         // Quelle: Codegenerierung mit ChatGPT
-        function deleteMaterial(materialId) {
-            fetch(`/material/delete/${materialId}/`, {
+        function deleteMaterial() {
+            if (!selectedMaterialId) return;
+
+            fetch(`/material/delete/${selectedMaterialId}/`, {
                 method: "POST",
                 headers: {
                     "X-CSRFToken": getCookie("csrftoken"),
@@ -306,7 +333,7 @@
                 .then(response => response.json())
                 .then(data => {
                     if (data.success) {
-                        const row = document.getElementById(`material-${materialId}`);
+                        const row = document.getElementById(`material-${selectedMaterialId}`);
                         if (row) row.remove();
 
                         const tbody = document.querySelector("#material-list tbody");
@@ -321,6 +348,10 @@
                             noDataRow.appendChild(td);
                             tbody.appendChild(noDataRow);
                         }
+                        const modalElement = document.getElementById('deleteMaterialModal');
+                        const modalInstance = bootstrap.Modal.getInstance(modalElement) || new bootstrap.Modal(modalElement);
+                        document.activeElement.blur(); 
+                        modalInstance.hide();
                     } else {
                         alert("Fehler beim Löschen");
                     }
