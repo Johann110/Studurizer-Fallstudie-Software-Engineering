@@ -33,6 +33,10 @@
     --border-color: rgba(0, 0, 0, 0.125);
     --hover-bg: rgba(0, 0, 0, 0.03);
     --card-shadow: 0 0.125rem 0.25rem rgba(0, 0, 0, 0.075);
+
+    /* stepper buttons */
+    --stepper-btn-bg: #ffffff;
+    --stepper-btn-text: #000000;
 }
 
 [data-theme="dark"] {
@@ -544,6 +548,11 @@ small,
 /* Verbesserungen für Dark Mode */
 [data-theme="dark"] .text-muted {
     color: rgba(255, 255, 255, 0.7) !important;
+}
+
+[data-theme="dark"] {
+    --stepper-btn-bg: #ffffff;
+    --stepper-btn-text: #000000;
 }
 
 [data-theme="dark"] small,

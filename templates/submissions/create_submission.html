@@ -33,14 +33,26 @@
         }
 
         .stepper-content {
-            padding-top: 10px !important;
+            padding: 0 0 0 0 !important;
+            background: var(--text-main) !important;
+            background-color: var(--bg-card);
         }
+
+        .stepper-content div, .stepper-content div .w-100.h-100{
+            background-color: var(--bg-card) !important;
+        }
+
 
         #stepper-container {
             display: flex;
             justify-content: center;
             align-items: flex-start;
             min-height: 80vh;
+        }
+        
+        button:not(#submit-btn) {
+            background-color: var(--stepper-btn-bg) !important;
+            color: var(--stepper-btn-text) !important;
         }
 
     </style>
@@ -51,7 +63,7 @@
         <div id="stepper-container">
             <div class="stepper" id="stepper">
                 <div class="steps-container">
-                    <div class="steps">
+                    <div class="steps" style="margin-bottom: 20px">
                         <div class="step" icon="fa fa-info-circle" id="1" style="pointer-events: none">
                             <div class="step-title">
                                 <span class="step-number">01</span>
@@ -91,7 +103,13 @@
                                     <ul>
                                         <li>Die Abgabe erfolgt ausschließlich als PDF-Datei.</li>
                                         <li>Stellen Sie sicher, dass Ihre Matrikelnummer auf dem Dokument steht.</li>
-                                        <li>Sie müssen im nächsten Schritt der Datenschutzerklärung zustimmen.</li>
+                                        <li>Um die Antwort einreichen zu können müssen Sie in den folgenden Schritten:</li>
+                                        <ul>
+                                            <li>der Datenschutzerklärung zustimmen.</li>
+                                            <li>die eidesstattliche Erklärung bestätigen.</li>
+                                            <li>Eine PDF-Datei mit ihrer Antwort hochladen.</li>
+                                        </ul>
+                                        
                                     </ul>
                                     <div class="d-flex justify-content-end">
                                         <button class="btn btn-dark mt-4" onclick="navigate('2');">Weiter</button>
