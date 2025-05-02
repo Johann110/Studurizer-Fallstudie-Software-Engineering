@@ -49,7 +49,7 @@ def create_pdf(firstname, lastname, gradetext, teachertext, course_name):
         'course': course_name,
     })
 
-    filename = f"Zertifikat_{lastname}_{firstname}.pdf"
+    filename = f"Zertifikat_{course_name}_{lastname}_{firstname}.pdf"
     output_path = os.path.join(settings.MEDIA_ROOT, 'certificates', filename)
 
     os.makedirs(os.path.dirname(output_path), exist_ok=True)
