@@ -1,4 +1,5 @@
 {% extends "base.html" %}
+{% load roles %}
 
 {% block title %}Profil bearbeiten | Studurizer{% endblock %}
 
@@ -37,25 +38,29 @@
                             {% endif %}
 
                             <div class="mb-3">
-                                <label for="{{ form.profile_picture.id_for_label }}" class="form-label">Mein aktuelles Profilbild:</label>
+                                <h5>Mein aktuelles Profilbild:</h5>
                                 {% if profile and profile.profile_picture %}
                                     <div class="mb-2">
-                                        <img src="{{ profile.profile_picture.url }}" alt="Aktuelles Profilbild" class="img-thumbnail" style="max-height: 100px;">
+                                        <img src="{{ profile.profile_picture.url }}" alt="Aktuelles Profilbild"
+                                             class="img-thumbnail" style="max-height: 100px;">
                                         <a href="{% url 'profile_delete_picture' %}" class="btn btn-sm btn-danger ms-2"
-                                            onclick="return confirm('Sind Sie sicher, dass Sie Ihr Profilbild löschen möchten?');">
-                                                Löschen
+                                           onclick="return confirm('Sind Sie sicher, dass Sie Ihr Profilbild löschen möchten?');">
+                                            Löschen
                                         </a>
                                     </div>
                                 {% else %}
                                     <br>
-                                    <div class="placeholder-image d-inline-flex justify-content-center align-items-center bg-light rounded" style="width: 100px; height: 100px;">
+                                    <div class="placeholder-image d-inline-flex justify-content-center align-items-center bg-light rounded"
+                                         style="width: 100px; height: 100px;">
                                         <span class="text-secondary fs-3">{{ user.username|first|upper }}</span>
                                     </div>
                                 {% endif %}
                                 <div class="input-group">
                                     {{ form.profile_picture }}
                                 </div>
-                                <div class="form-text">Unterstützte Formate: JPG, JPEG, PNG, GIF. Maximale Größe: 5 MB.</div>
+                                <div class="form-text">Unterstützte Formate: JPG, JPEG, PNG, GIF. Maximale Größe: 5
+                                    MB.
+                                </div>
                                 {% if form.profile_picture.errors %}
                                     <div class="invalid-feedback d-block">
                                         {% for error in form.profile_picture.errors %}
@@ -63,10 +68,34 @@
                                         {% endfor %}
                                     </div>
                                 {% endif %}
+                                {% if user|is_group:"Teacher" %}
+                                    <br>
+                                    <h5>Meine aktuelle Unterschrift:</h5>
+                                    {% if profile and profile.signature %}
+                                        <div class="mb-2">
+                                            <img src="{{ profile.signature.url }}" alt="Aktuelle Unterschrift" class="img-thumbnail" style="max-height: 100px;">
+                                            <a href="{% url 'profile_delete_signature' %}"
+                                               class="btn btn-sm btn-danger ms-2"
+                                               onclick="return confirm('Sind Sie sicher, dass Sie Ihre Unterschrift löschen möchten?');">
+                                                Löschen
+                                            </a>
+                                        </div>
+                                    {% else %}
+                                        <span class="text-secondary">Keine Unterschrift vorhanden</span>
+                                        <br>
+                                    {% endif %}
+                                    <br>
+                                    <div class="input-group">
+                                        {{ form.signature }}
+                                    </div>
+                                    <div class="form-text">Unterstützte Formate: JPG, JPEG, PNG, GIF. Maximale Größe: 5
+                                        MB.
+                                    </div>
+                                {% endif %}
                             </div>
 
                             <div class="mb-3">
-                                <label for="{{ form.description.id_for_label }}" class="form-label">Über mich:</label>
+                                <h5>Über mich:</h5>
                                 {{ form.description }}
                                 <div id="descriptionCounter" class="form-text text-end">0/500 Zeichen</div>
                                 {% if form.description.errors %}

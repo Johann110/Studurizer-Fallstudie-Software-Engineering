@@ -12,6 +12,7 @@ urlpatterns = [
     path('profile/edit/', profile_edit, name='profile_edit'),
     path('logout/', views.LogoutView.as_view(), name='logout'),
     path('profile/delete-picture/', profile_delete_picture, name='profile_delete_picture'),
+    path('profile/delete-signature/', profile_delete_picture, name='profile_delete_signature'),
 ]
 
 # Serve media files in development

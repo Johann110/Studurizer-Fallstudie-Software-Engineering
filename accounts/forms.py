@@ -32,9 +32,10 @@ class UserProfileForm(forms.ModelForm):
     
     class Meta:
         model = UserProfile
-        fields = ('profile_picture', 'description')
+        fields = ('profile_picture', 'description', 'signature')
         widgets = {
             'profile_picture': forms.FileInput(),
+            'signature': forms.FileInput(),
             'description': forms.Textarea(attrs={
                 'placeholder': 'Beschreibe dich!',
                 'rows': 4,
@@ -61,6 +62,20 @@ class UserProfileForm(forms.ModelForm):
         if description and len(description) > 500:
             raise forms.ValidationError('Beschreibung darf nicht größer sein als 500 Zeichen.')
         return description
+
+    def clean_signature(self):
+        signature = self.cleaned_data.get('signature')
+        if signature:
+            if signature.size > 5 * 1024 * 1024:
+                raise forms.ValidationError('Die Größe der Bilddatei sollte 5 MB nicht überschreiten.')
+
+            file_name = signature.name
+            valid_extensions = ['.jpg', '.jpeg', '.png', '.gif']
+            ext = file_name[file_name.rfind('.'):].lower()
+            if ext not in valid_extensions:
+                raise forms.ValidationError('Nicht unterstützte Dateierweiterung. Bitte verwenden Sie .jpg, .jpeg, .png, oder .gif')
+
+        return signature
 
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)

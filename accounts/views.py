@@ -64,3 +64,26 @@ def profile_delete_picture(request):
         messages.error(request, _('Profil konnte nicht gefunden werden.'))
 
     return redirect('profile_edit')
+
+
+def profile_delete_signature(request):
+    try:
+        profile = UserProfile.objects.get(user=request.user)
+        if profile.signature:
+            if os.path.isfile(profile.signature.path):
+                try:
+                    os.remove(profile.signature.path)
+                except OSError as e:
+                    messages.error(request, 'Die Unterschrift konnte nicht gelöscht werden: ' + str(e))
+            profile.signature = None
+            profile.save()
+
+            messages.success(request, _('Unterschrift wurde erfolgreich gelöscht.'))
+        else:
+            messages.info(request, _('Keine Unterschrift zum Löschen vorhanden.'))
+
+    except UserProfile.DoesNotExist:
+        messages.error(request, _('Profil konnte nicht gefunden werden.'))
+
+    return redirect('profile_edit')
+
