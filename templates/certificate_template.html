@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <style>
+        body { font-family: Arial, sans-serif; margin: 50px; }
+        h1 { text-align: center; }
+        .content { margin-top: 30px; }
+        .grades, .teachers { margin-top: 20px; }
+    </style>
+    <title>Zertifikat</title>
+</head>
+<body>
+    <h1>Teilnahmezertifikat</h1>
+    <div class="content">
+        <p>Hiermit wird bestätigt, dass <strong>{{ firstname }} {{ lastname }}</strong> erfolgreich am Kurs <em>{{ course }}</em> teilgenommen hat.</p>
+
+        <div class="grades">
+            <h3>Notenübersicht</h3>
+            {{ grades_html|safe }}
+        </div>
+
+        <div class="teachers">
+            <h3>Lehrkräfte</h3>
+            {{ teachers_html|safe }}
+        </div>
+    </div>
+</body>
+</html>
