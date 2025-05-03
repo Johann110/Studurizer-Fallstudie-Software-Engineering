@@ -25,7 +25,6 @@ SECRET_KEY = os.environ.get('SECRET_KEY', 'fallback-secret-key')
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = os.environ.get('DEBUG', 'False') == 'True'
-
 # Basiswerte
 allowed_hosts = ['localhost', '127.0.0.1']
 
@@ -55,7 +54,8 @@ INSTALLED_APPS = [
     'material.apps.MaterialConfig',
     "assignments.apps.AssignmentsConfig",
     "submissions.apps.SubmissionsConfig",
-    'grades.apps.GradesConfig'
+    'grades.apps.GradesConfig',
+    'certificates.apps.CertificatesConfig'
 
     # Project apps
 ]
