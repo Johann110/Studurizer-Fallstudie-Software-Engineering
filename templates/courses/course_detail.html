@@ -41,8 +41,16 @@
                                 Noten
                             </button>
                         </li>
+                    {% if user|is_group:"Teacher" or user.is_staff %}
+                        <li class="nav-item" role="presentation">
+                            <button class="nav-link" id="certificates-tab" data-bs-toggle="tab"
+                                    data-bs-target="#certificates"
+                                    type="button" role="tab" aria-controls="certificates" aria-selected="false"> Zertifikate
+                            </button>
+                        </li>
+                    {% endif %}
                     </ul>
-
+                </div>
                     <div class="card-body">
                         <div class="tab-content" id="courseTabContent">
                             <div class="tab-pane fade show active" id="main" role="tabpanel" aria-labelledby="main-tab">
@@ -180,17 +188,22 @@
                                      aria-labelledby="certificates-tab">
                                     <h5>Teilnehmende Schüler</h5>
                                     <ul class="list-group mb-3">
-                                        {% for student in course.students.all %}
-                                            <li class="list-group-item d-flex align-items-center">
-                                                <span class="me-auto">{{ student.first_name }} {{ student.last_name }}</span>
-                                                <div class="d-flex">
-                                                    <input type="checkbox" name="student_ids" value="{{ student.id }}">
-                                                </div>
-                                            </li>
-                                        {% empty %}
+                                        {% if course.students.all  %}
+                                            {% for student in course.students.all %}
+                                                <li class="list-group-item d-flex align-items-center">
+                                                    <span class="me-auto">{{ student.first_name }} {{ student.last_name }}</span>
+                                                    <div class="d-flex">
+                                                        <input type="checkbox" name="student_ids" value="{{ student.id }}">
+                                                    </div>
+                                                </li>
+                                            {% endfor %}
+                                            <button class="btn btn-primary mt-3" onclick="submitCertificates({{ course.id }})">
+                                                Zertifikate generieren
+                                            </button>
+                                        {% else %}
                                             <li class="list-group-item text-muted">Keine Studierenden eingeschrieben
                                             </li>
-                                        {% endfor %}
+                                        {% endif %}
                                     </ul>
                                 </div>
                             {% endif %}
@@ -236,32 +249,31 @@
                         </div>
                     </div>
                 </div>
-            {% else %}
-                <div class="alert alert-warning">
-                    Du bist nicht für diesen Kurs eingeschrieben. Bitte wende dich an einen der Lehrenden:
-                    <ul class="mt-2">
-                        {% for teacher in course.teachers.all %}
-                            <li class="d-flex align-items-center">
-                                <span class="me-auto">{{ teacher.first_name }} {{ teacher.last_name }}</span>
-                                <div class="d-flex">
-                                    <a href="mailto:{{ teacher.email }}" class="btn btn-sm btn-link"
-                                       title="E-Mail an {{ teacher.first_name }} senden">
-                                        <i class="fas fa-envelope"></i>
-                                    </a>
-                                    <a href="{% url 'profile' teacher.id %}" class="btn btn-sm btn-link"
-                                       title="Profil anzeigen">
-                                        <i class="fas fa-user"></i>
-                                    </a>
-                                </div>
-                            </li>
-                        {% empty %}
-                            <li>Keine Lehrenden verfügbar.</li>
-                        {% endfor %}
-                    </ul>
-                </div>
-            {% endif %}
+        {% else %}
+            <div class="alert alert-warning">
+                Du bist nicht für diesen Kurs eingeschrieben. Bitte wende dich an einen der Lehrenden:
+                <ul class="mt-2">
+                    {% for teacher in course.teachers.all %}
+                        <li class="d-flex align-items-center">
+                            <span class="me-auto">{{ teacher.first_name }} {{ teacher.last_name }}</span>
+                            <div class="d-flex">
+                                <a href="mailto:{{ teacher.email }}" class="btn btn-sm btn-link"
+                                   title="E-Mail an {{ teacher.first_name }} senden">
+                                    <i class="fas fa-envelope"></i>
+                                </a>
+                                <a href="{% url 'profile' teacher.id %}" class="btn btn-sm btn-link"
+                                   title="Profil anzeigen">
+                                    <i class="fas fa-user"></i>
+                                </a>
+                            </div>
+                        </li>
+                    {% empty %}
+                        <li>Keine Lehrenden verfügbar.</li>
+                    {% endfor %}
+                </ul>
+            </div>
         {% endif %}
-    </div>
+    {% endif %}
 {% endblock %}
 {% block extra_js %}
     <script src="{% static 'js/cookies.js' %}"></script>
