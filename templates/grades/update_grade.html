@@ -24,8 +24,8 @@
             </fieldset>
 
 
-            <button type="submit" id="submit-btn" class="btn btn-success">Speichern</button>
-            <button type="button" class="btn btn-danger" onclick="window.location.href='{% url "home" %}'">Abbrechen
+            <button type="submit" id="submit-btn" data-action="save" class="btn btn-success">Speichern</button>
+            <button type="button" data-action="cancel" class="btn btn-danger" onclick="window.location.href='{% url "home" %}'">Abbrechen
             </button>
         </form>
     {% else %}

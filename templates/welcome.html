@@ -12,8 +12,8 @@
                 <p class="mb-4">Studurizer bietet eine intuitive Plattform für Lehrende und Studierende, um Kurse zu verwalten, Lernmaterialien zu teilen und den Lehralltag zu organisieren.</p>
 
                 <div class="d-grid gap-2 d-sm-flex">
-                    <a href="{% url 'login' %}" class="btn btn-primary btn-lg px-4 me-sm-3 w-100 w-sm-auto">Anmelden</a>
-                    <a href="{% url 'contact' %}" class="btn btn-outline-secondary btn-lg px-4 w-100 w-sm-auto">Mehr erfahren</a>
+                    <a href="{% url 'login' %}" data-action="login" class="btn btn-primary btn-lg px-4 me-sm-3 w-100 w-sm-auto">Anmelden</a>
+                    <a href="{% url 'contact' %}" data-action="details" class="btn btn-outline-secondary btn-lg px-4 w-100 w-sm-auto">Mehr erfahren</a>
                 </div>
             </div>
 
@@ -89,14 +89,6 @@
                         <p class="card-text small">Alle Lernmaterialien an einem Ort. Mit der Suchfunktion finden Sie schnell genau das, was Sie brauchen.</p>
                     </div>
                 </div>
-            </div>
-        </div>
-
-        <!-- CTA Section -->
-        <div class="row mt-4">
-            <div class="col-12 text-center">
-                <p class="fw-bold mb-3">Bereit loszulegen?</p>
-                <a href="{% url 'login' %}" class="btn btn-primary px-4 py-2">Jetzt anmelden</a>
             </div>
         </div>
     </div>
