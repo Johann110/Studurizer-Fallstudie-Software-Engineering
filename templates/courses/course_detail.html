@@ -1,4 +1,6 @@
 {% extends "base.html" %}
+{% load static %}
+{% load roles %}
 {% load filename %}
 {% block title %}{{ course.title }} | Studurizer{% endblock %}
 
@@ -173,6 +175,25 @@
                                 {% endif %}
 
                             </div>
+                            {% if user|is_group:"Teacher" or user.is_staff %}
+                                <div class="tab-pane fade" id="certificates" role="tabpanel"
+                                     aria-labelledby="certificates-tab">
+                                    <h5>Teilnehmende Schüler</h5>
+                                    <ul class="list-group mb-3">
+                                        {% for student in course.students.all %}
+                                            <li class="list-group-item d-flex align-items-center">
+                                                <span class="me-auto">{{ student.first_name }} {{ student.last_name }}</span>
+                                                <div class="d-flex">
+                                                    <input type="checkbox" name="student_ids" value="{{ student.id }}">
+                                                </div>
+                                            </li>
+                                        {% empty %}
+                                            <li class="list-group-item text-muted">Keine Studierenden eingeschrieben
+                                            </li>
+                                        {% endfor %}
+                                    </ul>
+                                </div>
+                            {% endif %}
                         </div>
 
                         <div class="mt-2">
@@ -242,7 +263,35 @@
         {% endif %}
     </div>
 {% endblock %}
+{% block extra_js %}
+    <script src="{% static 'js/cookies.js' %}"></script>
+    <script>
+        function submitCertificates(courseId) {
+            const checkboxes = document.querySelectorAll('input[name="student_ids"]:checked');
+            const selectedIds = Array.from(checkboxes).map(cb => cb.value);
 
+            if (selectedIds.length === 0) {
+                alert("Bitte mindestens einen Schüler auswählen.");
+                return;
+            }
+
+            fetch(`/course/${courseId}/create_certificates/`, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'X-CSRFToken': getCookie('csrftoken')
+                },
+                body: JSON.stringify({user_ids: selectedIds})
+            }).then(response => {
+                if (response.ok) {
+                    alert("Zertifikate wurden erfolgreich erstellt und versendet.");
+                } else {
+                    alert("Fehler beim Erstellen der Zertifikate.");
+                }
+            });
+        }
+    </script>
+{% endblock %}
 {% block extra_head %}
     <style>
         /* Anpassungen für die Benutzerlisten */
