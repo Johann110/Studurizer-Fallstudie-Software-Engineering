@@ -175,3 +175,11 @@ PASSWORD_HASHERS = [
     'django.contrib.auth.hashers.Argon2PasswordHasher',
     'django.contrib.auth.hashers.BCryptSHA256PasswordHasher',
 ]
+
+EMAIL_USERNAME = os.getenv('EMAIL_USERNAME')
+EMAIL_PASSWORD = os.getenv('EMAIL_PASSWORD')
+SMTP_HOST = os.getenv('SMTP_HOST', 'smtp.gmail.com')
+SMTP_PORT = os.getenv('SMTP_PORT', '587')
+
+# Das Format ohne Empfänger, Empfänger wird dynamisch ergänzt
+APPRISE_EMAIL_BASE = f"mailto://{EMAIL_USERNAME}:{EMAIL_PASSWORD}@{SMTP_HOST}:{SMTP_PORT}"

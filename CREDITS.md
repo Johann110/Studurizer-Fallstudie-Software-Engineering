@@ -28,3 +28,8 @@
   Lizenz: Apache Licence<br>
   Quelle: https://github.com/mozilla/pdf.js<br>
   Copyright 2024 Mozilla Foundation
+
+- **Apprise (Version 1.9.3)**<br>
+  Lizenz: BSD 2-Clause License<br>
+  Quelle: https://github.com/caronc/apprise<br>
+  Copyright (c) 2025, Chris Caron <lead2gold@gmail.com>
