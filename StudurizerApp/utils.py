@@ -33,7 +33,7 @@ def send_email_notification(to_email, subject, body, attachment_path=None):
         raise ValueError("Es muss genau eine E-Mail-Adresse als String übergeben werden.")
 
     # Apprise-URL dynamisch bauen mit To:
-    url = f"{settings.APPRISE_EMAIL_BASE}/?to={to_email}"
+    url = f"{settings.APPRISE_EMAIL_BASE}&to={to_email}"
 
     apobj = apprise.Apprise()
     apobj.add(url)

@@ -180,8 +180,19 @@ PASSWORD_HASHERS = [
     'django.contrib.auth.hashers.BCryptSHA256PasswordHasher',
 ]
 
-EMAIL_USERNAME = os.getenv('EMAIL_USERNAME')
-EMAIL_PASSWORD = os.getenv('EMAIL_PASSWORD')
+SMTP_USERNAME = os.getenv('SMTP_USERNAME')
+SMTP_PASSWORD = os.getenv('SMTP_PASSWORD')
+SMTP_SERVER = os.getenv('SMTP_SERVER')
+SMTP_PORT = os.getenv('SMTP_PORT')
+SMTP_DOMAIN = os.getenv('SMTP_DOMAIN')
+USE_SSL = os.environ.get('USE_SSL', 'False') == 'True'
+USE_STARTLS = os.environ.get('USE_STARTLS', 'True') == 'True'
+
+# Basis-Protokoll
+protocol = 'mailtos' if USE_SSL or USE_STARTLS else 'mailto'
 
 # Das Format ohne Empfänger, Empfänger wird dynamisch ergänzt
-APPRISE_EMAIL_BASE = f"mailto://{EMAIL_USERNAME}:{EMAIL_PASSWORD}@gmail.com"
+APPRISE_EMAIL_BASE = f"{protocol}://{SMTP_DOMAIN}:{SMTP_PORT}?smtp={SMTP_SERVER}&user={SMTP_USERNAME}&pass={SMTP_PASSWORD}&from=Studurizer<{SMTP_USERNAME}"
+
+if USE_SSL:
+    APPRISE_EMAIL_BASE += "&mode=ssl"
