@@ -47,10 +47,9 @@ Diese Anleitung erklärt, wie du das Studurizer-Projekt mit Docker lokal ausfüh
          - SECRET_KEY=${SECRET_KEY:-default_development_key}  # SECRET_KEY generieren: https://djecrety.ir oder z. B. python -c "import secrets; print(secrets.token_urlsafe(50))"
    #         - DOMAIN=${DOMAIN:-DOMAIN} # Domain setzen wenn SSL benutzt wird oder eine Domain um auf die App zugreifen (optional)
    #         E-Mails sind optional, diese werden genutzt um E-Mails an Nutzer zu senden (z.B. Zertifikate oder Informationen)
-   #         - EMAIL_USERNAME=
-   #         - EMAIL_PASSWORD=
-   #         - SMTP_HOST=
-   #         - SMTP_PORT=
+   #         ACHTUNG: Es werden derzeit nur @gmail.com Adressen unterstützt
+   #         - EMAIL_USERNAME= # Nutzername ist alles vor der @gmail.com
+   #         - EMAIL_PASSWORD= # Es muss ein App-spezifisches Passwort erstellt werden
    ```
 
    Container starten:

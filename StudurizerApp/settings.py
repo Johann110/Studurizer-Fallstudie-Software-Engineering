@@ -12,6 +12,10 @@ https://docs.djangoproject.com/en/5.2/ref/settings/
 
 from pathlib import Path
 import os
+from dotenv import load_dotenv
+
+# .env-Datei laden
+load_dotenv()
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -178,8 +182,6 @@ PASSWORD_HASHERS = [
 
 EMAIL_USERNAME = os.getenv('EMAIL_USERNAME')
 EMAIL_PASSWORD = os.getenv('EMAIL_PASSWORD')
-SMTP_HOST = os.getenv('SMTP_HOST', 'smtp.gmail.com')
-SMTP_PORT = os.getenv('SMTP_PORT', '587')
 
 # Das Format ohne Empfänger, Empfänger wird dynamisch ergänzt
-APPRISE_EMAIL_BASE = f"mailto://{EMAIL_USERNAME}:{EMAIL_PASSWORD}@{SMTP_HOST}:{SMTP_PORT}"
+APPRISE_EMAIL_BASE = f"mailto://{EMAIL_USERNAME}:{EMAIL_PASSWORD}@gmail.com"
