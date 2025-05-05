@@ -31,7 +31,7 @@
                             </a>
                         </td>
                         <td>
-                            <button type="button" class="btn btn-danger" onclick="deleteMaterial({{ file.id }})">
+                            <button type="button" data-action="delete" class="btn btn-danger" onclick="deleteMaterial({{ file.id }})">
                                 Löschen
                             </button>
                         </td>
@@ -52,8 +52,8 @@
                 </div>
             </div>
 
-            <button type="submit" id="submit-btn" class="btn btn-success">Speichern</button>
-            <button type="button" class="delete-material-btn btn btn-danger"
+            <button type="submit" data-action="save" id="submit-btn" class="btn btn-success">Speichern</button>
+            <button type="button" data-action="cancel" class="delete-material-btn btn btn-danger"
                     onclick="window.location.href='{% url 'assignment_detail' assignment.id %}'">Abbrechen
             </button>
         </form>

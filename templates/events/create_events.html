@@ -1,7 +1,7 @@
 {% load roles %}
 {% load static %}
 {% block content %}
-    <button class="btn btn-success" data-bs-toggle="modal" data-bs-target="#createEventModal">
+    <button class="btn btn-success" data-action="event" data-bs-toggle="modal" data-bs-target="#createEventModal">
         Termin erstellen
     </button>
 
@@ -19,7 +19,7 @@
                         {{ form.as_p }}
                     </div>
                     <div class="modal-footer">
-                        <button type="submit" class="btn btn-primary">Speichern</button>
+                        <button type="submit" data-action="save" class="btn btn-primary">Speichern</button>
                     </div>
                 </form>
             </div>

@@ -42,12 +42,12 @@
                     </ul>
 
                     <div class="mt-4">
-                        <a href="{% url 'course_detail' course.id %}" class="btn btn-secondary">Zurück zum Kurs</a>
+                        <a href="{% url 'course_detail' course.id %}" data-action="back" class="btn btn-secondary">Zurück zum Kurs</a>
                         {% if user|is_group:"Teacher" and request.user in course.teachers.all or user.is_staff %}
                             <a href="{% url 'update_assignment' assignment.pk %}" class="btn btn-primary">Bearbeiten</a>
                             <form method="post" action="{% url 'delete_assignment' assignment.pk %}" class="d-inline">
                                 {% csrf_token %}
-                                <button type="submit" class="btn btn-danger">Löschen</button>
+                                <button type="submit" data-action="delete" class="btn btn-danger">Löschen</button>
                             </form>
                         {% elif user|is_group:"Student" and request.user in course.students.all %}
                             {% if not user|has_submitted:assignment.pk %}

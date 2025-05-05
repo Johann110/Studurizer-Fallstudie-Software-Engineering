@@ -10,7 +10,7 @@
                 <p class="lead">Willkommen zurück, {{ user.get_full_name|default:user.username }}!</p>
             </div>
             <div class="col-md-4 text-md-end">
-                <a href="{% url 'create_course' %}" class="btn btn-primary">
+                <a href="{% url 'create_course' %}" data-action="add" class="btn btn-primary">
                     Neuen Kurs erstellen
                 </a>
                 {% include 'events/create_events.html' %}
@@ -51,10 +51,12 @@
                                         <div class="card-footer bg-transparent border-0">
                                             <div class="btn-group w-100" role="group">
                                                 <a href="{% url 'course_detail' course.id %}"
+                                                   data-action="course"
                                                    class="btn btn-outline-primary">
                                                     Zum Kurs
                                                 </a>
                                                 <a href="{% url 'update_course' course.id %}"
+                                                   data-action="edit"
                                                    class="btn btn-outline-secondary">
                                                     Bearbeiten
                                                 </a>
@@ -116,10 +118,10 @@
                                 </div>
                                 <div class="card-footer bg-transparent border-0">
                                     <div class="btn-group w-100" role="group">
-                                        <a href="{% url 'course_detail' course.id %}" class="btn btn-outline-secondary">
+                                        <a href="{% url 'course_detail' course.id %}" data-action="course" class="btn btn-outline-secondary">
                                             Zum Kurs
                                         </a>
-                                        <a href="{% url 'update_course' course.id %}" class="btn btn-outline-secondary">
+                                        <a href="{% url 'update_course' course.id %}" data-action="edit" class="btn btn-outline-secondary">
                                             Bearbeiten
                                         </a>
                                     </div>

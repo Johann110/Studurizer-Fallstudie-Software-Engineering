@@ -16,7 +16,7 @@
     </div>
     <div class="col-md-4 text-md-end">
         {% if request.user.id == logged_in_user.id %}
-            <a href="{% url 'profile_edit' %}" class="btn btn-primary">
+            <a href="{% url 'profile_edit' %}" data-action="edit" class="btn btn-primary">
                 Profil bearbeiten
             </a>
         {% endif %}
