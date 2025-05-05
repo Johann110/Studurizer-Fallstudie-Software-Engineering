@@ -3,8 +3,9 @@
 # Django-Initialisierung
 echo "Applying database migrations..."
 python manage.py makemigrations
+python manage.py migrate
 python manage.py migrate --run-syncdb
-
+python manage.py migrate
 
 echo "Seeding groups..."
 python manage.py seedgroups
