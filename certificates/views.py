@@ -50,7 +50,7 @@ def create_certificate(request, id):
                         endgrade += int(grade.grade)
                         grade_text += f'<p>Note {grade_nr}: {grade.grade}</p>'
                         grade_nr += 1
-                        print(endgrade)
+                        logger.debug(f"Current endgrade: {endgrade}")
                     endgrade = round(endgrade / len(grades), 2) if grades else 0
                     grade_text += f'<p>Endnote: {endgrade}</p>'
                     pdf_path = create_pdf(user.first_name, user.last_name, grade_text, teacher_text, course.title)
