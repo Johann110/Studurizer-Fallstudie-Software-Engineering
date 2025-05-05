@@ -7,8 +7,8 @@ from django.views.decorators.csrf import csrf_exempt
 from django.core.mail import EmailMessage
 from django.contrib.auth.models import User
 from reportlab.lib.colors import hue2rgb
-
-from StudurizerApp.utils import send_email_notification
+import logging
+from StudurizerApp.utils import send_email_notification, logger
 from accounts.models import CustomUser, UserProfile
 from grades.models import Grade
 from courses.models import Course
@@ -16,7 +16,6 @@ from xhtml2pdf import pisa
 from django.template.loader import render_to_string
 import os
 from django.conf import settings
-
 
 @csrf_exempt
 def create_certificate(request, id):
