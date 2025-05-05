@@ -27,12 +27,14 @@ def create_certificate(request, id):
             teacher_text = 'Lehrkräfte: <br>'
             for teacher in course.teachers.all():
                 teacher_text += f'{teacher.first_name} {teacher.last_name}<br>'
-                teacher_img_url = UserProfile.objects.filter(user_id=teacher.id).get().signature.url
-                teacher_img_path = os.path.join(settings.MEDIA_ROOT, teacher_img_url.replace(settings.MEDIA_URL, ''))
-                teacher_img_path = teacher_img_path.replace('/', os.sep).replace('\\', os.sep)
-                logging.debug(f"Teacher image path: {teacher_img_path}")
-                if os.path.exists(teacher_img_path):
-                    teacher_text += f'<img src="{teacher_img_path}" width="200px" height="50px"/> <br>'
+                teacher_profile =  UserProfile.objects.filter(user_id=teacher.id)
+                if teacher_profile.exists():
+                    teacher_img_url = teacher_profile.get().signature.url
+                    teacher_img_path = os.path.join(settings.MEDIA_ROOT, teacher_img_url.replace(settings.MEDIA_URL, ''))
+                    teacher_img_path = teacher_img_path.replace('/', os.sep).replace('\\', os.sep)
+                    logging.debug(f"Teacher image path: {teacher_img_path}")
+                    if os.path.exists(teacher_img_path):
+                        teacher_text += f'<img src="{teacher_img_path}" width="200px" height="50px"/> <br>'
             for user_id in user_ids:
                 grade_text = 'Noten:'
                 grade_nr = 1
