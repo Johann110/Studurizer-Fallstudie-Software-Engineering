@@ -9,5 +9,4 @@ urlpatterns = [
     # path('update-course/<int:pk>/', views.UpdateCourse.as_view(), name='update_course'),
     path('update-course/<int:pk>/', views.update_course, name='update_course'),
     path('delete-course/<int:pk>/', views.DeleteCourse.as_view(), name='delete_course'),
-    path('<int:id>/create_certificates/', certificates.views.create_certificate),
 ]
