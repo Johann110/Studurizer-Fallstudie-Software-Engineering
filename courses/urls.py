@@ -1,6 +1,7 @@
 from django.urls import path
-from courses import views
 
+import certificates.views
+from courses import views
 urlpatterns = [
     path('course/<int:pk>/', views.course_detail, name='course_detail'),
     # path('create-course/', views.CreateCourse.as_view(), name='create_course'),

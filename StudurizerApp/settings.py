@@ -12,6 +12,10 @@ https://docs.djangoproject.com/en/5.2/ref/settings/
 
 from pathlib import Path
 import os
+from dotenv import load_dotenv
+
+# .env-Datei laden
+load_dotenv()
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -175,3 +179,20 @@ PASSWORD_HASHERS = [
     'django.contrib.auth.hashers.Argon2PasswordHasher',
     'django.contrib.auth.hashers.BCryptSHA256PasswordHasher',
 ]
+
+SMTP_USERNAME = os.getenv('SMTP_USERNAME')
+SMTP_PASSWORD = os.getenv('SMTP_PASSWORD')
+SMTP_SERVER = os.getenv('SMTP_SERVER')
+SMTP_PORT = os.getenv('SMTP_PORT')
+SMTP_DOMAIN = os.getenv('SMTP_DOMAIN')
+USE_SSL = os.environ.get('USE_SSL', 'False') == 'True'
+USE_STARTLS = os.environ.get('USE_STARTLS', 'True') == 'True'
+
+# Basis-Protokoll
+protocol = 'mailtos' if USE_SSL or USE_STARTLS else 'mailto'
+
+# Das Format ohne Empfänger, Empfänger wird dynamisch ergänzt
+APPRISE_EMAIL_BASE = f"{protocol}://{SMTP_DOMAIN}:{SMTP_PORT}?smtp={SMTP_SERVER}&user={SMTP_USERNAME}&pass={SMTP_PASSWORD}&from=Studurizer<{SMTP_USERNAME}"
+
+if USE_SSL:
+    APPRISE_EMAIL_BASE += "&mode=ssl"
