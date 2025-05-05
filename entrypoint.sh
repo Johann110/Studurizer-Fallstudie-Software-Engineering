@@ -1,6 +1,7 @@
 #!/bin/sh
 
 # Django-Initialisierung
+python manage.py clear_migrations
 echo "Applying database migrations..."
 python manage.py makemigrations
 python manage.py migrate
