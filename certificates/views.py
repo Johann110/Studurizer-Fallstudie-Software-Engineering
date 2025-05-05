@@ -67,7 +67,7 @@ def create_certificate(request, id):
             print('Course does not exist')
             return JsonResponse({'error': 'Course not found'}, status=404)
         except Exception as e:
-            print('idk')
+            logging.error('An unexpected error occurred while creating the certificate.', exc_info=True)
             return JsonResponse({'error': str(e)}, status=500)
     else:
         print('wrong method')
