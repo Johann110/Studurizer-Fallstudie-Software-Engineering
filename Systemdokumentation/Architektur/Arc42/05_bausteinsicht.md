@@ -1,3 +1,6 @@
+<!---
+Artefakte der Systemdokumentation wurden mithilfe von ChatGPT (OpenAI) erstellt und manuell angepasst
+-->
 # 05 – Bausteinsicht
 
 Diese Bausteinsicht beschreibt die statische Struktur von Studurizer.  

@@ -1,3 +1,6 @@
+<!---
+Artefakte der Systemdokumentation wurden mithilfe von ChatGPT (OpenAI) erstellt und manuell angepasst
+-->
 # 09 – Architekturentscheidungen
 
 Dieses Kapitel dokumentiert wesentliche Architekturentscheidungen, die im Projektverlauf getroffen wurden.

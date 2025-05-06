@@ -1,4 +1,7 @@
-# 📄 Lastenheft für das Projekt „Studurizer“
+<!---
+Artefakte der Systemdokumentation wurden mithilfe von ChatGPT (OpenAI) erstellt und manuell angepasst
+-->
+# Lastenheft für das Projekt „Studurizer“
 
 ## 1. Einleitung
 

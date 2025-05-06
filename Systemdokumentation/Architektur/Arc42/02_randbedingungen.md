@@ -1,3 +1,6 @@
+<!---
+Artefakte der Systemdokumentation wurden mithilfe von ChatGPT (OpenAI) erstellt und manuell angepasst
+-->
 # 02 – Randbedingungen
 
 In diesem Kapitel werden die nicht-funktionalen Anforderungen und technischen Rahmenbedingungen für das System „Studurizer“ beschrieben. Sie sind für Planung, Architektur und Entwicklung verbindlich.

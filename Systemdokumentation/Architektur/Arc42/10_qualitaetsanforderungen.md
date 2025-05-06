@@ -1,3 +1,6 @@
+<!---
+Artefakte der Systemdokumentation wurden mithilfe von ChatGPT (OpenAI) erstellt und manuell angepasst
+-->
 # 10 – Qualitätsanforderungen
 
 Dieses Kapitel beschreibt die nicht-funktionalen Anforderungen an das System Studurizer. Die Ziele orientieren sich an den Qualitätsattributen nach ISO/IEC 25010.

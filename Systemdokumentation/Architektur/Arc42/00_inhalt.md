@@ -1,3 +1,6 @@
+<!---
+Artefakte der Systemdokumentation wurden mithilfe von ChatGPT (OpenAI) erstellt und manuell angepasst
+-->
 # Studurizer – arc42-Dokumentation : Inhaltsübersicht
 
 Die hier vorliegende Dokumentation basiert auf dem **arc42 Template** für Softwarearchitekturen.

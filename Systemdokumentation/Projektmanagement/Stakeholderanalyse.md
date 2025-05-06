@@ -1,3 +1,6 @@
+<!---
+Artefakte der Systemdokumentation wurden mithilfe von ChatGPT (OpenAI) erstellt und manuell angepasst
+-->
 # Stakeholderanalyse für Studurizer
 
 **Projektbeschreibung:**  

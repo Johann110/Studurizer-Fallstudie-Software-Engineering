@@ -1,3 +1,6 @@
+<!---
+Artefakte der Systemdokumentation wurden mithilfe von ChatGPT (OpenAI) erstellt und manuell angepasst
+-->
 # 04 – Lösungsstrategie
 
 Dieses Kapitel beschreibt die grundlegenden Architektur- und Designentscheidungen für die Implementierung von Studurizer.

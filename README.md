@@ -1,3 +1,6 @@
+<!---
+Artefakte der Systemdokumentation wurden mithilfe von ChatGPT (OpenAI) erstellt und manuell angepasst
+-->
 # MyCampus-Learn-Fallstudie-Software-Engineering
 
 [https://studurizer.atris.dev](https://studurizer.atris.dev)

@@ -1,3 +1,6 @@
+<!---
+Artefakte der Systemdokumentation wurden mithilfe von ChatGPT (OpenAI) erstellt und manuell angepasst
+-->
 # 12 – Glossar
 
 | Begriff / Abkürzung           | Bedeutung / Erklärung |

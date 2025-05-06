@@ -1,3 +1,6 @@
+<!---
+Artefakte der Systemdokumentation wurden mithilfe von ChatGPT (OpenAI) erstellt und manuell angepasst
+-->
 # Pflichtenheft für die Lernplattform „Studurizer"
 ## 1. Einleitung
 ### 1.1 Ziel des Dokuments

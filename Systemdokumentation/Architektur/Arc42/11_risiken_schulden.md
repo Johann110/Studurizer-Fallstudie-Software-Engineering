@@ -1,3 +1,6 @@
+<!---
+Artefakte der Systemdokumentation wurden mithilfe von ChatGPT (OpenAI) erstellt und manuell angepasst
+-->
 # 11 – Risiken und technische Schulden
 
 In diesem Kapitel werden bekannte Projektrisiken sowie technische Schulden dokumentiert, die bewusst (z.B. aus Zeit- oder Aufwandsgründen) in Kauf genommen wurden. Diese Punkte sollten im späteren Projektverlauf priorisiert beobachtet und ggf. behoben werden.

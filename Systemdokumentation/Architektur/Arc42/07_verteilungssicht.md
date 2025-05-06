@@ -1,3 +1,6 @@
+<!---
+Artefakte der Systemdokumentation wurden mithilfe von ChatGPT (OpenAI) erstellt und manuell angepasst
+-->
 # 07 – Verteilungssicht
 
 Dieses Kapitel beschreibt die physische Verteilung und Deploymentstruktur der Studurizer-Anwendung.

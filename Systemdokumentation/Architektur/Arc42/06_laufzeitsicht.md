@@ -1,3 +1,6 @@
+<!---
+Artefakte der Systemdokumentation wurden mithilfe von ChatGPT (OpenAI) erstellt und manuell angepasst
+-->
 # 06 – Laufzeitsicht
 
 Dieses Kapitel zeigt das dynamische Verhalten des Systems anhand exemplarischer Szenarien.
