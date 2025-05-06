@@ -11,7 +11,7 @@ from courses.models import Course
 from grades.models import Grade
 from submissions.models import Submission
 
-
+# Diese Methode wurde mithilfe von ChatGPT (OpenAI) erstellt und manuell angepasst
 def create_assignment(request, course_id):
     course = get_object_or_404(Course, pk=course_id)
 
@@ -45,7 +45,7 @@ class DeleteAssignment(DeleteView):
         course_id = self.object.course.id
         return reverse('course_detail', args=[course_id])
 
-
+# Diese Methode wurde mithilfe von ChatGPT (OpenAI) erstellt und manuell angepasst
 def assignment_detail(request, assignment_id):
     assignment = get_object_or_404(Assignment, pk=assignment_id)
     submissions = Submission.objects.filter(assignment=assignment)
@@ -111,6 +111,7 @@ def update_assignment(request, pk):
     return HttpResponse("Nur POST oder GET erlaubt", status=405)
 
 
+# Diese Methode wurde mithilfe von ChatGPT (OpenAI) erstellt und manuell angepasst
 def delete_assignment_file(request, file_id):
     file = get_object_or_404(AssignmentFile, pk=file_id)
 
