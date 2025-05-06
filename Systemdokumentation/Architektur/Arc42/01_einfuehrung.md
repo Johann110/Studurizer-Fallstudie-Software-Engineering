@@ -20,7 +20,7 @@ Im Vordergrund steht die Realisierung einer **zugänglichen**, **benutzerfreundl
 | **Hochschulverwaltung / Dekanat**| Verantwortlich für die organisatorischen Rahmenbedingungen und Controlling |
 | **IT-Abteilung / Systemadministration** | Betreuen die Server, Sicherheitsinfrastruktur und Deployment-Prozesse |
 | **Entwicklungsteam**             | Entwickelt und pflegt die Softwarearchitektur und den Code |
-| **Externe Anbieter**             | Stellen optional z. B. KI-Services oder barrierefreie Sprachinterfaces bereit |
+| **Externe Anbieter**             | Stellen optional z.B. KI-Services oder barrierefreie Sprachinterfaces bereit |
 
 ## Qualitätsziele
 

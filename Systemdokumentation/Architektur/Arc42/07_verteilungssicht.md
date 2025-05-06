@@ -6,7 +6,7 @@ Dieses Kapitel beschreibt die physische Verteilung und Deploymentstruktur der St
 
 Studurizer wird containerisiert mit **Docker** ausgeliefert. Alle wesentlichen Komponenten laufen in einem lokalen Docker-Netzwerk.  
 
-Für die Entwicklungsumgebung ist eine **Single-Host-Lösung** vorgesehen. In der Produktion kann das System auf einen Linux-Server mit Reverse-Proxy (z. B. NGINX) ausgerollt werden.
+Für die Entwicklungsumgebung ist eine **Single-Host-Lösung** vorgesehen. In der Produktion kann das System auf einen Linux-Server mit Reverse-Proxy (z.B. NGINX) ausgerollt werden.
 
 ## Laufzeitumgebung (Entwicklung)
 

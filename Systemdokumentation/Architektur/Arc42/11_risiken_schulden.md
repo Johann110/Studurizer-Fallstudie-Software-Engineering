@@ -1,12 +1,12 @@
 # 11 – Risiken und technische Schulden
 
-In diesem Kapitel werden bekannte Projektrisiken sowie technische Schulden dokumentiert, die bewusst (z. B. aus Zeit- oder Aufwandsgründen) in Kauf genommen wurden. Diese Punkte sollten im späteren Projektverlauf priorisiert beobachtet und ggf. behoben werden.
+In diesem Kapitel werden bekannte Projektrisiken sowie technische Schulden dokumentiert, die bewusst (z.B. aus Zeit- oder Aufwandsgründen) in Kauf genommen wurden. Diese Punkte sollten im späteren Projektverlauf priorisiert beobachtet und ggf. behoben werden.
 
 ---
 
 ## Technische Schulden
 
-### 1. Kein Einsatz eines modernen Frontend-Frameworks (z. B. Angular, React, Vue)
+### 1. Kein Einsatz eines modernen Frontend-Frameworks (z.B. Angular, React, Vue)
 
 **Auswirkung:**  
 Die Benutzeroberfläche basiert vollständig auf **klassischem serverseitigem Templating** mit Django.  
@@ -19,7 +19,7 @@ Dies vereinfacht die Entwicklung und verbessert die Barrierefreiheit, limitiert 
 
 **Risiko:**  
 - Die UI wirkt weniger „modern“ oder responsiv im Vergleich zu Single-Page-Anwendungen
-- Erweiterungen (z. B. Live-Chat, Drag&Drop, Vorschau etc.) sind deutlich schwerer umzusetzen
+- Erweiterungen (z.B. Live-Chat, Drag&Drop, Vorschau etc.) sind deutlich schwerer umzusetzen
 
 ---
 

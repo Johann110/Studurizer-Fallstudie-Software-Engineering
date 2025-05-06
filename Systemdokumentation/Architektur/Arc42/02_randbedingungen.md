@@ -20,9 +20,9 @@ In diesem Kapitel werden die nicht-funktionalen Anforderungen und technischen Ra
 
 ## Rechtliche Randbedingungen
 
-- **Datenschutz**: Einhaltung der DSGVO – insbesondere bzgl. personenbezogener Daten wie Name, Matrikelnummer, Teilnahmeverläufe
+- **Datenschutz**: Einhaltung der DSGVO – insbesondere bzgl. personenbezogener Daten wie Name, ggf Matrikelnummer, Teilnahmeverläufe
 - **Barrierefreiheit**: Verpflichtung zur Einhaltung barrierefreier Standards auf Grundlage öffentlicher Digitalangebote
-- **Open-Source-Komponenten**: Es dürfen nur OSS-Komponenten verwendet werden, deren Lizenzen mit der Weiterverwendung vereinbar sind (z. B. MIT, Apache 2.0)
+- **Open-Source-Komponenten**: Es dürfen nur OSS-Komponenten verwendet werden, deren Lizenzen mit der Weiterverwendung vereinbar sind (z.B. MIT, Apache 2.0)
 
 ## Institutionelle Randbedingungen
 
