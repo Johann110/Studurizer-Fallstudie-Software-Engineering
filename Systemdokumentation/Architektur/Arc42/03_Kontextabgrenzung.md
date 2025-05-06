@@ -8,16 +8,16 @@ Die Nutzer:innen interagieren über eine Weboberfläche, während die Administra
 
 Folgende externe Akteure und Systeme interagieren mit Studurizer:
 
-| Externe Instanz           | Beschreibung                                                             |
-|---------------------------|--------------------------------------------------------------------------|
+| Externe Instanz           | Beschreibung                                                            |
+|---------------------------|-------------------------------------------------------------------------|
 | **Studierende**           | Erhalten Kurseinblicke, laden Materialien herunter, reichen Aufgaben ein |
-| **Dozierende**            | Verwalten Kurse, laden Inhalte hoch, verwalten Teilnahmen                |
-| **Administrator:innen**   | Erstellen Benutzerkonten, richten Kurse ein, konfigurieren das System    |
-| **Barrierefreiheitsbeauftragte** | Prüfen die Umsetzung von WCAG 2.2-Standards                              |
-| **Datenschutzbeauftragte:r** | Kontrolliert Einhaltung von DSGVO-Vorgaben                               |
-| **Hochschulverwaltung**   | Beobachtet Kursbetrieb, ggf. für Reporting relevant                      |
-| **Externe KI-Dienste**    | Optional: z. B. automatische Textzusammenfassungen oder Voice-Interface  |
-| **Mailserver**            | Versendet Zertifikate                                                    |
+| **Dozierende**            | Verwalten Kurse, laden Inhalte hoch, verwalten Teilnahmen               |
+| **Administrator:innen**   | Erstellen Benutzerkonten, richten Kurse ein, konfigurieren das System   |
+| **Barrierefreiheitsbeauftragte** | Prüfen die Umsetzung von WCAG 2.2-Standards                             |
+| **Datenschutzbeauftragte:r** | Kontrolliert Einhaltung von DSGVO-Vorgaben                              |
+| **Hochschulverwaltung**   | Beobachtet Kursbetrieb, ggf. für Reporting relevant                     |
+| **Externe KI-Dienste**    | Optional: z.B. automatische Textzusammenfassungen oder Voice-Interface  |
+| **Mailserver**            | Versendet Zertifikate                                                   |
 
 ---
 

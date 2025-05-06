@@ -20,7 +20,7 @@ Es wurde entwickelt von **Dr. Gernot Starke** und **Peter Hruschka** und ist off
 | 07  | Verteilungssicht                    | Verteilung der Software auf Hardware, Netzwerk, Deployment           |
 | 08  | Konzepte                            | Querschnittliche Konzepte wie Sicherheit, Persistenz, Fehlerbehandlung |
 | 09  | Architekturentscheidungen           | Dokumentierte bewusste Architekturentscheidungen                      |
-| 10  | Qualitätsanforderungen              | Nicht-funktionale Anforderungen (z. B. Sicherheit, Performance)        |
+| 10  | Qualitätsanforderungen              | Nicht-funktionale Anforderungen (z.B. Sicherheit, Performance)        |
 | 11  | Risiken und technische Schulden     | Identifizierte Risiken, bekannte Schwächen oder bewusste Kompromisse  |
 | 12  | Glossar                             | Fachbegriffe und Abkürzungen zur besseren Verständlichkeit            |
 

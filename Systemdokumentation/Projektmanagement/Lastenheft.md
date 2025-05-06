@@ -32,7 +32,7 @@ Viele bestehende Lern- und Kursplattformen bieten zwar umfassende Funktionen, we
 - Rollensystem: Studierende, Lehrende, Admins
 - Kalender-Integration mit Erinnerungsfunktion
 - Barrierefreie Darstellung von Inhalten (Screenreader-Kompatibilität, Tastaturnavigation, Farbkontrast)
-- Optional: Integration von KI-Tools (z. B. automatische Zusammenfassungen, Chatbot für Fragen)
+- Optional: Integration von KI-Tools (z.B. automatische Zusammenfassungen, Chatbot für Fragen)
 - Erstellung von Zertifikaten (PDF)
 
 ### 2.2 Nicht-funktionale Anforderungen
