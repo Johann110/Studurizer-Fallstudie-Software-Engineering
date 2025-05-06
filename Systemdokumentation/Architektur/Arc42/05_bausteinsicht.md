@@ -35,6 +35,4 @@ graph TD
     H[submissions] --> E
     I[grades] --> H
     J[certificates] --> I
-    J --> B
-    J --> C
     A --> G[adminpanel]
