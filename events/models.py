@@ -3,7 +3,6 @@ from django.db import models
 from courses.models import Course
 
 
-# Create your models here.
 class Events(models.Model):
     description = models.TextField(verbose_name="Beschreibung")
     start_date = models.DateTimeField(verbose_name="Startzeit")

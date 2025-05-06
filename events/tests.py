@@ -6,7 +6,7 @@ from courses.models import Course
 from events.models import Events
 from django.contrib.auth.models import Group
 
-# Create your tests here.
+# Diese Methode wurde mithilfe von ChatGPT (OpenAI) in Hinblick auf bestimmte Aspekte verbessert und manuell angepasst
 class EventsTestcase(TestCase):
     def setUp(self):
         Group.objects.get_or_create(id=1, name='Student')

@@ -5,7 +5,7 @@ from django.db import models
 class CustomUser(AbstractUser):
     email = models.EmailField(verbose_name="Email", unique=True)
 
-
+# Diese Methode wurde mithilfe von ChatGPT (OpenAI) erstellt und manuell angepasst
 def signature_file_upload_path(instance, filename):
     return f'signatures/user_{instance.user.id}/{filename}'
 

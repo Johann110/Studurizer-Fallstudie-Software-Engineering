@@ -27,6 +27,7 @@ class DeleteEvent(View):
 
         return redirect('all_events')
 
+# Diese Methode wurde mithilfe von ChatGPT (OpenAI) in Hinblick auf bestimmte Aspekte verbessert und manuell angepasst
 def events(request):
     user_courses_q = Q(course__students=request.user) | Q(course__teachers=request.user)
     now = timezone.now()

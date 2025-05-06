@@ -17,6 +17,7 @@ class CreateGradeForSubmission(CreateView):
     form_class = GradeForm
     template_name = 'grades/create_grade.html'
 
+    # Diese Methode wurde mithilfe von ChatGPT (OpenAI) in Hinblick auf bestimmte Aspekte verbessert und manuell angepasst
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         submission_id = self.kwargs.get('submission_id')
@@ -25,6 +26,7 @@ class CreateGradeForSubmission(CreateView):
         context['student'] = submission.user
         return context
 
+    # Diese Methode wurde mithilfe von ChatGPT (OpenAI) in Hinblick auf bestimmte Aspekte verbessert und manuell angepasst
     def form_valid(self, form):
         submission_id = self.kwargs.get('submission_id')
         submission = get_object_or_404(Submission, pk=submission_id)
@@ -39,7 +41,7 @@ class CreateGradeForSubmission(CreateView):
         return reverse_lazy("assignment_detail", kwargs={"assignment_id": assignment_id})
 
 
-
+# Diese Methode wurde mithilfe von ChatGPT (OpenAI) erstellt und manuell angepasst
 @xframe_options_exempt
 def embedded_pdf_view(request, path):
     full_path = os.path.join(settings.MEDIA_ROOT, path)

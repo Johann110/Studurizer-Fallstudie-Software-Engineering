@@ -17,6 +17,7 @@ from django.template.loader import render_to_string
 import os
 from django.conf import settings
 
+# Diese Methode wurde mithilfe von ChatGPT (OpenAI) in Hinblick auf bestimmte Aspekte verbessert und manuell angepasst
 @csrf_exempt
 def create_certificate(request, id):
     if request.method == 'POST':
@@ -74,7 +75,7 @@ def create_certificate(request, id):
         print('wrong method')
         return JsonResponse({'error': 'Invalid request method'}, status=405)
 
-
+# Diese Methode wurde mithilfe von ChatGPT (OpenAI) erstellt und manuell angepasst
 def create_pdf(firstname, lastname, gradetext, teachertext, course_name):
     html_content = render_to_string("certificate_template.html", {
         'firstname': firstname,

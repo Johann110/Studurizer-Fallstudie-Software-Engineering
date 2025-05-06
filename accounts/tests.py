@@ -4,7 +4,7 @@ from django.test import TestCase
 from accounts.models import CustomUser
 
 
-# Create your tests here.
+# Diese Methode wurde mithilfe von ChatGPT (OpenAI) erstellt und manuell angepasst
 class CustomUserTestcase(TestCase):
     def setUp(self):
         CustomUser.objects.create_user(username='test1', email='test@gmail.com', password='iamatest1234')
