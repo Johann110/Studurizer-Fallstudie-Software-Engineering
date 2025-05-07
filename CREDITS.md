@@ -160,11 +160,6 @@
   Quelle: https://pypi.org/project/zopfli/<br>
   Author: Adam DePrince, Maintained by: Cosimo Lupo.
 
-- **apprise (Version 1.9.3)**<br>
-  Lizenz: BSD License<br>
-  Quelle: https://pypi.org/project/apprise/<br>
-  Copyright (c) 2025, Chris Caron <lead2gold@gmail.com>.
-
 - **reportlab (Version 4.4.0)**<br>
   Lizenz: BSD License<br>
   Quelle: https://pypi.org/project/reportlab/<br>
