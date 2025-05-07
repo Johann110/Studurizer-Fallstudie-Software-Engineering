@@ -11,7 +11,7 @@ Alle Quellen, Lizenzen und Copyrightangaben für verwendete Software befinden si
 
 ## Hinweis zum KI-Einsatz
 
-Teile des Codes in diesem Projekt wurden mithilfe von KI-Tools wie ChatGPT (OpenAI), Claude AI (Anthropic) und GitHub Copilot generiert oder überarbeitet. Alle generierten Inhalte wurden manuell überprüft und angepasst.
+Teile des Codes in diesem Projekt wurden mithilfe von KI-Tools wie ChatGPT (OpenAI), Grok, Claude AI (Anthropic) und GitHub Copilot generiert oder überarbeitet. Alle generierten Inhalte wurden manuell überprüft und angepasst.
  
 # Docker für Studurizer
 
