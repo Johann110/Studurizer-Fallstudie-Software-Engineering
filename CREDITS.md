@@ -144,7 +144,6 @@
 - **tzdata (Version 2025.2)**<br>
   Lizenz: Public Domain<br>
   Quelle: https://www.iana.org/time-zones
- 
 
 - **webencodings (Version 0.5.1)**<br>
   Lizenz: BSD License<br>
