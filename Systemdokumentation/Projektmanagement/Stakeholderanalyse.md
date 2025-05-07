@@ -59,7 +59,6 @@ Bewerte die Stakeholder nach:
 ### Strategie KI Meetings:
 - Welche Anforderungen haben Stakeholder, z.B. sehbehinderte Nutzer:innen?
 - Welche Funktionen wünschen sich Lehrende?
-- Gibt es Vorbehalte gegenüber KI-Integration?
 - Welche Datenschutz- und Sicherheitsanforderungen gibt es?
 
 ---
