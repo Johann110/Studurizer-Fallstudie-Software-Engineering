@@ -36,7 +36,7 @@ Bewerte die Stakeholder nach:
 |---------------------------|----------|-----------|------------------|------------|
 | Studierende               | Hoch     | Hoch      | Eng einbinden    | Hauptnutzer:innen, stark betroffen, wichtiges Feedback für UX und Barrierefreiheit |
 | Dozierende                | Hoch     | Hoch      | Eng einbinden    | Zentrale Nutzer:innen bei Kursverwaltung, stark involviert in Workflows |
-| Hochschulverwaltung       | Hoch     | Niedrig   | Zufriedenstellen | Trifft strategische Entscheidungen, aber nutzt System nicht direkt |
+| Hochschulverwaltung       | Hoch     | Hoch   | Eng einbinden | Trifft strategische Entscheidungen, nutzt das System um Nutzer zu registrieren |
 | Datenschutzbeauftragte      | Hoch     | Hoch      | Eng einbinden      | Setzt rechtliche Rahmen um |
 | Barrierefreiheitsbeauftragte | Niedrig | Hoch      | Informieren      | Hohe Anforderungen an Barrierefreiheit, aber kein direkter Einfluss auf Projektverlauf |
 | IT-Abteilung / Admins     | Mittel   | Mittel    | Eng einbinden    | Zuständig für technische Integration, Support und Sicherheit |
