@@ -1,7 +1,7 @@
 <!---
 Artefakte der Systemdokumentation wurden mithilfe von ChatGPT (OpenAI) erstellt und manuell angepasst
 -->
-# MyCampus-Learn-Fallstudie-Software-Engineering
+## MyCampus-Learn-Fallstudie-Software-Engineering
 
 [https://studurizer.atris.dev](https://studurizer.atris.dev)
 
@@ -9,6 +9,10 @@ Artefakte der Systemdokumentation wurden mithilfe von ChatGPT (OpenAI) erstellt 
 
 Alle Quellen, Lizenzen und Copyrightangaben für verwendete Software befinden sich in der Datei CREDITS.md im Hauptverzeichnis.
 
+## Hinweis zum KI-Einsatz
+
+Teile des Codes in diesem Projekt wurden mithilfe von KI-Tools wie ChatGPT (OpenAI), Grok, Claude AI (Anthropic) und GitHub Copilot generiert oder überarbeitet. Alle generierten Inhalte wurden manuell überprüft und angepasst.
+ 
 # Docker für Studurizer
 
 Diese Anleitung erklärt, wie du das Studurizer-Projekt mit Docker lokal ausführen kannst.

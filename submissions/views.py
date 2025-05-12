@@ -7,7 +7,7 @@ from .models import Submission
 from assignments.models import Assignment
 from .forms import SubmissionForm
 
-
+# Diese Methode wurde mithilfe von ChatGPT (OpenAI) erstellt und manuell angepasst
 def create_submission(request, assignment_id):
     assignment = get_object_or_404(Assignment, pk=assignment_id)
 

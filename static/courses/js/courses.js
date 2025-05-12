@@ -1,3 +1,4 @@
+// # Dieser Code wurde mithilfe von Claude AI (Anthropic) in Hinblick auf bestimmte Aspekte verbessert und manuell angepasst
 $('select.dual-listbox-student').bootstrapDualListbox({
 nonSelectedListLabel: 'Alle Teilnehmer',
 selectedListLabel: 'Zugewiesene Teilnehmer',
