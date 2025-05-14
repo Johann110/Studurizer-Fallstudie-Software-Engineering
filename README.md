@@ -78,7 +78,7 @@ Diese Anleitung erklärt, wie du das Studurizer-Projekt mit Docker lokal ausfüh
 
 4. **Zugriff auf die Anwendung**
 
-   Öffne deinen Webbrowser und gehe zu: http://localhost:8000
+   Öffne deinen Webbrowser und gehe zu: http://localhost:80
 
 ## Dateipfade und Persistenz
 
